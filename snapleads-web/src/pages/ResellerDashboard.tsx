@@ -120,7 +120,7 @@ export default function ResellerDashboard() {
   }, []);
 
   useEffect(() => { loadStats(); }, [loadStats]);
-  useEffect(() => { if (tab === "keys") loadKeys(); }, [tab, loadKeys]);
+  useEffect(() => { if (tab === "keys" || tab === "templates") loadKeys(); }, [tab, loadKeys]);
   useEffect(() => { if (tab === "sub-resellers") loadSubResellers(); }, [tab, loadSubResellers]);
 
   const handleGenerate = async (e: React.FormEvent) => {
