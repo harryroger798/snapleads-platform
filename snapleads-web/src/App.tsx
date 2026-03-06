@@ -168,11 +168,10 @@ function Hero() {
         </a>
       </motion.div>
       
-      {/* Hero Image */}
-      <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.8 }} className="relative mt-16 w-full max-w-4xl mx-auto z-10">
-        <div className="relative rounded-2xl overflow-hidden border border-dark-border shadow-2xl">
-          <img src="/images/hero-dashboard.jpg" alt="SnapLeads in action" className="w-full h-auto" />
-          <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent" />
+      {/* Hero Image — 3D Dashboard */}
+      <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.8 }} className="relative mt-16 w-full max-w-3xl mx-auto z-10">
+        <div className="relative">
+          <img src="/images/3d-hero-dashboard.png" alt="SnapLeads Dashboard" className="w-full h-auto" style={{ mixBlendMode: 'lighten' }} />
         </div>
       </motion.div>
       
@@ -252,10 +251,10 @@ function WhoWeAre() {
 /* ─── FEATURES (VALUE PROPS) ─── */
 function Features() {
   const features = [
-    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/feature-extract.jpg' },
-    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/feature-protect.jpg' },
-    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/feature-automate.jpg' },
-    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/feature-enrich.jpg' },
+    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/3d-extract.png' },
+    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/3d-protect.png' },
+    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/3d-automate.png' },
+    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/3d-enrich.png' },
   ]
   
   return (
@@ -304,8 +303,8 @@ function FeatureCard({ icon, title, subtitle, desc, img }: { icon: React.ReactNo
             Learn more <ArrowRight size={14} className={`transition-transform duration-300 ${hovered ? 'translate-x-1' : ''}`} />
           </a>
         </div>
-        <div className={`w-full md:w-80 h-48 md:h-auto overflow-hidden transition-all duration-500 ${hovered ? 'md:w-96' : 'md:w-80'}`}>
-          <img src={img} alt={title} className={`w-full h-full object-cover transition-transform duration-700 ${hovered ? 'scale-105' : 'scale-100'}`} />
+        <div className={`w-full md:w-80 h-56 md:h-auto overflow-hidden transition-all duration-500 bg-[#0A0A0A] flex items-center justify-center ${hovered ? 'md:w-96' : 'md:w-80'}`}>
+          <img src={img} alt={title} className={`w-full h-full object-contain p-2 transition-transform duration-700 ${hovered ? 'scale-110' : 'scale-100'}`} style={{ mixBlendMode: 'lighten' }} />
         </div>
       </div>
     </motion.div>
@@ -332,6 +331,13 @@ function Platforms() {
               Our <span className="italic text-gray-400">Supported</span> Platforms
             </h2>
             <p className="text-gray-500 mt-4 max-w-2xl mx-auto">Extract leads from the biggest platforms on the internet. Each extractor is purpose-built with safety controls and smart rate limiting.</p>
+          </motion.div>
+          
+          {/* 3D Platform Icons */}
+          <motion.div variants={fadeIn} className="flex justify-center mb-12">
+            <div className="w-full max-w-lg">
+              <img src="/images/3d-platforms.png" alt="Supported Platforms" className="w-full h-auto rounded-2xl" style={{ mixBlendMode: 'darken' }} />
+            </div>
           </motion.div>
           
           <div className="space-y-4">
@@ -498,8 +504,13 @@ function Testimonial() {
           <motion.div variants={fadeIn}>
             <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-dark-border px-4 py-2 rounded-full">[ Helping Businesses Scale ]</span>
           </motion.div>
-          <motion.div variants={fadeIn} className="mt-10">
-            <div className="text-accent text-6xl font-serif mb-6">&ldquo;</div>
+          
+          {/* 3D Testimonial Quote Bubble */}
+          <motion.div variants={fadeIn} className="flex justify-center mt-8 mb-4">
+            <img src="/images/3d-testimonial.png" alt="Testimonials" className="w-48 h-48 object-contain" style={{ mixBlendMode: 'lighten' }} />
+          </motion.div>
+          
+          <motion.div variants={fadeIn} className="mt-2">
             <h3 className="text-2xl md:text-4xl font-black uppercase tracking-tight leading-tight">
               {testimonials[active].quote}
             </h3>
@@ -535,15 +546,19 @@ function HowItWorks() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} /> },
-              { step: '02', title: 'Choose Your Platform', desc: 'Select from 12+ platforms. Configure your search query, filters, and extraction limits.', icon: <Search size={28} /> },
-              { step: '03', title: 'Extract & Export', desc: 'Hit start and watch leads pour in. Export to CSV, Excel, or push directly to HubSpot CRM.', icon: <Users size={28} /> },
+              { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/3d-step-download.png' },
+              { step: '02', title: 'Choose Your Platform', desc: 'Select from 12+ platforms. Configure your search query, filters, and extraction limits.', icon: <Search size={28} />, img: '/images/3d-step-configure.png' },
+              { step: '03', title: 'Extract & Export', desc: 'Hit start and watch leads pour in. Export to CSV, Excel, or push directly to HubSpot CRM.', icon: <Users size={28} />, img: '/images/3d-step-export.png' },
             ].map((s, i) => (
-              <motion.div key={i} variants={fadeIn} className="bg-white rounded-2xl border border-gray-200 p-8 hover:shadow-xl transition-all duration-500 group">
-                <span className="text-accent font-mono text-lg font-bold">{s.step}.</span>
-                <div className="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center my-4 group-hover:bg-accent/20 transition-colors text-accent">{s.icon}</div>
-                <h3 className="text-xl font-bold mb-2">{s.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+              <motion.div key={i} variants={fadeIn} className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-500 group">
+                <div className="bg-[#0A0A0A] flex items-center justify-center p-4">
+                  <img src={s.img} alt={s.title} className="w-full h-44 object-contain" style={{ mixBlendMode: 'lighten' }} />
+                </div>
+                <div className="p-8">
+                  <span className="text-accent font-mono text-lg font-bold">{s.step}.</span>
+                  <h3 className="text-xl font-bold mb-2 mt-2">{s.title}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed">{s.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -603,6 +618,10 @@ function FinalCTA() {
     <section className="py-24 px-4 bg-dark noise-bg relative">
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
+          {/* 3D Rocket CTA */}
+          <motion.div variants={fadeIn} className="flex justify-center mb-8">
+            <img src="/images/3d-cta-rocket.png" alt="Launch SnapLeads" className="w-64 h-64 object-contain" style={{ mixBlendMode: 'lighten' }} />
+          </motion.div>
           <motion.h2 variants={fadeIn} className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none">
             Your Ultimate Lead Extraction Machine.
             <span className="text-gradient"> Start Today.</span>
