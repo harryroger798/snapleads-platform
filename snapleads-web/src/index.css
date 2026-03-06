@@ -37,20 +37,64 @@
     color: #1e293b;
   }
 
+  /* Layout */
   html.light .dash-bg { background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #eef2ff 100%) !important; }
-  html.light .dash-header { background-color: rgba(255,255,255,0.85) !important; border-color: #e2e8f0 !important; }
-  html.light .dash-card { background-color: rgba(255,255,255,0.9) !important; border-color: #e2e8f0 !important; }
-  html.light .dash-card:hover { background-color: rgba(255,255,255,1) !important; }
-  html.light .dash-text-primary { color: #1e293b !important; }
-  html.light .dash-text-secondary { color: #64748b !important; }
-  html.light .dash-text-muted { color: #94a3b8 !important; }
-  html.light .dash-input { background-color: rgba(241,245,249,0.8) !important; border-color: #cbd5e1 !important; color: #1e293b !important; }
-  html.light .dash-input::placeholder { color: #94a3b8 !important; }
-  html.light .dash-table-row:hover { background-color: rgba(241,245,249,0.6) !important; }
-  html.light .dash-table-header { border-color: #e2e8f0 !important; }
-  html.light .dash-tab-bg { background-color: rgba(241,245,249,0.8) !important; }
-  html.light .dash-message { background-color: rgba(99,102,241,0.08) !important; border-color: rgba(99,102,241,0.15) !important; }
+  html.light .dash-header { background-color: rgba(255,255,255,0.92) !important; border-color: #e2e8f0 !important; backdrop-filter: blur(12px) !important; }
   html.light .dash-login-card { background-color: rgba(255,255,255,0.95) !important; border-color: #e2e8f0 !important; box-shadow: 0 4px 24px rgba(0,0,0,0.06) !important; }
+
+  /* Cards & panels */
+  html.light .dash-card,
+  html.light .bg-slate-800\/50 { background-color: rgba(255,255,255,0.9) !important; border-color: #e2e8f0 !important; }
+  html.light .bg-slate-800\/50:hover { background-color: rgba(255,255,255,1) !important; }
+  html.light .bg-slate-900\/50 { background-color: rgba(241,245,249,0.7) !important; }
+  html.light .bg-slate-700\/30 { background-color: rgba(226,232,240,0.5) !important; }
+
+  /* Text - primary (white -> dark) */
+  html.light .dash-text-primary,
+  html.light .text-white { color: #1e293b !important; }
+
+  /* Text - secondary */
+  html.light .dash-text-secondary,
+  html.light .text-slate-300,
+  html.light .text-slate-400 { color: #475569 !important; }
+
+  /* Text - muted */
+  html.light .dash-text-muted,
+  html.light .text-slate-500 { color: #64748b !important; }
+
+  /* Code / mono text */
+  html.light .text-indigo-300 { color: #4f46e5 !important; }
+  html.light .text-purple-300 { color: #7c3aed !important; }
+
+  /* Inputs */
+  html.light .dash-input,
+  html.light input[class*="bg-slate-900"],
+  html.light select[class*="bg-slate-"],
+  html.light textarea[class*="bg-slate-"] {
+    background-color: rgba(241,245,249,0.8) !important;
+    border-color: #cbd5e1 !important;
+    color: #1e293b !important;
+  }
+  html.light input::placeholder,
+  html.light textarea::placeholder { color: #94a3b8 !important; }
+
+  /* Tables */
+  html.light .border-slate-700\/50,
+  html.light .border-slate-700\/30 { border-color: #e2e8f0 !important; }
+  html.light tr:hover { background-color: rgba(241,245,249,0.6) !important; }
+  html.light th { color: #64748b !important; }
+  html.light td { color: #334155 !important; }
+
+  /* Tabs */
+  html.light .bg-slate-800\/50[class*="rounded-xl"][class*="p-1"] { background-color: rgba(241,245,249,0.8) !important; }
+
+  /* Message banner */
+  html.light .dash-message,
+  html.light .bg-indigo-500\/10 { background-color: rgba(99,102,241,0.08) !important; border-color: rgba(99,102,241,0.15) !important; }
+  html.light .text-indigo-300[class*="flex"] { color: #4338ca !important; }
+
+  /* Progress bars */
+  html.light .bg-slate-700 { background-color: #e2e8f0 !important; }
 }
 
 @layer utilities {
