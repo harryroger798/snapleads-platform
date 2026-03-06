@@ -8,6 +8,9 @@ import {
 } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import SnapLeadsLogo from "../components/SnapLeadsLogo";
+import DownloadSection from "../components/DownloadSection";
+import ShareTemplates from "../components/ShareTemplates";
+import { Download as DownloadIcon, MessageSquare } from "lucide-react";
 
 interface Stats {
   total_keys: number;
@@ -42,7 +45,7 @@ interface SubReseller {
   created_at: string;
 }
 
-type Tab = "overview" | "keys" | "generate" | "sub-resellers";
+type Tab = "overview" | "keys" | "generate" | "sub-resellers" | "download" | "templates";
 
 export default function ResellerDashboard() {
   const { user, logout } = useAuth();
@@ -172,6 +175,8 @@ export default function ResellerDashboard() {
     ["generate", "Generate Keys", Plus],
   ];
   if (isMasterReseller) tabs.push(["sub-resellers", "Sub-Resellers", Users]);
+  tabs.push(["download", "Download", DownloadIcon]);
+  tabs.push(["templates", "Templates", MessageSquare as typeof BarChart3]);
 
   return (
     <div className={`min-h-screen ${t.bg}`}>
@@ -411,6 +416,15 @@ export default function ResellerDashboard() {
               </table>
             </div>
           </div>
+        )}
+        {/* DOWNLOAD TAB */}
+        {tab === "download" && (
+          <DownloadSection isDark={isDark} />
+        )}
+
+        {/* TEMPLATES TAB */}
+        {tab === "templates" && (
+          <ShareTemplates isDark={isDark} licenseKeys={keys.filter(k => k.status === "active").map(k => ({ key: k.key, plan: k.plan }))} />
         )}
       </div>
     </div>
