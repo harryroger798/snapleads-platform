@@ -95,6 +95,30 @@ function Hero() {
       <div className="absolute top-[5%] right-[15%] w-[350px] h-[350px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(220,50,0,0.08) 0%, transparent 60%)' }} />
       <div className="absolute bottom-[30%] left-[10%] w-[300px] h-[300px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.05) 0%, transparent 60%)' }} />
       
+      {/* Hakari-style sparkle particles */}
+      {[...Array(24)].map((_, i) => {
+        const sizes = [2, 3, 4, 2, 3, 2, 4, 3, 2, 3, 4, 2, 3, 2, 4, 3, 2, 3, 4, 2, 3, 2, 4, 3]
+        const tops = ['8%','15%','22%','35%','45%','55%','65%','75%','12%','28%','42%','58%','72%','85%','18%','32%','48%','62%','78%','5%','25%','50%','70%','90%']
+        const lefts = ['5%','15%','85%','92%','8%','78%','25%','65%','45%','55%','35%','72%','18%','88%','60%','40%','95%','3%','50%','70%','30%','82%','12%','58%']
+        const opacities = [0.15, 0.25, 0.35, 0.2, 0.3, 0.15, 0.25, 0.2, 0.35, 0.15, 0.25, 0.3, 0.2, 0.15, 0.35, 0.25, 0.2, 0.3, 0.15, 0.25, 0.35, 0.2, 0.3, 0.15]
+        const delays = [0, 1.5, 3, 0.5, 2, 3.5, 1, 2.5, 0.8, 1.8, 2.8, 0.3, 1.3, 2.3, 3.3, 0.6, 1.6, 2.6, 3.6, 0.9, 1.9, 2.9, 3.9, 1.2]
+        return (
+          <div
+            key={`sparkle-${i}`}
+            className="absolute rounded-full animate-sparkle"
+            style={{
+              width: sizes[i],
+              height: sizes[i],
+              top: tops[i],
+              left: lefts[i],
+              backgroundColor: `rgba(255, 255, 255, ${opacities[i]})`,
+              boxShadow: `0 0 ${sizes[i] * 3}px rgba(255, 255, 255, ${opacities[i] * 0.5})`,
+              animationDelay: `${delays[i]}s`,
+            }}
+          />
+        )
+      })}
+      
       {/* Floating platform icons */}
       <motion.div style={{ y: y1 }} className="absolute top-32 left-[10%] animate-float">
         <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/30"><Linkedin size={28} className="text-white" /></div>
@@ -147,7 +171,7 @@ function Hero() {
       {/* Hero Image */}
       <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.8 }} className="relative mt-16 w-full max-w-4xl mx-auto z-10">
         <div className="relative rounded-2xl overflow-hidden border border-dark-border shadow-2xl">
-          <img src="/images/hero-team.png" alt="SnapLeads in action" className="w-full h-auto" />
+          <img src="/images/hero-dashboard.jpg" alt="SnapLeads in action" className="w-full h-auto" />
           <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent" />
         </div>
       </motion.div>
@@ -228,10 +252,10 @@ function WhoWeAre() {
 /* ─── FEATURES (VALUE PROPS) ─── */
 function Features() {
   const features = [
-    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/hero-team.png' },
-    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/strategy.png' },
-    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/team-celebrate.png' },
-    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/strategy.png' },
+    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/feature-extract.jpg' },
+    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/feature-protect.jpg' },
+    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/feature-automate.jpg' },
+    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/feature-enrich.jpg' },
   ]
   
   return (
@@ -276,9 +300,9 @@ function FeatureCard({ icon, title, subtitle, desc, img }: { icon: React.ReactNo
           </div>
           <h4 className="text-2xl md:text-3xl font-bold text-dark mb-3">{subtitle}</h4>
           <p className="text-gray-500 leading-relaxed">{desc}</p>
-          <div className="flex items-center gap-2 mt-6 text-accent font-mono text-xs uppercase tracking-wider">
+          <a href="#pricing" className="flex items-center gap-2 mt-6 text-accent font-mono text-xs uppercase tracking-wider hover:text-accent-hover transition-colors">
             Learn more <ArrowRight size={14} className={`transition-transform duration-300 ${hovered ? 'translate-x-1' : ''}`} />
-          </div>
+          </a>
         </div>
         <div className={`w-full md:w-80 h-48 md:h-auto overflow-hidden transition-all duration-500 ${hovered ? 'md:w-96' : 'md:w-80'}`}>
           <img src={img} alt={title} className={`w-full h-full object-cover transition-transform duration-700 ${hovered ? 'scale-105' : 'scale-100'}`} />
@@ -387,7 +411,7 @@ function Pricing() {
                     <span className="text-gray-300 text-sm">{item}</span>
                   </div>
                 ))}
-                <a href="#" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 mt-6 w-full hover:shadow-lg hover:shadow-accent/30">
+                <a href="#pricing" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 mt-6 w-full hover:shadow-lg hover:shadow-accent/30">
                   Get Starter <ArrowRight size={14} />
                 </a>
               </div>
@@ -412,7 +436,7 @@ function Pricing() {
                     <span className="text-gray-300 text-sm">{item}</span>
                   </div>
                 ))}
-                <a href="#" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 mt-6 w-full hover:shadow-lg hover:shadow-accent/30 animate-pulse-glow">
+                <a href="#pricing" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 mt-6 w-full hover:shadow-lg hover:shadow-accent/30 animate-pulse-glow">
                   Get Pro <ArrowRight size={14} />
                 </a>
               </div>
@@ -461,9 +485,9 @@ function Pricing() {
 /* ─── TESTIMONIAL ─── */
 function Testimonial() {
   const testimonials = [
-    { quote: "SnapLeads replaced 3 separate tools for us. The Google Maps extractor alone saved us 20 hours per week of manual prospecting.", name: "Marcus Rodriguez", title: "CEO at LeadFlow Agency", img: "/images/testimonial-person.png" },
-    { quote: "The account safety features are incredible. We have been running extractions for 6 months with zero issues. This is the real deal.", name: "James Chen", title: "Growth Lead at TechScale", img: "/images/testimonial-person.png" },
-    { quote: "From extraction to outreach in one tool — we closed $50K in new business in the first month using SnapLeads Pro.", name: "David Park", title: "Founder at CloudReach", img: "/images/testimonial-person.png" },
+    { quote: "SnapLeads replaced 3 separate tools for us. The Google Maps extractor alone saved us 20 hours per week of manual prospecting.", name: "Marcus Rodriguez", title: "CEO at LeadFlow Agency", img: "/images/testimonial-1.jpg" },
+    { quote: "The account safety features are incredible. We have been running extractions for 6 months with zero issues. This is the real deal.", name: "James Chen", title: "Growth Lead at TechScale", img: "/images/testimonial-2.jpg" },
+    { quote: "From extraction to outreach in one tool — we closed $50K in new business in the first month using SnapLeads Pro.", name: "David Park", title: "Founder at CloudReach", img: "/images/testimonial-3.jpg" },
   ]
   const [active, setActive] = useState(0)
 
@@ -623,9 +647,9 @@ function Footer() {
             <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">Follow Us</h6>
             <div className="space-y-3">
               {[
-                { icon: <Twitter size={16} />, name: 'X (Twitter)', href: '#' },
-                { icon: <Facebook size={16} />, name: 'Facebook', href: '#' },
-                { icon: <Linkedin size={16} />, name: 'LinkedIn', href: '#' },
+                { icon: <Twitter size={16} />, name: 'X (Twitter)', href: 'https://x.com' },
+                { icon: <Facebook size={16} />, name: 'Facebook', href: 'https://facebook.com' },
+                { icon: <Linkedin size={16} />, name: 'LinkedIn', href: 'https://linkedin.com' },
               ].map((s, i) => (
                 <a key={i} href={s.href} className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors text-sm">
                   {s.icon} <span className="font-mono text-xs uppercase tracking-wider">{s.name}</span>
@@ -664,10 +688,10 @@ function Footer() {
           <div>
             <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">Legal</h6>
             {[
-              { label: 'Privacy Policy', href: '#' },
-              { label: 'Terms of Service', href: '#' },
+              { label: 'Privacy Policy', href: '#privacy' },
+              { label: 'Terms of Service', href: '#terms' },
               { label: 'Refund Policy', href: '#faq' },
-              { label: 'License Agreement', href: '#' },
+              { label: 'License Agreement', href: '#license' },
             ].map((item, i) => (
               <a key={i} href={item.href} className="block text-gray-500 hover:text-white transition-colors mb-2 font-mono text-xs uppercase tracking-wider">{item.label}</a>
             ))}
