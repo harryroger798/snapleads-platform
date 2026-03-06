@@ -5,10 +5,10 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads.Setup.1.0.0.exe";
-const DOWNLOAD_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads-1.0.0-mac.zip";
-const DOWNLOAD_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads-1.0.0.AppImage";
-const VERSION = "1.0.0";
+const DOWNLOAD_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads.Setup.1.0.1.exe";
+const DOWNLOAD_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads-1.0.1-mac.zip";
+const DOWNLOAD_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads-1.0.1.AppImage";
+const VERSION = "1.0.1";
 const VT_SCAN_URL = "https://www.virustotal.com/gui/url/f51d3eb2d54cc0fb25a0d1a679a94a8132a4e99ea616898aaa2df71780db171b";
 
 type OSTab = "windows" | "macos" | "linux";
@@ -113,8 +113,8 @@ const bypassGuides: BypassGuide[] = [
     os: "linux",
     steps: [
       "Download the .AppImage file to your desired location (e.g., ~/Applications/)",
-      "Make it executable: chmod +x SnapLeads-1.0.0.AppImage",
-      "Run it: ./SnapLeads-1.0.0.AppImage",
+      "Make it executable: chmod +x SnapLeads-1.0.1.AppImage",
+      "Run it: ./SnapLeads-1.0.1.AppImage",
       "Or right-click the file > Properties > Permissions > check \"Allow executing file as program\"",
       "Then double-click to launch",
     ],
@@ -140,7 +140,7 @@ const bypassGuides: BypassGuide[] = [
     os: "linux",
     steps: [
       "If SELinux blocks execution: sudo setenforce 0 (temporary) or add a policy exception",
-      "For AppArmor: sudo aa-complain /path/to/SnapLeads-1.0.0.AppImage",
+      "For AppArmor: sudo aa-complain /path/to/SnapLeads-1.0.1.AppImage",
       "Check logs: journalctl -xe | grep -i snapleads for specific error messages",
       "For persistent fix, create a custom SELinux/AppArmor profile for SnapLeads",
     ],
@@ -207,8 +207,8 @@ const installSteps: Record<OSTab, string[]> = {
   linux: [
     "Download the .AppImage file using the button above",
     "Open Terminal and navigate to the download location",
-    "Make it executable: chmod +x SnapLeads-1.0.0.AppImage",
-    "Run it: ./SnapLeads-1.0.0.AppImage (or double-click if FUSE is installed)",
+    "Make it executable: chmod +x SnapLeads-1.0.1.AppImage",
+    "Run it: ./SnapLeads-1.0.1.AppImage (or double-click if FUSE is installed)",
     "If FUSE error: install with sudo apt install fuse libfuse2 (Ubuntu/Debian)",
     "Enter your license key when prompted and click \"Activate\"",
     "Done! Start extracting leads from 9+ social media platforms",
