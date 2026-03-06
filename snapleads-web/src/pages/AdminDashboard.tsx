@@ -4,9 +4,11 @@ import { api } from "../lib/api";
 import { useNavigate } from "react-router-dom";
 import {
   KeyRound, Users, BarChart3, Plus, Search, XCircle, CheckCircle,
-  LogOut, Copy, Download, RefreshCw, Shield, UserPlus,
-  TrendingUp, Clock, AlertTriangle
+  LogOut, Copy, Download, RefreshCw, UserPlus,
+  TrendingUp, Clock, AlertTriangle, Sun, Moon, PackageOpen
 } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
+import SnapLeadsLogo from "../components/SnapLeadsLogo";
 
 interface Stats {
   total_keys: number;
@@ -81,6 +83,7 @@ export default function AdminDashboard() {
   const [showResForm, setShowResForm] = useState(false);
 
   const [message, setMessage] = useState("");
+  const { isDark, toggleTheme } = useTheme();
 
   const loadStats = useCallback(async () => {
     try {
@@ -151,8 +154,8 @@ export default function AdminDashboard() {
       setMessage("Reseller created successfully");
       setShowResForm(false);
       setResName(""); setResEmail(""); setResPassword("");
-      loadResellers();
-      loadStats();
+      await loadResellers();
+      await loadStats();
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Failed to create reseller");
     }
@@ -187,22 +190,25 @@ export default function AdminDashboard() {
   const formatCurrency = (cents: number) => `$${(cents / 100).toLocaleString()}`;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
+    <div className="dash-bg min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
       {/* Header */}
-      <header className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+      <header className="dash-header border-b border-slate-700/50 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center">
-              <Shield className="w-5 h-5 text-white" />
-            </div>
+            <SnapLeadsLogo size={36} />
             <div>
-              <h1 className="text-lg font-bold text-white">SnapLeads Admin</h1>
-              <p className="text-xs text-slate-400">{user?.email}</p>
+              <h1 className="text-lg font-bold text-white dash-text-primary">SnapLeads Admin</h1>
+              <p className="text-xs text-slate-400 dash-text-muted">{user?.email}</p>
             </div>
           </div>
-          <button onClick={handleLogout} className="flex items-center gap-2 text-slate-400 hover:text-white transition text-sm">
-            <LogOut className="w-4 h-4" /> Sign Out
-          </button>
+          <div className="flex items-center gap-3">
+            <button onClick={toggleTheme} className="p-2 rounded-lg dash-card bg-slate-800/50 border border-slate-700/50 text-slate-400 dash-text-secondary hover:text-white transition" title={isDark ? "Light mode" : "Dark mode"}>
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+            <button onClick={handleLogout} className="flex items-center gap-2 text-slate-400 dash-text-secondary hover:text-white transition text-sm">
+              <LogOut className="w-4 h-4" /> Sign Out
+            </button>
+          </div>
         </div>
       </header>
 
@@ -290,12 +296,12 @@ export default function AdminDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-5">
-                <h3 className="text-white font-medium mb-3">Plan Distribution</h3>
+                <h3 className="text-white dash-text-primary font-medium mb-3">Plan Distribution</h3>
                 <div className="space-y-3">
                   <div>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="text-slate-400">Starter</span>
-                      <span className="text-white">{stats.starter_keys}</span>
+                      <span className="text-slate-400 dash-text-secondary">Starter</span>
+                      <span className="text-white dash-text-primary font-semibold ml-2">{stats.starter_keys}</span>
                     </div>
                     <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                       <div className="h-full bg-blue-500 rounded-full" style={{ width: `${stats.total_keys ? (stats.starter_keys / stats.total_keys) * 100 : 0}%` }} />
@@ -303,8 +309,8 @@ export default function AdminDashboard() {
                   </div>
                   <div>
                     <div className="flex justify-between text-sm mb-1">
-                      <span className="text-slate-400">Pro</span>
-                      <span className="text-white">{stats.pro_keys}</span>
+                      <span className="text-slate-400 dash-text-secondary">Pro</span>
+                      <span className="text-white dash-text-primary font-semibold ml-2">{stats.pro_keys}</span>
                     </div>
                     <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                       <div className="h-full bg-purple-500 rounded-full" style={{ width: `${stats.total_keys ? (stats.pro_keys / stats.total_keys) * 100 : 0}%` }} />
@@ -620,7 +626,17 @@ export default function AdminDashboard() {
                     </tr>
                   ))}
                   {resellers.length === 0 && (
-                    <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">No resellers yet</td></tr>
+                    <tr><td colSpan={6} className="px-4 py-12 text-center">
+                      <div className="flex flex-col items-center gap-3">
+                        <div className="w-16 h-16 bg-slate-700/30 dash-card rounded-2xl flex items-center justify-center">
+                          <PackageOpen className="w-8 h-8 text-slate-500 dash-text-muted" />
+                        </div>
+                        <div>
+                          <p className="text-slate-400 dash-text-secondary font-medium">No resellers yet</p>
+                          <p className="text-slate-500 dash-text-muted text-xs mt-1">Click "Add Reseller" to create your first reseller account</p>
+                        </div>
+                      </div>
+                    </td></tr>
                   )}
                 </tbody>
               </table>

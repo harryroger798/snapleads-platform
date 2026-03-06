@@ -4,8 +4,10 @@ import { api } from "../lib/api";
 import { useNavigate } from "react-router-dom";
 import {
   KeyRound, Users, BarChart3, Plus, Search, XCircle, CheckCircle,
-  LogOut, Copy, TrendingUp, UserPlus, Shield
+  LogOut, Copy, TrendingUp, UserPlus, Sun, Moon, PackageOpen
 } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
+import SnapLeadsLogo from "../components/SnapLeadsLogo";
 
 interface Stats {
   total_keys: number;
@@ -68,6 +70,7 @@ export default function ResellerDashboard() {
   const [srEmail, setSrEmail] = useState("");
   const [srPassword, setSrPassword] = useState("");
   const [showSrForm, setShowSrForm] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   const isMasterReseller = user?.role === "master_reseller";
 
@@ -95,10 +98,15 @@ export default function ResellerDashboard() {
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Validate form state before submitting (Fix 9: form state sync)
+    const validPlans = ["starter", "pro"];
+    const validCycles = ["monthly", "yearly", "lifetime"];
+    const plan = validPlans.includes(genPlan) ? genPlan : "starter";
+    const cycle = validCycles.includes(genCycle) ? genCycle : "monthly";
     setLoading(true);
     try {
       const res = await api.resellerGenerateKeys({
-        plan: genPlan, billing_cycle: genCycle, quantity: genQty,
+        plan, billing_cycle: cycle, quantity: genQty,
         assigned_to_email: genEmail, assigned_to_name: genName,
       });
       setGeneratedKeys(res.keys);
@@ -117,7 +125,8 @@ export default function ResellerDashboard() {
       setMessage("Sub-reseller created successfully");
       setShowSrForm(false);
       setSrName(""); setSrEmail(""); setSrPassword("");
-      loadSubResellers();
+      await loadSubResellers();
+      await loadStats();
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Failed");
     }
@@ -141,21 +150,24 @@ export default function ResellerDashboard() {
   if (isMasterReseller) tabs.push(["sub-resellers", "Sub-Resellers", Users]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
-      <header className="border-b border-slate-700/50 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
+    <div className="dash-bg min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950">
+      <header className="dash-header border-b border-slate-700/50 bg-slate-900/50 backdrop-blur sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center">
-              <Shield className="w-5 h-5 text-white" />
-            </div>
+            <SnapLeadsLogo size={36} />
             <div>
-              <h1 className="text-lg font-bold text-white">SnapLeads Reseller</h1>
-              <p className="text-xs text-slate-400">{user?.name} &middot; {isMasterReseller ? "Master Reseller" : "Reseller"}</p>
+              <h1 className="text-lg font-bold text-white dash-text-primary">SnapLeads Reseller</h1>
+              <p className="text-xs text-slate-400 dash-text-muted">{user?.name} &middot; {isMasterReseller ? "Master Reseller" : "Reseller"}</p>
             </div>
           </div>
-          <button onClick={handleLogout} className="flex items-center gap-2 text-slate-400 hover:text-white transition text-sm">
-            <LogOut className="w-4 h-4" /> Sign Out
-          </button>
+          <div className="flex items-center gap-3">
+            <button onClick={toggleTheme} className="p-2 rounded-lg dash-card bg-slate-800/50 border border-slate-700/50 text-slate-400 dash-text-secondary hover:text-white transition" title={isDark ? "Light mode" : "Dark mode"}>
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
+            <button onClick={handleLogout} className="flex items-center gap-2 text-slate-400 dash-text-secondary hover:text-white transition text-sm">
+              <LogOut className="w-4 h-4" /> Sign Out
+            </button>
+          </div>
         </div>
       </header>
 
@@ -246,7 +258,17 @@ export default function ResellerDashboard() {
                       <td className="px-4 py-3"><button onClick={() => copyToClipboard(k.key)} className="text-slate-500 hover:text-white"><Copy className="w-4 h-4" /></button></td>
                     </tr>
                   ))}
-                  {keys.length === 0 && <tr><td colSpan={6} className="px-4 py-8 text-center text-slate-500">No keys found</td></tr>}
+                  {keys.length === 0 && <tr><td colSpan={6} className="px-4 py-12 text-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-16 h-16 bg-slate-700/30 dash-card rounded-2xl flex items-center justify-center">
+                        <PackageOpen className="w-8 h-8 text-slate-500 dash-text-muted" />
+                      </div>
+                      <div>
+                        <p className="text-slate-400 dash-text-secondary font-medium">No keys found</p>
+                        <p className="text-slate-500 dash-text-muted text-xs mt-1">Generate keys from the "Generate Keys" tab</p>
+                      </div>
+                    </div>
+                  </td></tr>}
                 </tbody>
               </table>
             </div>
@@ -350,7 +372,17 @@ export default function ResellerDashboard() {
                       <td className="px-4 py-3"><span className={`px-2 py-0.5 rounded text-xs font-medium ${r.status === "active" ? "bg-emerald-500/20 text-emerald-300" : "bg-red-500/20 text-red-300"}`}>{r.status}</span></td>
                     </tr>
                   ))}
-                  {subResellers.length === 0 && <tr><td colSpan={4} className="px-4 py-8 text-center text-slate-500">No sub-resellers yet</td></tr>}
+                  {subResellers.length === 0 && <tr><td colSpan={4} className="px-4 py-12 text-center">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-16 h-16 bg-slate-700/30 dash-card rounded-2xl flex items-center justify-center">
+                        <Users className="w-8 h-8 text-slate-500 dash-text-muted" />
+                      </div>
+                      <div>
+                        <p className="text-slate-400 dash-text-secondary font-medium">No sub-resellers yet</p>
+                        <p className="text-slate-500 dash-text-muted text-xs mt-1">Click "Add" to create your first sub-reseller</p>
+                      </div>
+                    </div>
+                  </td></tr>}
                 </tbody>
               </table>
             </div>
