@@ -9,6 +9,9 @@ import {
 } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import SnapLeadsLogo from "../components/SnapLeadsLogo";
+import DownloadSection from "../components/DownloadSection";
+import ShareTemplates from "../components/ShareTemplates";
+import { Download as DownloadIcon, MessageSquare } from "lucide-react";
 
 interface Stats {
   total_keys: number;
@@ -50,7 +53,7 @@ interface Reseller {
   created_at: string;
 }
 
-type Tab = "overview" | "keys" | "generate" | "resellers";
+type Tab = "overview" | "keys" | "generate" | "resellers" | "download" | "templates";
 
 export default function AdminDashboard() {
   const { user, logout } = useAuth();
@@ -255,6 +258,8 @@ export default function AdminDashboard() {
             ["keys", "License Keys", KeyRound],
             ["generate", "Generate Keys", Plus],
             ["resellers", "Resellers", Users],
+            ["download", "Download", DownloadIcon],
+            ["templates", "Templates", MessageSquare],
           ] as const).map(([id, label, Icon]) => (
             <button
               key={id}
@@ -667,6 +672,15 @@ export default function AdminDashboard() {
               </table>
             </div>
           </div>
+        )}
+        {/* DOWNLOAD TAB */}
+        {tab === "download" && (
+          <DownloadSection isDark={isDark} />
+        )}
+
+        {/* TEMPLATES TAB */}
+        {tab === "templates" && (
+          <ShareTemplates isDark={isDark} licenseKeys={keys.filter(k => k.status === "active").map(k => ({ key: k.key, plan: k.plan }))} />
         )}
       </div>
     </div>
