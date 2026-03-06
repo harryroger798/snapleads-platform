@@ -6,9 +6,9 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads.Setup.1.0.0.exe";
-const DOWNLOAD_URL_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads-1.0.0-mac.zip";
-const DOWNLOAD_URL_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads-1.0.0.AppImage";
+const DOWNLOAD_URL_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads.Setup.1.0.1.exe";
+const DOWNLOAD_URL_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads-1.0.1-mac.zip";
+const DOWNLOAD_URL_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads-1.0.1.AppImage";
 const VT_SCAN_URL = "https://www.virustotal.com/gui/url/f51d3eb2d54cc0fb25a0d1a679a94a8132a4e99ea616898aaa2df71780db171b";
 
 interface PlatformTemplate {
@@ -78,7 +78,7 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-1.0.0.AppImage && ./SnapLeads-1.0.0.AppImage
+Linux: chmod +x SnapLeads-1.0.1.AppImage && ./SnapLeads-1.0.1.AppImage
 
 Verified safe on VirusTotal (0/95): ${VT_SCAN_URL}
 
