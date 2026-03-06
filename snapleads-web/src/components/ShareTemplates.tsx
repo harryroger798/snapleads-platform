@@ -6,7 +6,10 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL = "https://snapleads-releases.s3.us-east-1.amazonaws.com/SnapLeads+Setup+1.0.0.exe";
+const DOWNLOAD_URL_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads.Setup.1.0.0.exe";
+const DOWNLOAD_URL_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads-1.0.0-mac.zip";
+const DOWNLOAD_URL_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.0/SnapLeads-1.0.0.AppImage";
+const VT_SCAN_URL = "https://www.virustotal.com/gui/url/f51d3eb2d54cc0fb25a0d1a679a94a8132a4e99ea616898aaa2df71780db171b";
 
 interface PlatformTemplate {
   id: string;
@@ -28,14 +31,24 @@ const platforms: PlatformTemplate[] = [
 *License Key:*
 \`${key}\`
 
+*Download Links:*
+Windows: ${DOWNLOAD_URL_WIN}
+macOS: ${DOWNLOAD_URL_MAC}
+Linux: ${DOWNLOAD_URL_LINUX}
+
 *How to activate:*
-1. Download: ${DOWNLOAD_URL}
+1. Download for your OS above
 2. Install & open SnapLeads
 3. Paste your license key
 4. Click "Activate"
 5. Done! Start extracting leads
 
-If Windows shows a warning, click "More info" then "Run anyway" - the app is 100% safe.
+*Bypass tips:*
+Windows: Click "More info" > "Run anyway"
+macOS: Right-click > Open > Open
+Linux: chmod +x then run
+
+App is 100% safe - verified on VirusTotal (0/95 clean): ${VT_SCAN_URL}
 
 Need help? Just reply here.`,
   },
@@ -50,14 +63,24 @@ Need help? Just reply here.`,
 **License Key:**
 \`${key}\`
 
+**Download Links:**
+Windows (.exe): ${DOWNLOAD_URL_WIN}
+macOS (.zip): ${DOWNLOAD_URL_MAC}
+Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
+
 **Setup Instructions:**
-1. Download the app: ${DOWNLOAD_URL}
+1. Download for your operating system
 2. Install and open SnapLeads
 3. Paste your license key
 4. Click "Activate"
 5. Done! Start extracting leads
 
-**Windows Warning?** Click "More info" > "Run anyway" - app is safe.
+**Security bypass:**
+Windows: Click "More info" > "Run anyway"
+macOS: Right-click > Open > Open again
+Linux: chmod +x SnapLeads-1.0.0.AppImage && ./SnapLeads-1.0.0.AppImage
+
+Verified safe on VirusTotal (0/95): ${VT_SCAN_URL}
 
 Questions? Message me here.`,
   },
@@ -72,14 +95,21 @@ Questions? Message me here.`,
 Your License Key:
 ${key}
 
+Download links:
+Windows: ${DOWNLOAD_URL_WIN}
+macOS: ${DOWNLOAD_URL_MAC}
+Linux: ${DOWNLOAD_URL_LINUX}
+
 How to set up:
-1. Download from: ${DOWNLOAD_URL}
+1. Download for your OS
 2. Install and open SnapLeads
 3. Paste your license key
 4. Click Activate
 5. You're all set!
 
-Windows warning? Click More info then Run anyway - totally safe
+Security warning? Windows: More info > Run anyway. macOS: Right-click > Open. Linux: chmod +x then run
+
+App verified safe (0/95 on VirusTotal)
 
 DM me if you need any help`,
   },
@@ -93,14 +123,24 @@ DM me if you need any help`,
 
 Your License Key: ${key}
 
+Download Links:
+Windows: ${DOWNLOAD_URL_WIN}
+macOS: ${DOWNLOAD_URL_MAC}
+Linux: ${DOWNLOAD_URL_LINUX}
+
 How to get started:
-1. Download: ${DOWNLOAD_URL}
+1. Download the app for your operating system
 2. Install and open SnapLeads
 3. Paste your license key
 4. Click "Activate"
 5. Done! Start extracting leads
 
-If you see a Windows security warning, click "More info" then "Run anyway" - the app is completely safe and virus-free.
+If you see a security warning:
+- Windows: Click "More info" then "Run anyway"
+- macOS: Right-click the app > "Open" > "Open" again
+- Linux: Run chmod +x on the AppImage first
+
+The app is verified safe on VirusTotal (0/95 clean): ${VT_SCAN_URL}
 
 Let me know if you need any help!`,
   },
@@ -116,14 +156,24 @@ Your SnapLeads ${plan} license has been activated. Please find your details belo
 
 License Key: ${key}
 
+Download Links:
+- Windows (.exe): ${DOWNLOAD_URL_WIN}
+- macOS (.zip): ${DOWNLOAD_URL_MAC}
+- Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
+
 Getting Started:
-1. Download the installer: ${DOWNLOAD_URL}
-2. Run the installer and follow the setup wizard
+1. Download the installer for your operating system
+2. Run the installer and follow the setup instructions
 3. Launch SnapLeads and enter your license key
 4. Click "Activate" to verify your license
 5. You're ready to start extracting leads
 
-Note: If Windows SmartScreen shows a warning, click "More info" followed by "Run anyway." This is standard for newly released software and the application is completely safe.
+Security Notes:
+- Windows: If SmartScreen shows a warning, click "More info" then "Run anyway"
+- macOS: Right-click the app > "Open" > "Open" again to bypass Gatekeeper
+- Linux: Make the AppImage executable with chmod +x before running
+
+The application has been verified safe on VirusTotal (0/95 detections): ${VT_SCAN_URL}
 
 Please don't hesitate to reach out if you need any assistance.
 
@@ -141,14 +191,24 @@ Best regards`,
 ${key}
 \`\`\`
 
+**Download Links:**
+Windows: <${DOWNLOAD_URL_WIN}>
+macOS: <${DOWNLOAD_URL_MAC}>
+Linux: <${DOWNLOAD_URL_LINUX}>
+
 **Quick Setup:**
-1. Download: <${DOWNLOAD_URL}>
+1. Download for your OS
 2. Install & open SnapLeads
 3. Paste your key above
 4. Click **Activate**
 5. Done!
 
-> Windows warning? Click \`More info\` > \`Run anyway\` - app is safe.
+> **Bypass tips:**
+> Windows: \`More info\` > \`Run anyway\`
+> macOS: Right-click > Open > Open
+> Linux: \`chmod +x\` then run
+
+Verified safe: [VirusTotal 0/95](${VT_SCAN_URL})
 
 Need help? Ping me here.`,
   },
@@ -166,13 +226,19 @@ Thank you for your purchase! Your SnapLeads ${plan} license is now ready.
 
 LICENSE KEY: ${key}
 
+DOWNLOAD LINKS:
+- Windows (.exe): ${DOWNLOAD_URL_WIN}
+- macOS (.zip): ${DOWNLOAD_URL_MAC}
+- Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
+
 GETTING STARTED:
 
-Step 1: Download the installer
-${DOWNLOAD_URL}
+Step 1: Download the installer for your operating system using the links above.
 
 Step 2: Install the application
-Run the downloaded .exe file and follow the installation wizard.
+- Windows: Run the .exe file and follow the installation wizard
+- macOS: Extract the .zip, drag SnapLeads.app to Applications
+- Linux: Make the AppImage executable (chmod +x) and run it
 
 Step 3: Activate your license
 Launch SnapLeads, enter your license key, and click "Activate."
@@ -180,10 +246,14 @@ Launch SnapLeads, enter your license key, and click "Activate."
 Step 4: Start extracting leads!
 Your license is now active. Enjoy using SnapLeads!
 
-IMPORTANT NOTES:
-- If Windows SmartScreen shows a warning, click "More info" then "Run anyway." This is normal for new software.
+SECURITY NOTES:
+- Windows: If SmartScreen shows a warning, click "More info" then "Run anyway." This is normal for new software.
+- macOS: If Gatekeeper blocks the app, right-click > "Open" > "Open" again, or go to System Settings > Privacy & Security > "Open Anyway"
+- Linux: If FUSE is needed, install with: sudo apt install fuse libfuse2
 - If your antivirus flags the file, add SnapLeads to your exceptions list.
-- Make sure your firewall allows SnapLeads internet access for activation.
+
+The app has been verified safe on VirusTotal with 0/95 detections:
+${VT_SCAN_URL}
 
 Need help? Reply to this email and we'll assist you promptly.
 
