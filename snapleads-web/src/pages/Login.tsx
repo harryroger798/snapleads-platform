@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { KeyRound, Eye, EyeOff, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, Sun, Moon } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
+import SnapLeadsLogo from "../components/SnapLeadsLogo";
 
 export default function Login() {
   const { login } = useAuth();
@@ -11,6 +13,7 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,17 +39,26 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center p-4">
+    <div className="dash-bg min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center p-4 relative">
+      {/* Theme toggle */}
+      <button
+        onClick={toggleTheme}
+        className="absolute top-4 right-4 p-2.5 rounded-xl dash-card bg-slate-800/50 border border-slate-700/50 text-slate-400 dash-text-secondary hover:text-white transition"
+        title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
+
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/25">
-            <KeyRound className="w-8 h-8 text-white" />
+          <div className="flex justify-center mb-4">
+            <SnapLeadsLogo size={64} />
           </div>
-          <h1 className="text-2xl font-bold text-white">SnapLeads</h1>
-          <p className="text-slate-400 mt-1">License Management Portal</p>
+          <h1 className="text-2xl font-bold text-white dash-text-primary">SnapLeads</h1>
+          <p className="text-slate-400 dash-text-secondary mt-1">License Management Portal</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-2xl p-8 shadow-xl">
+        <form onSubmit={handleSubmit} className="dash-login-card bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-2xl p-8 shadow-xl">
           <h2 className="text-xl font-semibold text-white mb-6">Sign In</h2>
 
           {error && (

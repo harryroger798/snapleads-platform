@@ -30,6 +30,27 @@
     background-color: #FF4500;
     color: white;
   }
+
+  /* Light mode overrides for dashboard pages */
+  html.light body {
+    background-color: #f8fafc;
+    color: #1e293b;
+  }
+
+  html.light .dash-bg { background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #eef2ff 100%) !important; }
+  html.light .dash-header { background-color: rgba(255,255,255,0.85) !important; border-color: #e2e8f0 !important; }
+  html.light .dash-card { background-color: rgba(255,255,255,0.9) !important; border-color: #e2e8f0 !important; }
+  html.light .dash-card:hover { background-color: rgba(255,255,255,1) !important; }
+  html.light .dash-text-primary { color: #1e293b !important; }
+  html.light .dash-text-secondary { color: #64748b !important; }
+  html.light .dash-text-muted { color: #94a3b8 !important; }
+  html.light .dash-input { background-color: rgba(241,245,249,0.8) !important; border-color: #cbd5e1 !important; color: #1e293b !important; }
+  html.light .dash-input::placeholder { color: #94a3b8 !important; }
+  html.light .dash-table-row:hover { background-color: rgba(241,245,249,0.6) !important; }
+  html.light .dash-table-header { border-color: #e2e8f0 !important; }
+  html.light .dash-tab-bg { background-color: rgba(241,245,249,0.8) !important; }
+  html.light .dash-message { background-color: rgba(99,102,241,0.08) !important; border-color: rgba(99,102,241,0.15) !important; }
+  html.light .dash-login-card { background-color: rgba(255,255,255,0.95) !important; border-color: #e2e8f0 !important; box-shadow: 0 4px 24px rgba(0,0,0,0.06) !important; }
 }
 
 @layer utilities {
