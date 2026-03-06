@@ -138,7 +138,7 @@ export default function AdminDashboard() {
   }, []);
 
   useEffect(() => { loadStats(); }, [loadStats]);
-  useEffect(() => { if (tab === "keys") loadKeys(); }, [tab, loadKeys]);
+  useEffect(() => { if (tab === "keys" || tab === "templates") loadKeys(); }, [tab, loadKeys]);
   useEffect(() => { if (tab === "resellers") loadResellers(); }, [tab, loadResellers]);
 
   const handleGenerate = async (e: React.FormEvent) => {
