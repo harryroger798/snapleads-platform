@@ -5,17 +5,17 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.2/SnapLeads-Setup-1.0.2.exe";
-const DOWNLOAD_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.2/SnapLeads-1.0.2-arm64-mac.zip";
-const DOWNLOAD_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.2/SnapLeads-1.0.2.AppImage";
-const VERSION = "1.0.2";
+const DOWNLOAD_WIN = "https://crop-spray-uploads.s3.us-west-1.idrivee2.com/snapleads-releases/v1.0.3/SnapLeads.Setup.1.0.3.exe";
+const DOWNLOAD_MAC = "https://crop-spray-uploads.s3.us-west-1.idrivee2.com/snapleads-releases/v1.0.3/SnapLeads-1.0.3-arm64-mac.zip";
+const DOWNLOAD_LINUX = "https://crop-spray-uploads.s3.us-west-1.idrivee2.com/snapleads-releases/v1.0.3/SnapLeads-1.0.3.AppImage";
+const VERSION = "1.0.3";
 
 type OSTab = "windows" | "macos" | "linux";
 
 const VT_SCAN_URLS: Record<OSTab, string> = {
-  windows: "https://www.virustotal.com/gui/url/f95bdaa2d91438a5d72421c46ab9ff11b318348b2ab1516c7c4ea6126ef2ee1c",
-  macos: "https://www.virustotal.com/gui/url/d73ea63d11eeb499389feca1aab0766b63e21e727abecca4b0b968bf22cf1c04",
-  linux: "https://www.virustotal.com/gui/url/0a36b33a706f7db9fb7caf7695322b36250f0bd910ac46f327747cfcb791ce4a",
+  windows: "https://www.virustotal.com/gui/url/23753822322383e9f4e5ce26ed8aadc25330a68ab00862cd043c18eda10809d8",
+  macos: "https://www.virustotal.com/gui/url/700ce44368fc8b8feac771cb8aa56ee2858dd8897bc4bb83d24563511ad62f4a",
+  linux: "https://www.virustotal.com/gui/url/0832413a08289283518f7d72a7ed6f0c06172c6814c9f5acbd7541eb57044f2b",
 };
 
 interface BypassGuide {
@@ -118,8 +118,8 @@ const bypassGuides: BypassGuide[] = [
     os: "linux",
     steps: [
       "Download the .AppImage file to your desired location (e.g., ~/Applications/)",
-            "Make it executable: chmod +x SnapLeads-1.0.2.AppImage",
-            "Run it: ./SnapLeads-1.0.2.AppImage",
+                        "Make it executable: chmod +x SnapLeads-1.0.3.AppImage",
+                        "Run it: ./SnapLeads-1.0.3.AppImage",
       "Or right-click the file > Properties > Permissions > check \"Allow executing file as program\"",
       "Then double-click to launch",
     ],
@@ -145,7 +145,7 @@ const bypassGuides: BypassGuide[] = [
     os: "linux",
     steps: [
       "If SELinux blocks execution: sudo setenforce 0 (temporary) or add a policy exception",
-      "For AppArmor: sudo aa-complain /path/to/SnapLeads-1.0.2.AppImage",
+      "For AppArmor: sudo aa-complain /path/to/SnapLeads-1.0.3.AppImage",
       "Check logs: journalctl -xe | grep -i snapleads for specific error messages",
       "For persistent fix, create a custom SELinux/AppArmor profile for SnapLeads",
     ],
@@ -212,8 +212,8 @@ const installSteps: Record<OSTab, string[]> = {
   linux: [
     "Download the .AppImage file using the button above",
     "Open Terminal and navigate to the download location",
-        "Make it executable: chmod +x SnapLeads-1.0.2.AppImage",
-        "Run it: ./SnapLeads-1.0.2.AppImage (or double-click if FUSE is installed)",
+                "Make it executable: chmod +x SnapLeads-1.0.3.AppImage",
+                "Run it: ./SnapLeads-1.0.3.AppImage (or double-click if FUSE is installed)",
     "If FUSE error: install with sudo apt install fuse libfuse2 (Ubuntu/Debian)",
     "Enter your license key when prompted and click \"Activate\"",
     "Done! Start extracting leads from 9+ social media platforms",
