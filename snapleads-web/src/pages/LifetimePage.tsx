@@ -130,15 +130,15 @@ export default function LifetimePage() {
           <h2 className="text-2xl md:text-3xl font-bold mb-4">Download SnapLeads</h2>
           <p className="text-slate-400 mb-8">Get started immediately after purchase</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="#" className="flex items-center gap-3 px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition min-w-56">
+            <a href="https://snapleads-installers.s3.us-east-1.amazonaws.com/v2.0.0/SnapLeads-Setup-2.0.0.exe" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition min-w-56">
               <Monitor className="w-6 h-6 text-blue-400" />
               <div className="text-left"><p className="text-xs text-slate-400">Download for</p><p className="font-semibold">Windows</p></div>
             </a>
-            <a href="#" className="flex items-center gap-3 px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition min-w-56">
+            <a href="https://snapleads-installers.s3.us-east-1.amazonaws.com/v2.0.0/SnapLeads-2.0.0-mac.zip" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition min-w-56">
               <Apple className="w-6 h-6 text-slate-300" />
               <div className="text-left"><p className="text-xs text-slate-400">Download for</p><p className="font-semibold">macOS</p></div>
             </a>
-            <a href="#" className="flex items-center gap-3 px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition min-w-56">
+            <a href="https://snapleads-installers.s3.us-east-1.amazonaws.com/v2.0.0/SnapLeads-2.0.0.AppImage" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-8 py-4 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-xl transition min-w-56">
               <Terminal className="w-6 h-6 text-orange-400" />
               <div className="text-left"><p className="text-xs text-slate-400">Download for</p><p className="font-semibold">Linux</p></div>
             </a>
