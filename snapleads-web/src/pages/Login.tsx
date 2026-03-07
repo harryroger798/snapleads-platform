@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { KeyRound, Eye, EyeOff, AlertCircle } from "lucide-react";
+import { Eye, EyeOff, AlertCircle, Sun, Moon } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
+import SnapLeadsLogo from "../components/SnapLeadsLogo";
 
 export default function Login() {
   const { login } = useAuth();
@@ -11,6 +13,18 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
+
+  const t = {
+    bg: isDark ? "bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950" : "bg-gradient-to-br from-slate-50 via-white to-indigo-50",
+    card: isDark ? "bg-slate-800/50 border-slate-700/50" : "bg-white border-slate-200 shadow-lg",
+    textPrimary: isDark ? "text-white" : "text-slate-900",
+    textSecondary: isDark ? "text-slate-400" : "text-slate-600",
+    input: isDark ? "bg-slate-900/50 border-slate-600/50 text-white placeholder-slate-500" : "bg-white border-slate-300 text-slate-900 placeholder-slate-400",
+    label: isDark ? "text-slate-300" : "text-slate-700",
+    themeBtn: isDark ? "bg-slate-800/50 border-slate-700/50 text-slate-400" : "bg-white border-slate-200 text-slate-600 shadow-sm",
+    eyeBtn: isDark ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-900",
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,18 +50,27 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 flex items-center justify-center p-4">
+    <div className={`min-h-screen ${t.bg} flex items-center justify-center p-4 relative`}>
+      {/* Theme toggle */}
+      <button
+        onClick={toggleTheme}
+        className={`absolute top-4 right-4 p-2.5 rounded-xl border ${t.themeBtn} transition`}
+        title={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
+
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/25">
-            <KeyRound className="w-8 h-8 text-white" />
+          <div className="flex justify-center mb-4">
+            <SnapLeadsLogo size={64} />
           </div>
-          <h1 className="text-2xl font-bold text-white">SnapLeads</h1>
-          <p className="text-slate-400 mt-1">License Management Portal</p>
+          <h1 className={`text-2xl font-bold ${t.textPrimary}`}>SnapLeads</h1>
+          <p className={`${t.textSecondary} mt-1`}>License Management Portal</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-slate-800/50 backdrop-blur border border-slate-700/50 rounded-2xl p-8 shadow-xl">
-          <h2 className="text-xl font-semibold text-white mb-6">Sign In</h2>
+        <form onSubmit={handleSubmit} className={`backdrop-blur border ${t.card} rounded-2xl p-8 shadow-xl`}>
+          <h2 className={`text-xl font-semibold ${t.textPrimary} mb-6`}>Sign In</h2>
 
           {error && (
             <div className="flex items-center gap-2 bg-red-500/10 border border-red-500/20 rounded-lg p-3 mb-4">
@@ -58,32 +81,32 @@ export default function Login() {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label className={`block text-sm font-medium ${t.label} mb-1.5`}>Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2.5 bg-slate-900/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition"
+                className={`w-full px-4 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition`}
                 placeholder="admin@snapleads.store"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+              <label className={`block text-sm font-medium ${t.label} mb-1.5`}>Password</label>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-slate-900/50 border border-slate-600/50 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition pr-10"
+                  className={`w-full px-4 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition pr-10`}
                   placeholder="Enter password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition"
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 ${t.eyeBtn} transition`}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
