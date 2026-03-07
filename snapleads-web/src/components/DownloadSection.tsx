@@ -179,7 +179,7 @@ const osInfo: Record<OSTab, { name: string; icon: string; size: string; type: st
   linux: {
     name: "Linux",
     icon: "\u{1F427}",
-    size: "~127 MB",
+    size: "~145 MB",
     type: "AppImage (.AppImage)",
     url: DOWNLOAD_LINUX,
     platform: "Ubuntu 20.04+ / Fedora 35+ / Debian 11+",
