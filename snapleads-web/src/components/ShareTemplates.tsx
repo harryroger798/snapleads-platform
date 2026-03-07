@@ -6,10 +6,12 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads.Setup.1.0.1.exe";
-const DOWNLOAD_URL_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads-1.0.1-mac.zip";
-const DOWNLOAD_URL_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads-1.0.1.AppImage";
-const VT_SCAN_URL = "https://www.virustotal.com/gui/url/f51d3eb2d54cc0fb25a0d1a679a94a8132a4e99ea616898aaa2df71780db171b";
+const DOWNLOAD_URL_WIN = "https://snapleads-installers.s3.us-east-1.amazonaws.com/v2.0.0/SnapLeads-Setup-2.0.0.exe";
+const DOWNLOAD_URL_MAC = "https://snapleads-installers.s3.us-east-1.amazonaws.com/v2.0.0/SnapLeads-2.0.0-mac.zip";
+const DOWNLOAD_URL_LINUX = "https://snapleads-installers.s3.us-east-1.amazonaws.com/v2.0.0/SnapLeads-2.0.0.AppImage";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/e4e8c7edc5f1a2b7a38afd0bcfbca3cc642ea8ad594c3cdcc34e9252ef3b9191";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/8b849e259abf140723802d6daef2a9e2988b6cd184661772793dcd5b8af45f18";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/283990b37a9f8aefa9793adc07c2acaa9c6769faf897e4b1b6c47cd323f89f8a";
 
 interface PlatformTemplate {
   id: string;
@@ -48,7 +50,10 @@ Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open
 Linux: chmod +x then run
 
-App is 100% safe - verified on VirusTotal (0/95 clean): ${VT_SCAN_URL}
+App is 100% safe - verified on VirusTotal (0/95 clean):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Need help? Just reply here.`,
   },
@@ -78,9 +83,12 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-1.0.1.AppImage && ./SnapLeads-1.0.1.AppImage
+Linux: chmod +x SnapLeads-2.0.0.AppImage && ./SnapLeads-2.0.0.AppImage
 
-Verified safe on VirusTotal (0/95): ${VT_SCAN_URL}
+Verified safe on VirusTotal:
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Questions? Message me here.`,
   },
@@ -109,7 +117,10 @@ How to set up:
 
 Security warning? Windows: More info > Run anyway. macOS: Right-click > Open. Linux: chmod +x then run
 
-App verified safe (0/95 on VirusTotal)
+App verified safe (0/95 on VirusTotal):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 DM me if you need any help`,
   },
@@ -140,7 +151,10 @@ If you see a security warning:
 - macOS: Right-click the app > "Open" > "Open" again
 - Linux: Run chmod +x on the AppImage first
 
-The app is verified safe on VirusTotal (0/95 clean): ${VT_SCAN_URL}
+The app is verified safe on VirusTotal (0/95 clean):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Let me know if you need any help!`,
   },
@@ -173,7 +187,10 @@ Security Notes:
 - macOS: Right-click the app > "Open" > "Open" again to bypass Gatekeeper
 - Linux: Make the AppImage executable with chmod +x before running
 
-The application has been verified safe on VirusTotal (0/95 detections): ${VT_SCAN_URL}
+The application has been verified safe on VirusTotal (0/95 detections):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Please don't hesitate to reach out if you need any assistance.
 
@@ -208,7 +225,10 @@ Linux: <${DOWNLOAD_URL_LINUX}>
 > macOS: Right-click > Open > Open
 > Linux: \`chmod +x\` then run
 
-Verified safe: [VirusTotal 0/95](${VT_SCAN_URL})
+Verified safe on VirusTotal:
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Need help? Ping me here.`,
   },
@@ -253,7 +273,9 @@ SECURITY NOTES:
 - If your antivirus flags the file, add SnapLeads to your exceptions list.
 
 The app has been verified safe on VirusTotal with 0/95 detections:
-${VT_SCAN_URL}
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Need help? Reply to this email and we'll assist you promptly.
 
