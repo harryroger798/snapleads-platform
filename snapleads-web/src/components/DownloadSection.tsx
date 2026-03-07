@@ -9,9 +9,14 @@ const DOWNLOAD_WIN = "https://github.com/harryroger798/social-lead-extractor-pro
 const DOWNLOAD_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads-1.0.1-mac.zip";
 const DOWNLOAD_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v1.0.1/SnapLeads-1.0.1.AppImage";
 const VERSION = "1.0.1";
-const VT_SCAN_URL = "https://www.virustotal.com/gui/url/f51d3eb2d54cc0fb25a0d1a679a94a8132a4e99ea616898aaa2df71780db171b";
 
 type OSTab = "windows" | "macos" | "linux";
+
+const VT_SCAN_URLS: Record<OSTab, string> = {
+  windows: "https://www.virustotal.com/gui/url/a79dd2b3658d5787fef5a35f628e66b9372628b15d68a907e2f2ff504c246491",
+  macos: "https://www.virustotal.com/gui/url/f17a2425a581e65a1bb7556b5091868cdad5daea6b429f4c779faed7367b077f",
+  linux: "https://www.virustotal.com/gui/url/f7d517912295ecd6ce71df04e181f61b40da350738ccde7d1df7e2029b63df8e",
+};
 
 interface BypassGuide {
   id: string;
@@ -344,19 +349,19 @@ export default function DownloadSection({ isDark }: DownloadSectionProps) {
             <Shield className="w-5 h-5 text-emerald-500" />
           </div>
           <div className="flex-1">
-            <h4 className={`font-semibold ${t.vtBadgeText} mb-1`}>VirusTotal Verified &mdash; 0/95 Clean &amp; Safe</h4>
+            <h4 className={`font-semibold ${t.vtBadgeText} mb-1`}>VirusTotal Verified &mdash; 0/95 Clean &amp; Safe ({currentOS.name})</h4>
             <p className={`text-sm ${t.textSecondary} mb-3`}>
-              Our installer has been scanned by 95 antivirus engines on VirusTotal with 0 detections.
-              Click below to see the live scan report and verify for yourself.
+              All SnapLeads installers have been scanned by 95 antivirus engines on VirusTotal with <strong>0 detections</strong>.
+              Click below to see the live {currentOS.name} scan report and verify for yourself.
             </p>
             <a
-              href={VT_SCAN_URL}
+              href={VT_SCAN_URLS[selectedOS]}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-sm font-medium text-emerald-500 hover:text-emerald-400 transition"
             >
               <ExternalLink className="w-4 h-4" />
-              View VirusTotal Scan Report (0/95 Clean)
+              View {currentOS.name} VirusTotal Report (0/95 Clean)
             </a>
           </div>
         </div>
@@ -444,7 +449,7 @@ export default function DownloadSection({ isDark }: DownloadSectionProps) {
           <strong>Why do I see warnings?</strong> Our app is newly released and has not yet built a reputation
           with {selectedOS === "windows" ? "Microsoft SmartScreen" : selectedOS === "macos" ? "macOS Gatekeeper" : "your system's security"} or browser download scanners. This is normal for all new software.
           The installer is digitally built with Electron{selectedOS === "windows" ? " and NSIS" : ""} &mdash; verify on{" "}
-          <a href={VT_SCAN_URL} target="_blank" rel="noopener noreferrer" className="underline font-medium hover:no-underline">VirusTotal (0/95 Clean)</a>.
+          <a href={VT_SCAN_URLS[selectedOS]} target="_blank" rel="noopener noreferrer" className="underline font-medium hover:no-underline">VirusTotal (0/95 Clean)</a>.
         </p>
       </div>
     </div>
