@@ -7,15 +7,15 @@ interface DownloadSectionProps {
 
 const DOWNLOAD_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.0.0/SnapLeads.Setup.2.0.0.exe";
 const DOWNLOAD_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.0.0/SnapLeads-2.0.0-arm64-mac.zip";
-const DOWNLOAD_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.0.0/SnapLeads-2.0.0.AppImage";
+const DOWNLOAD_LINUX = "https://crop-spray-uploads.s3.us-west-1.idrivee2.com/installers/v2.0.0/SnapLeads-2.0.0.AppImage";
 const VERSION = "2.0.0";
 
 type OSTab = "windows" | "macos" | "linux";
 
 const VT_SCAN_URLS: Record<OSTab, string> = {
-  windows: "https://www.virustotal.com/gui/url/23753822322383e9f4e5ce26ed8aadc25330a68ab00862cd043c18eda10809d8",
-  macos: "https://www.virustotal.com/gui/url/700ce44368fc8b8feac771cb8aa56ee2858dd8897bc4bb83d24563511ad62f4a",
-  linux: "https://www.virustotal.com/gui/url/0832413a08289283518f7d72a7ed6f0c06172c6814c9f5acbd7541eb57044f2b",
+  windows: "https://www.virustotal.com/gui/file/5b610657bc9a963f2a5185231409c45abfe030e778385d05b1d1db12acdb3e33",
+  macos: "https://www.virustotal.com/gui/file/50cbb43b8a34626085e6e7cd9948c3a505f08f24af4b038f2542788b1c30202f",
+  linux: "https://www.virustotal.com/gui/file/b1cd924d2a126c9d1dfe2bd2d39d82f7452bb8f34ba94494d1eefb5d6f5fdb08",
 };
 
 interface BypassGuide {
@@ -168,7 +168,7 @@ const osInfo: Record<OSTab, { name: string; icon: string; size: string; type: st
   windows: {
     name: "Windows",
     icon: "\u{1FA9F}",
-    size: "~96 MB",
+    size: "~321 MB",
     type: "Installer (.exe)",
     url: DOWNLOAD_WIN,
     platform: "Windows 10/11 (64-bit)",
@@ -176,7 +176,7 @@ const osInfo: Record<OSTab, { name: string; icon: string; size: string; type: st
   macos: {
     name: "macOS",
     icon: "\u{1F34E}",
-    size: "~118 MB",
+    size: "~261 MB",
     type: "Application (.zip)",
     url: DOWNLOAD_MAC,
     platform: "macOS 11+ (Big Sur or later)",
@@ -184,7 +184,7 @@ const osInfo: Record<OSTab, { name: string; icon: string; size: string; type: st
   linux: {
     name: "Linux",
     icon: "\u{1F427}",
-    size: "~145 MB",
+    size: "~4.3 GB",
     type: "AppImage (.AppImage)",
     url: DOWNLOAD_LINUX,
     platform: "Ubuntu 20.04+ / Fedora 35+ / Debian 11+",
