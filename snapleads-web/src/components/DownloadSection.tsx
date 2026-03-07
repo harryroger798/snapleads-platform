@@ -13,9 +13,9 @@ const VERSION = "2.0.0";
 type OSTab = "windows" | "macos" | "linux";
 
 const VT_SCAN_URLS: Record<OSTab, string> = {
-  windows: "https://www.virustotal.com/gui/file/5b610657bc9a963f2a5185231409c45abfe030e778385d05b1d1db12acdb3e33",
-  macos: "https://www.virustotal.com/gui/file/50cbb43b8a34626085e6e7cd9948c3a505f08f24af4b038f2542788b1c30202f",
-  linux: "https://www.virustotal.com/gui/file/b1cd924d2a126c9d1dfe2bd2d39d82f7452bb8f34ba94494d1eefb5d6f5fdb08",
+  windows: "https://www.virustotal.com/gui/file/e4e8c7edc5f1a2b7a38afd0bcfbca3cc642ea8ad594c3cdcc34e9252ef3b9191",
+  macos: "https://www.virustotal.com/gui/file/8b849e259abf140723802d6daef2a9e2988b6cd184661772793dcd5b8af45f18",
+  linux: "https://www.virustotal.com/gui/file/283990b37a9f8aefa9793adc07c2acaa9c6769faf897e4b1b6c47cd323f89f8a",
 };
 
 interface BypassGuide {
