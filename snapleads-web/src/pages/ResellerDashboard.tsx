@@ -3,8 +3,8 @@ import { useAuth } from "../contexts/AuthContext";
 import { api } from "../lib/api";
 import { useNavigate } from "react-router-dom";
 import {
-  KeyRound, Users, BarChart3, Plus, Search, XCircle, CheckCircle,
-  LogOut, Copy, TrendingUp, UserPlus, Sun, Moon, PackageOpen
+  KeyRound, BarChart3, Plus, Search, XCircle, CheckCircle,
+  LogOut, Copy, TrendingUp, Sun, Moon, PackageOpen
 } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import SnapLeadsLogo from "../components/SnapLeadsLogo";
