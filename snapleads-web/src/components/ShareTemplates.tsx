@@ -6,12 +6,12 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.7.0/SnapLeads-Setup-2.7.0.exe";
-const DOWNLOAD_URL_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.7.0/SnapLeads-2.7.0-arm64-mac.zip";
-const DOWNLOAD_URL_LINUX = "https://crop-spray-uploads.s3.us-west-1.idrivee2.com/v2.7.0/SnapLeads-2.7.0.AppImage";
-const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/14393f4f1996971edee169593edcb12a62f6aba84113a8b72801ffdfe01fb273";
-const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/2b9a401132518b0472b55f1b6457c83258adf952123786219e05faf9e720b75f";
-const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/a75a17f92faf617e013c2acad1203e4a5e5fbd480442a8e31e15db19b646b794";
+const DOWNLOAD_URL_WIN = "https://getsnapleads.store/download/windows";
+const DOWNLOAD_URL_MAC = "https://getsnapleads.store/download/mac";
+const DOWNLOAD_URL_LINUX = "https://getsnapleads.store/download/linux";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/a6fc649ee343d93d162143729c54ac3c46dabbe267904299cf3bbef6a0ba0005";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/c0a46cb46cbc4cbfe10b1c5501e7e6f5f7f564e095365f2641518a0744e8f0e0";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/38252946b1762f09e3bcd6c66c76a08e614638a64eae179918234620b2fc0b35";
 
 interface PlatformTemplate {
   id: string;
@@ -83,7 +83,7 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-2.7.0.AppImage && ./SnapLeads-2.7.0.AppImage
+Linux: chmod +x SnapLeads-2.8.3.AppImage && ./SnapLeads-2.8.3.AppImage
 
 Verified safe on VirusTotal (0/95):
 Windows: ${VT_SCAN_URL_WIN}
