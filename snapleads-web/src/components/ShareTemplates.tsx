@@ -6,12 +6,12 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.6.0/SnapLeads-Setup-2.6.0.exe";
-const DOWNLOAD_URL_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.6.0/SnapLeads-2.6.0-arm64-mac.zip";
-const DOWNLOAD_URL_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.6.0/SnapLeads-2.6.0.AppImage";
-const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/a2f5b3aa29c7ad7919bd77d27cd1b5ce81e81b71e228fed7ad1d3a6c989e69e2";
-const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/e1a727c7fd03ea11bbfbc36d6f9624d38e8a7ba21050e736de56aafc52060eda";
-const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/27e023df48ee21cef362d89866d4d2ce07d054ef794b538c289c4ec5c138ad63";
+const DOWNLOAD_URL_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.7.0/SnapLeads-Setup-2.7.0.exe";
+const DOWNLOAD_URL_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.7.0/SnapLeads-2.7.0-arm64-mac.zip";
+const DOWNLOAD_URL_LINUX = "https://crop-spray-uploads.s3.us-west-1.idrivee2.com/v2.7.0/SnapLeads-2.7.0.AppImage";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/14393f4f1996971edee169593edcb12a62f6aba84113a8b72801ffdfe01fb273";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/2b9a401132518b0472b55f1b6457c83258adf952123786219e05faf9e720b75f";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/a75a17f92faf617e013c2acad1203e4a5e5fbd480442a8e31e15db19b646b794";
 
 interface PlatformTemplate {
   id: string;
@@ -83,7 +83,7 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-2.6.0.AppImage && ./SnapLeads-2.6.0.AppImage
+Linux: chmod +x SnapLeads-2.7.0.AppImage && ./SnapLeads-2.7.0.AppImage
 
 Verified safe on VirusTotal (0/95):
 Windows: ${VT_SCAN_URL_WIN}
