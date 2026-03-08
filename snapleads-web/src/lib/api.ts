@@ -55,10 +55,6 @@ export const api = {
     if (params?.search) q.set("search", params.search);
     return request(`/api/reseller/keys?${q.toString()}`);
   },
-  resellerCreateSubReseller: (data: { email: string; password: string; name: string }) =>
-    request("/api/reseller/sub-resellers", { method: "POST", body: JSON.stringify(data) }),
-  resellerListSubResellers: () => request("/api/reseller/sub-resellers"),
-
   // License (public)
   validateLicense: (key: string, device_id: string) =>
     request("/api/license/validate", { method: "POST", body: JSON.stringify({ key, device_id }) }),

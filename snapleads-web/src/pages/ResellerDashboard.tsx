@@ -19,7 +19,6 @@ interface Stats {
   pro_keys: number;
   revenue_usd: number;
   revenue_inr: number;
-  sub_resellers?: number;
 }
 
 interface LicenseKey {
@@ -36,16 +35,7 @@ interface LicenseKey {
   created_at: string;
 }
 
-interface SubReseller {
-  id: string;
-  email: string;
-  name: string;
-  status: string;
-  total_keys: number;
-  created_at: string;
-}
-
-type Tab = "overview" | "keys" | "generate" | "sub-resellers" | "download" | "templates";
+type Tab = "overview" | "keys" | "generate" | "download" | "templates";
 
 export default function ResellerDashboard() {
   const { user, logout } = useAuth();
@@ -56,7 +46,6 @@ export default function ResellerDashboard() {
   const [_keysTotal, setKeysTotal] = useState(0);
   const [keysPage, setKeysPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [subResellers, setSubResellers] = useState<SubReseller[]>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -68,14 +57,7 @@ export default function ResellerDashboard() {
   const [genName, setGenName] = useState("");
   const [generatedKeys, setGeneratedKeys] = useState<Array<{ key: string; plan: string; billing_cycle: string }>>([]);
 
-  // Sub-reseller form
-  const [srName, setSrName] = useState("");
-  const [srEmail, setSrEmail] = useState("");
-  const [srPassword, setSrPassword] = useState("");
-  const [showSrForm, setShowSrForm] = useState(false);
   const { isDark, toggleTheme } = useTheme();
-
-  const isMasterReseller = user?.role === "master_reseller";
 
   // Theme-conditional classes
   const t = {
@@ -115,13 +97,8 @@ export default function ResellerDashboard() {
     setLoading(false);
   }, [keysPage, searchQuery]);
 
-  const loadSubResellers = useCallback(async () => {
-    try { const data = await api.resellerListSubResellers(); setSubResellers(data.resellers); } catch { /* ignore */ }
-  }, []);
-
   useEffect(() => { loadStats(); }, [loadStats]);
   useEffect(() => { if (tab === "keys" || tab === "templates") loadKeys(); }, [tab, loadKeys]);
-  useEffect(() => { if (tab === "sub-resellers") loadSubResellers(); }, [tab, loadSubResellers]);
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -145,20 +122,6 @@ export default function ResellerDashboard() {
     setLoading(false);
   };
 
-  const handleCreateSubReseller = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await api.resellerCreateSubReseller({ email: srEmail, password: srPassword, name: srName });
-      setMessage("Sub-reseller created successfully");
-      setShowSrForm(false);
-      setSrName(""); setSrEmail(""); setSrPassword("");
-      await loadSubResellers();
-      await loadStats();
-    } catch (err) {
-      setMessage(err instanceof Error ? err.message : "Failed");
-    }
-  };
-
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setMessage("Copied!");
@@ -173,10 +136,9 @@ export default function ResellerDashboard() {
     ["overview", "Overview", BarChart3],
     ["keys", "License Keys", KeyRound],
     ["generate", "Generate Keys", Plus],
+    ["download", "Download", DownloadIcon],
+    ["templates", "Templates", MessageSquare as typeof BarChart3],
   ];
-  if (isMasterReseller) tabs.push(["sub-resellers", "Sub-Resellers", Users]);
-  tabs.push(["download", "Download", DownloadIcon]);
-  tabs.push(["templates", "Templates", MessageSquare as typeof BarChart3]);
 
   return (
     <div className={`min-h-screen ${t.bg}`}>
@@ -186,7 +148,7 @@ export default function ResellerDashboard() {
             <SnapLeadsLogo size={36} />
             <div>
               <h1 className={`text-lg font-bold ${t.textPrimary}`}>SnapLeads Reseller</h1>
-              <p className={`text-xs ${t.textMuted}`}>{user?.name} &middot; {isMasterReseller ? "Master Reseller" : "Reseller"}</p>
+              <p className={`text-xs ${t.textMuted}`}>{user?.name} &middot; Reseller</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -247,12 +209,6 @@ export default function ResellerDashboard() {
                 <p className={`text-2xl font-bold ${t.textPrimary}`}>{formatCurrency(stats.revenue_usd)}</p>
                 <p className={`text-sm ${t.textMuted} mt-1`}>INR {(stats.revenue_inr / 100).toLocaleString()}</p>
               </div>
-              {isMasterReseller && (
-                <div className={`${t.card} rounded-xl p-5`}>
-                  <div className="flex items-center gap-2 mb-3"><Users className="w-4 h-4 text-purple-400" /><span className={`${t.textSecondary} text-sm`}>Sub-Resellers</span></div>
-                  <p className={`text-2xl font-bold ${t.textPrimary}`}>{stats.sub_resellers || 0}</p>
-                </div>
-              )}
             </div>
           </div>
         )}
@@ -364,59 +320,6 @@ export default function ResellerDashboard() {
           </div>
         )}
 
-        {tab === "sub-resellers" && isMasterReseller && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className={`text-lg font-semibold ${t.textPrimary}`}>Sub-Resellers ({subResellers.length})</h3>
-              <button onClick={() => setShowSrForm(!showSrForm)}
-                className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-sm"><UserPlus className="w-4 h-4" /> {showSrForm ? "Cancel" : "Add"}</button>
-            </div>
-            {showSrForm && (
-              <form onSubmit={handleCreateSubReseller} className={`${t.card} rounded-xl p-6 space-y-4`}>
-                <div className="grid grid-cols-3 gap-4">
-                  <div><label className={`block text-sm font-medium ${t.label} mb-1.5`}>Name</label>
-                    <input type="text" value={srName} onChange={(e) => setSrName(e.target.value)} required className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50`} /></div>
-                  <div><label className={`block text-sm font-medium ${t.label} mb-1.5`}>Email</label>
-                    <input type="email" value={srEmail} onChange={(e) => setSrEmail(e.target.value)} required className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50`} /></div>
-                  <div><label className={`block text-sm font-medium ${t.label} mb-1.5`}>Password</label>
-                    <input type="password" value={srPassword} onChange={(e) => setSrPassword(e.target.value)} required className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/50`} /></div>
-                </div>
-                <button type="submit" className="px-6 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg transition hover:from-purple-500 hover:to-pink-500">Create</button>
-              </form>
-            )}
-            <div className={`${t.card} rounded-xl overflow-hidden`}>
-              <table className="w-full">
-                <thead><tr className={`border-b ${t.border}`}>
-                  <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Name</th>
-                  <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Email</th>
-                  <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Keys</th>
-                  <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Status</th>
-                </tr></thead>
-                <tbody>
-                  {subResellers.map((r) => (
-                    <tr key={r.id} className={`border-b ${t.borderLight} ${t.rowHover}`}>
-                      <td className={`px-4 py-3 text-sm ${t.textPrimary}`}>{r.name}</td>
-                      <td className={`px-4 py-3 text-sm ${t.textSecondary}`}>{r.email}</td>
-                      <td className={`px-4 py-3 text-sm ${t.textSecondary}`}>{r.total_keys}</td>
-                      <td className="px-4 py-3"><span className={`px-2 py-0.5 rounded text-xs font-medium ${r.status === "active" ? "bg-emerald-500/20 text-emerald-300" : "bg-red-500/20 text-red-300"}`}>{r.status}</span></td>
-                    </tr>
-                  ))}
-                  {subResellers.length === 0 && <tr><td colSpan={4} className="px-4 py-12 text-center">
-                    <div className="flex flex-col items-center gap-3">
-                      <div className={`w-16 h-16 ${t.emptyIcon} rounded-2xl flex items-center justify-center`}>
-                        <Users className="w-8 h-8 text-slate-500 dash-text-muted" />
-                      </div>
-                      <div>
-                        <p className="text-slate-400 dash-text-secondary font-medium">No sub-resellers yet</p>
-                        <p className="text-slate-500 dash-text-muted text-xs mt-1">Click "Add" to create your first sub-reseller</p>
-                      </div>
-                    </div>
-                  </td></tr>}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
         {/* DOWNLOAD TAB */}
         {tab === "download" && (
           <DownloadSection isDark={isDark} />

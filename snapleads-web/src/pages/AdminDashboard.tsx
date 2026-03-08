@@ -82,7 +82,7 @@ export default function AdminDashboard() {
   const [resName, setResName] = useState("");
   const [resEmail, setResEmail] = useState("");
   const [resPassword, setResPassword] = useState("");
-  const [resRole, setResRole] = useState("master_reseller");
+  const [resRole, setResRole] = useState("reseller");
   const [showResForm, setShowResForm] = useState(false);
 
   const [message, setMessage] = useState("");
@@ -312,7 +312,7 @@ export default function AdminDashboard() {
                   <span className={`${t.textSecondary} text-sm`}>Activations</span>
                 </div>
                 <p className={`text-2xl font-bold ${t.textPrimary}`}>{stats.total_activations}</p>
-                <p className={`text-sm ${t.textMuted} mt-1`}>{stats.master_resellers} master + {stats.resellers} resellers</p>
+                <p className={`text-sm ${t.textMuted} mt-1`}>{(stats.master_resellers || 0) + (stats.resellers || 0)} resellers</p>
               </div>
               <div className={`${t.card} rounded-xl p-5`}>
                 <div className="flex items-center gap-2 mb-3">
@@ -608,7 +608,6 @@ export default function AdminDashboard() {
                     <label className={`block text-sm font-medium ${t.label} mb-1.5`}>Role</label>
                     <select value={resRole} onChange={(e) => setResRole(e.target.value)}
                       className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50`}>
-                      <option value="master_reseller">Master Reseller</option>
                       <option value="reseller">Reseller</option>
                     </select>
                   </div>
@@ -637,8 +636,8 @@ export default function AdminDashboard() {
                       <td className={`px-4 py-3 text-sm ${t.textPrimary}`}>{r.name}</td>
                       <td className={`px-4 py-3 text-sm ${t.textSecondary}`}>{r.email}</td>
                       <td className="px-4 py-3">
-                        <span className={`px-2 py-0.5 rounded text-xs font-medium ${r.role === "master_reseller" ? "bg-purple-500/20 text-purple-300" : "bg-blue-500/20 text-blue-300"}`}>
-                          {r.role === "master_reseller" ? "Master" : "Reseller"}
+                        <span className={`px-2 py-0.5 rounded text-xs font-medium bg-blue-500/20 text-blue-300`}>
+                          Reseller
                         </span>
                       </td>
                       <td className={`px-4 py-3 text-sm ${t.textSecondary}`}>{r.total_keys}</td>
