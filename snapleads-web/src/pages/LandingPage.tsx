@@ -404,14 +404,14 @@ function Pricing() {
               <div className="h-36 bg-gradient-to-br from-gray-800 to-gray-900 p-8 flex flex-col justify-end">
                 <div className="flex items-center gap-2 mb-1"><Zap size={16} className="text-accent" /><span className="font-mono text-xs uppercase tracking-widest text-gray-400">Starter</span></div>
                 <div className="flex items-baseline gap-3">
-                  <div className="text-4xl font-black text-white">${annual ? '79' : '9'}<span className="text-lg text-gray-400 font-normal">/{annual ? 'yr' : 'mo'}</span></div>
-                  <span className="text-gray-500 line-through text-lg">${annual ? '149' : '29'}</span>
-                  <span className="bg-green-500/20 text-green-400 font-mono text-xs px-2 py-0.5 rounded-full">{annual ? '47% OFF' : '69% OFF'}</span>
+                  <div className="text-4xl font-black text-white">${annual ? '59' : '7'}<span className="text-lg text-gray-400 font-normal">/{annual ? 'yr' : 'mo'}</span></div>
+                  <span className="text-gray-500 line-through text-lg">${annual ? '84' : '12'}</span>
+                  <span className="bg-green-500/20 text-green-400 font-mono text-xs px-2 py-0.5 rounded-full">{annual ? '30% OFF' : '42% OFF'}</span>
                 </div>
               </div>
               <div className="p-8">
                 <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">What's Included</h6>
-                {['5 social platforms (LinkedIn, FB, IG, Reddit, Twitter)', 'Google Maps lead extraction', 'CSV & Excel export', 'Email verification', '500 leads per extraction', 'Desktop app (Win/Mac/Linux)'].map((item, i) => (
+                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Tumblr)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Desktop app (Win/Mac/Linux)'].map((item, i) => (
                   <div key={i} className="flex items-start gap-3 mb-3">
                     <Check size={16} className="text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">{item}</span>
@@ -429,9 +429,9 @@ function Pricing() {
               <div className="h-36 bg-gradient-to-br from-accent/30 to-orange-900/40 p-8 flex flex-col justify-end">
                 <div className="flex items-center gap-2 mb-1"><Zap size={16} className="text-accent fill-accent" /><span className="font-mono text-xs uppercase tracking-widest text-accent">Pro</span></div>
                 <div className="flex items-baseline gap-3">
-                  <div className="text-4xl font-black text-white">${annual ? '249' : '29'}<span className="text-lg text-gray-400 font-normal">/{annual ? 'yr' : 'mo'}</span></div>
-                  <span className="text-gray-500 line-through text-lg">${annual ? '499' : '79'}</span>
-                  <span className="bg-green-500/20 text-green-400 font-mono text-xs px-2 py-0.5 rounded-full">{annual ? '50% OFF' : '63% OFF'}</span>
+                  <div className="text-4xl font-black text-white">${annual ? '169' : '19'}<span className="text-lg text-gray-400 font-normal">/{annual ? 'yr' : 'mo'}</span></div>
+                  <span className="text-gray-500 line-through text-lg">${annual ? '228' : '29'}</span>
+                  <span className="bg-green-500/20 text-green-400 font-mono text-xs px-2 py-0.5 rounded-full">{annual ? '26% OFF' : '34% OFF'}</span>
                 </div>
               </div>
               <div className="p-8">
@@ -459,15 +459,15 @@ function Pricing() {
               </div>
               <div className="flex items-center gap-8">
                 <div className="text-center">
-                  <div className="text-gray-500 line-through text-lg">$499</div>
-                  <div className="text-4xl font-black text-white">$149</div>
-                  <span className="bg-red-500/20 text-red-400 font-mono text-[10px] px-2 py-0.5 rounded-full">70% OFF</span>
+                  <div className="text-gray-500 line-through text-lg">$168</div>
+                  <div className="text-4xl font-black text-white">$99</div>
+                  <span className="bg-red-500/20 text-red-400 font-mono text-[10px] px-2 py-0.5 rounded-full">41% OFF</span>
                   <div className="text-gray-600 font-mono text-[10px] uppercase mt-1">Starter Lifetime</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-gray-500 line-through text-lg">$999</div>
-                  <div className="text-4xl font-black text-white">$399</div>
-                  <span className="bg-red-500/20 text-red-400 font-mono text-[10px] px-2 py-0.5 rounded-full">60% OFF</span>
+                  <div className="text-gray-500 line-through text-lg">$456</div>
+                  <div className="text-4xl font-black text-white">$249</div>
+                  <span className="bg-red-500/20 text-red-400 font-mono text-[10px] px-2 py-0.5 rounded-full">45% OFF</span>
                   <div className="text-gray-600 font-mono text-[10px] uppercase mt-1">Pro Lifetime</div>
                 </div>
               </div>
@@ -571,7 +571,7 @@ function HowItWorks() {
 /* ─── FAQ ─── */
 function FAQ() {
   const faqs = [
-    { q: 'Is SnapLeads really that affordable?', a: 'Yes! Our Starter plan is just $9/month. We believe powerful lead extraction should not cost hundreds. Your license gives you full access to the desktop app with no hidden costs, no API fees, and no proxy charges.' },
+    { q: 'Is SnapLeads really that affordable?', a: 'Yes! Our Starter plan is just $7/month. We believe powerful lead extraction should not cost hundreds. Your license gives you full access to the desktop app with no hidden costs, no API fees, and no proxy charges.' },
     { q: 'Will my accounts get banned using SnapLeads?', a: 'We have built enterprise-grade account safety: smart rate limiting, randomized behavior patterns, and built-in safety controls. In 6+ months of testing, zero bans reported.' },
     { q: 'What platforms can I extract leads from?', a: 'LinkedIn, Facebook, Instagram, Reddit, Twitter/X, TikTok, YouTube, Google Maps, Telegram, WhatsApp, and more. Pro plan includes all platforms; Starter includes 5 core platforms.' },
     { q: 'Does it work on Windows, Mac, and Linux?', a: 'Yes! SnapLeads works on all three platforms. Download the installer for your OS and you are ready in under 2 minutes.' },

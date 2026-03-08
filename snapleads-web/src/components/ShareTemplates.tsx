@@ -9,7 +9,9 @@ interface ShareTemplatesProps {
 const DOWNLOAD_URL_WIN = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.2.0/SnapLeads-Setup-2.2.0.exe";
 const DOWNLOAD_URL_MAC = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.2.0/SnapLeads-2.2.0-mac.zip";
 const DOWNLOAD_URL_LINUX = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.2.0/SnapLeads-2.2.0.AppImage";
-const VT_SCAN_URL = "https://www.virustotal.com/gui/file/d0f811a3a85c87dc6afd289b8e78fb2ef5a31878c14b6ef78bf01887951f11e3";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/d0f811a3a85c87dc6afd289b8e78fb2ef5a31878c14b6ef78bf01887951f11e3";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/170ebf6b581155cb6462a1367a8be02d2f7c39f9ae006e5900121d77996e3d06";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/98dd0d4b3a9026d8332bc0d7e35aa1ddaf05b9462166abb5a2e4e4b493a84b99";
 
 interface PlatformTemplate {
   id: string;
@@ -48,7 +50,10 @@ Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open
 Linux: chmod +x then run
 
-App is 100% safe - verified on VirusTotal (0/95 clean): ${VT_SCAN_URL}
+App is 100% safe - verified on VirusTotal (0/95 clean):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Need help? Just reply here.`,
   },
@@ -80,7 +85,10 @@ Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
 Linux: chmod +x SnapLeads-2.2.0.AppImage && ./SnapLeads-2.2.0.AppImage
 
-Verified safe on VirusTotal (0/95): ${VT_SCAN_URL}
+Verified safe on VirusTotal (0/95):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Questions? Message me here.`,
   },
@@ -109,7 +117,10 @@ How to set up:
 
 Security warning? Windows: More info > Run anyway. macOS: Right-click > Open. Linux: chmod +x then run
 
-App verified safe (0/95 on VirusTotal)
+App verified safe (0/95 on VirusTotal):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 DM me if you need any help`,
   },
@@ -140,7 +151,10 @@ If you see a security warning:
 - macOS: Right-click the app > "Open" > "Open" again
 - Linux: Run chmod +x on the AppImage first
 
-The app is verified safe on VirusTotal (0/95 clean): ${VT_SCAN_URL}
+The app is verified safe on VirusTotal (0/95 clean):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Let me know if you need any help!`,
   },
@@ -173,7 +187,10 @@ Security Notes:
 - macOS: Right-click the app > "Open" > "Open" again to bypass Gatekeeper
 - Linux: Make the AppImage executable with chmod +x before running
 
-The application has been verified safe on VirusTotal (0/95 detections): ${VT_SCAN_URL}
+The application has been verified safe on VirusTotal (0/95 detections):
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Please don't hesitate to reach out if you need any assistance.
 
@@ -208,7 +225,8 @@ Linux: <${DOWNLOAD_URL_LINUX}>
 > macOS: Right-click > Open > Open
 > Linux: \`chmod +x\` then run
 
-Verified safe: [VirusTotal 0/95](${VT_SCAN_URL})
+Verified safe on VirusTotal (0/95):
+[Windows](${VT_SCAN_URL_WIN}) | [macOS](${VT_SCAN_URL_MAC}) | [Linux](${VT_SCAN_URL_LINUX})
 
 Need help? Ping me here.`,
   },
@@ -253,7 +271,9 @@ SECURITY NOTES:
 - If your antivirus flags the file, add SnapLeads to your exceptions list.
 
 The app has been verified safe on VirusTotal with 0/95 detections:
-${VT_SCAN_URL}
+Windows: ${VT_SCAN_URL_WIN}
+macOS: ${VT_SCAN_URL_MAC}
+Linux: ${VT_SCAN_URL_LINUX}
 
 Need help? Reply to this email and we'll assist you promptly.
 
