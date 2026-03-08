@@ -6,9 +6,9 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://s3.us-west-1.idrivee2.com/crop-spray-uploads/v2.3.0/SnapLeads-Setup-2.3.0.exe";
-const DOWNLOAD_URL_MAC = "https://s3.us-west-1.idrivee2.com/crop-spray-uploads/v2.3.0/SnapLeads-2.3.0-arm64-mac.zip";
-const DOWNLOAD_URL_LINUX = "https://s3.us-west-1.idrivee2.com/crop-spray-uploads/v2.3.0/SnapLeads-2.3.0.AppImage";
+const DOWNLOAD_URL_WIN = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.3.0/SnapLeads-Setup-2.3.0.exe";
+const DOWNLOAD_URL_MAC = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.3.0/SnapLeads-2.3.0-arm64-mac.zip";
+const DOWNLOAD_URL_LINUX = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.3.0/SnapLeads-2.3.0.AppImage";
 const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/93ab1e4dd35733732e48ea897961c1baeff1daaceb995b9a74dcec523e907711";
 const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/1c1589cf0bf758ccb3cbc81b14cc7c792dca23cb0023fdee91287ce4689ba628";
 const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/35455b9df3fe5cbc73bac269c72d3973a2a7c25fb9b20bec738be4816fd5b2e7";
