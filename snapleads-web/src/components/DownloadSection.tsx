@@ -5,9 +5,9 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.8.0/SnapLeads-Setup-2.8.0.exe";
-const DOWNLOAD_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.8.0/SnapLeads-2.8.0-arm64-mac.zip";
-const DOWNLOAD_LINUX = "https://crop-spray-uploads.s3.us-west-1.idrivee2.com/v2.8.0/SnapLeads-2.8.0.AppImage";
+const DOWNLOAD_WIN = "https://getsnapleads.store/download/windows";
+const DOWNLOAD_MAC = "https://getsnapleads.store/download/mac";
+const DOWNLOAD_LINUX = "https://getsnapleads.store/download/linux";
 const VERSION = "2.8.0";
 
 type OSTab = "windows" | "macos" | "linux";
