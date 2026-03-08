@@ -6,12 +6,12 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.5.0/SnapLeads-Setup-2.5.0.exe";
-const DOWNLOAD_URL_MAC = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.5.0/SnapLeads-2.5.0-arm64-mac.zip";
-const DOWNLOAD_URL_LINUX = "https://social-lead-test-096938.s3.us-east-1.amazonaws.com/v2.5.0/SnapLeads-2.5.0.AppImage";
-const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/1b236bade3519c3a2c812a6abac0cd29748aca6a21c39bbc0bbf9a16c1e96ce4";
-const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/b892a3cb766f3f48bccded717f4f18539fa898b25618a93346864a43dd85c934";
-const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/0fb8375c4c1ddb75d398f8b6a2dc67c9ea459a3900032266f02e5efcd0b35618";
+const DOWNLOAD_URL_WIN = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.6.0/SnapLeads-Setup-2.6.0.exe";
+const DOWNLOAD_URL_MAC = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.6.0/SnapLeads-2.6.0-arm64-mac.zip";
+const DOWNLOAD_URL_LINUX = "https://github.com/harryroger798/social-lead-extractor-pro/releases/download/v2.6.0/SnapLeads-2.6.0.AppImage";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/a2f5b3aa29c7ad7919bd77d27cd1b5ce81e81b71e228fed7ad1d3a6c989e69e2";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/e1a727c7fd03ea11bbfbc36d6f9624d38e8a7ba21050e736de56aafc52060eda";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/27e023df48ee21cef362d89866d4d2ce07d054ef794b538c289c4ec5c138ad63";
 
 interface PlatformTemplate {
   id: string;
@@ -83,7 +83,7 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-2.5.0.AppImage && ./SnapLeads-2.5.0.AppImage
+Linux: chmod +x SnapLeads-2.6.0.AppImage && ./SnapLeads-2.6.0.AppImage
 
 Verified safe on VirusTotal (0/95):
 Windows: ${VT_SCAN_URL_WIN}
