@@ -9,9 +9,9 @@ interface ShareTemplatesProps {
 const DOWNLOAD_URL_WIN = "https://getsnapleads.store/download/windows";
 const DOWNLOAD_URL_MAC = "https://getsnapleads.store/download/mac";
 const DOWNLOAD_URL_LINUX = "https://getsnapleads.store/download/linux";
-const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/f6234cfc28bbfe9414124cc8ed5d46b70a367b514d768da9b5d559254a890e49";
-const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/7e287b4ac7625b474dc6ba9f6d0f66d579268824d9a133bed3ab159465086481";
-const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/b41f30e4d39c28d38da86f105bc9f0e244408318327301a45a4c079bcfe6baa7";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/0860506e96bdc115302a6790a31c325a6e2d251146037b51e5f66fdedb3b8113";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/bed727c1121134b9a83e6c5238965258a81f61ca8100242f25311b4be1960b43";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/7c5d75400b733dbb2be84bb3c090338292b5e173e8846300165e01a2833cf704";
 
 interface PlatformTemplate {
   id: string;
@@ -83,7 +83,7 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-3.0.2.AppImage && ./SnapLeads-3.0.2.AppImage
+Linux: chmod +x SnapLeads-3.0.3.AppImage && ./SnapLeads-3.0.3.AppImage
 
 Verified safe on VirusTotal (0/95):
 Windows: ${VT_SCAN_URL_WIN}
