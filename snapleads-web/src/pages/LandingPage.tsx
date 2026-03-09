@@ -168,11 +168,22 @@ function Hero() {
         </a>
       </motion.div>
       
-      {/* Hero Image — 3D Dashboard */}
-      <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.8 }} className="relative mt-16 w-full max-w-3xl mx-auto z-10">
-        <div className="relative">
-          <img src="/images/3d-hero-dashboard.png" alt="SnapLeads Dashboard" className="w-full h-auto" style={{ mixBlendMode: 'lighten' }} />
+      {/* Hero Image — Real App Screenshot */}
+      <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.8 }} className="relative mt-16 w-full max-w-4xl mx-auto z-10">
+        <div className="relative rounded-2xl overflow-hidden border border-dark-border shadow-2xl shadow-accent/10">
+          <img src="/images/screenshot-extraction.png" alt="SnapLeads App — Configure & Extract Leads" className="w-full h-auto" />
+          {/* Annotation overlays */}
+          <div className="absolute top-[8%] right-[4%] bg-accent/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg animate-pulse-glow">
+            9 Platforms Selected
+          </div>
+          <div className="absolute bottom-[35%] right-[4%] bg-green-500/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">
+            Auto-Verify Emails
+          </div>
+          <div className="absolute bottom-[6%] left-[15%] right-[15%] bg-accent/90 backdrop-blur-sm text-white text-xs md:text-sm font-bold text-center py-2 rounded-full shadow-lg animate-pulse-glow">
+            One Click to Start Extracting
+          </div>
         </div>
+        <div className="absolute -inset-1 bg-gradient-to-r from-accent/20 via-transparent to-accent/20 rounded-2xl blur-xl -z-10" />
       </motion.div>
       
       {/* Logo Marquee */}
@@ -248,13 +259,98 @@ function WhoWeAre() {
   )
 }
 
+/* ─── APP DEMO SHOWCASE ─── */
+function AppDemo() {
+  const [activeTab, setActiveTab] = useState(0)
+  const demos = [
+    {
+      tab: 'Configure',
+      title: 'Set Up Your Extraction in Seconds',
+      desc: 'Choose from 9+ platforms, enter your keywords, configure extraction methods, and hit start. The intuitive interface makes lead extraction effortless.',
+      img: '/images/screenshot-extraction.png',
+      annotations: [
+        { label: 'Session Name', pos: 'top-[13%] left-[16%]', color: 'bg-blue-500/90' },
+        { label: 'Multi-Keyword Support', pos: 'top-[25%] left-[16%]', color: 'bg-purple-500/90' },
+        { label: '9 Platforms', pos: 'top-[42%] left-[16%]', color: 'bg-accent/90' },
+      ]
+    },
+    {
+      tab: 'Extract',
+      title: 'Watch Leads Pour In — Real-Time',
+      desc: 'Track extraction progress across all platforms with live stats. See total leads, emails found, and phones discovered as they come in.',
+      img: '/images/screenshot-running.png',
+      annotations: [
+        { label: '67% Complete', pos: 'top-[11%] right-[8%]', color: 'bg-accent/90' },
+        { label: '247 Leads Found', pos: 'top-[28%] left-[16%]', color: 'bg-green-500/90' },
+        { label: 'Per-Platform Breakdown', pos: 'top-[55%] left-[16%]', color: 'bg-blue-500/90' },
+      ]
+    },
+    {
+      tab: 'Results',
+      title: '329 Verified Leads — Ready to Export',
+      desc: 'View all extracted leads with email, phone, name, platform source, quality score, and verification status. Export to CSV, XLSX, or JSON in one click.',
+      img: '/images/screenshot-results.png',
+      annotations: [
+        { label: 'Clean Results (Pro)', pos: 'top-[2%] right-[30%]', color: 'bg-accent/90' },
+        { label: 'Export CSV / XLSX / JSON', pos: 'top-[2%] right-[4%]', color: 'bg-green-500/90' },
+        { label: 'Quality Score & Verification', pos: 'top-[45%] right-[8%]', color: 'bg-blue-500/90' },
+      ]
+    },
+  ]
+  
+  return (
+    <section className="py-24 px-4 bg-dark noise-bg relative">
+      <div className="max-w-6xl mx-auto relative z-10">
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <motion.div variants={fadeIn} className="text-center mb-12">
+            <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-dark-border px-4 py-2 rounded-full">[ See It In Action ]</span>
+            <h2 className="text-4xl md:text-6xl font-black uppercase mt-6 tracking-tight">
+              Real App. <span className="text-gradient">Real Results.</span>
+            </h2>
+            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">No mockups, no fake data — these are actual screenshots from SnapLeads extracting leads across 9 platforms.</p>
+          </motion.div>
+          
+          {/* Tab Switcher */}
+          <motion.div variants={fadeIn} className="flex justify-center gap-2 mb-8">
+            {demos.map((d, i) => (
+              <button key={i} onClick={() => setActiveTab(i)} className={`font-mono text-xs uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 ${activeTab === i ? 'bg-accent text-white shadow-lg shadow-accent/30' : 'bg-dark-card border border-dark-border text-gray-400 hover:text-white hover:border-gray-600'}`}>
+                {d.tab}
+              </button>
+            ))}
+          </motion.div>
+          
+          {/* Screenshot Display */}
+          <motion.div variants={fadeIn} className="relative">
+            <div className="relative rounded-2xl overflow-hidden border border-dark-border shadow-2xl shadow-accent/10">
+              <img src={demos[activeTab].img} alt={demos[activeTab].title} className="w-full h-auto" />
+              {/* Annotation badges */}
+              {demos[activeTab].annotations.map((a, i) => (
+                <div key={`${activeTab}-${i}`} className={`absolute ${a.pos} ${a.color} backdrop-blur-sm text-white text-[9px] md:text-[11px] font-mono uppercase tracking-wider px-2.5 py-1 md:px-3 md:py-1.5 rounded-full shadow-lg hidden md:block`}>
+                  {a.label}
+                </div>
+              ))}
+            </div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-accent/10 via-transparent to-accent/10 rounded-2xl blur-xl -z-10" />
+          </motion.div>
+          
+          {/* Description */}
+          <motion.div variants={fadeIn} className="text-center mt-8">
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{demos[activeTab].title}</h3>
+            <p className="text-gray-400 max-w-xl mx-auto text-sm">{demos[activeTab].desc}</p>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── FEATURES (VALUE PROPS) ─── */
 function Features() {
   const features = [
-    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/3d-extract.png' },
-    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/3d-protect.png' },
-    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/3d-automate.png' },
-    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/3d-enrich.png' },
+    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/screenshot-extraction.png' },
+    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/screenshot-running.png' },
+    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/screenshot-running.png' },
+    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/screenshot-results.png' },
   ]
   
   return (
@@ -304,7 +400,7 @@ function FeatureCard({ icon, title, subtitle, desc, img }: { icon: React.ReactNo
           </a>
         </div>
         <div className={`w-full md:w-80 h-56 md:h-auto overflow-hidden transition-all duration-500 bg-[#0A0A0A] flex items-center justify-center ${hovered ? 'md:w-96' : 'md:w-80'}`}>
-          <img src={img} alt={title} className={`w-full h-full object-contain p-2 transition-transform duration-700 ${hovered ? 'scale-110' : 'scale-100'}`} style={{ mixBlendMode: 'lighten' }} />
+          <img src={img} alt={title} className={`w-full h-full object-cover transition-transform duration-700 ${hovered ? 'scale-110' : 'scale-100'}`} />
         </div>
       </div>
     </motion.div>
@@ -547,12 +643,12 @@ function HowItWorks() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/3d-step-download.png' },
-              { step: '02', title: 'Choose Your Platform', desc: 'Select from 12+ platforms. Configure your search query, filters, and extraction limits.', icon: <Search size={28} />, img: '/images/3d-step-configure.png' },
-              { step: '03', title: 'Extract & Export', desc: 'Hit start and watch leads pour in. Export to CSV, Excel, or push directly to HubSpot CRM.', icon: <Users size={28} />, img: '/images/3d-step-export.png' },
+              { step: '02', title: 'Configure & Extract', desc: 'Select from 9+ platforms, enter keywords, and choose extraction methods. Real app screenshot shown above.', icon: <Search size={28} />, img: '/images/screenshot-extraction.png' },
+              { step: '03', title: 'View Results & Export', desc: 'See all leads with email, phone, quality score. Export to CSV, Excel, JSON, or push to HubSpot CRM.', icon: <Users size={28} />, img: '/images/screenshot-results.png' },
             ].map((s, i) => (
               <motion.div key={i} variants={fadeIn} className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-500 group">
-                <div className="bg-[#0A0A0A] flex items-center justify-center p-4">
-                  <img src={s.img} alt={s.title} className="w-full h-44 object-contain" style={{ mixBlendMode: 'lighten' }} />
+                <div className="bg-[#0A0A0A] flex items-center justify-center p-1 overflow-hidden">
+                  <img src={s.img} alt={s.title} className="w-full h-44 object-cover object-top rounded-t-xl" />
                 </div>
                 <div className="p-8">
                   <span className="text-accent font-mono text-lg font-bold">{s.step}.</span>
@@ -737,6 +833,7 @@ export default function LandingPage() {
       <Hero />
       <Stats />
       <WhoWeAre />
+      <AppDemo />
       <Features />
       <Platforms />
       <Pricing />
