@@ -29,6 +29,8 @@ export default {
   			'float-delayed': 'float 6s ease-in-out infinite 2s',
   				'pulse-glow': 'pulse-glow 3s ease-in-out infinite',
 	  			'sparkle': 'sparkle 4s ease-in-out infinite',
+	  			'gradient': 'gradient 6s linear infinite',
+	  			'shine': 'shine 5s ease-in-out 500ms infinite',
 	  		},
   		keyframes: {
   			marquee: {
@@ -50,6 +52,15 @@ export default {
 	  			sparkle: {
 	  				'0%, 100%': { opacity: '0.2', transform: 'scale(1)' },
 	  				'50%': { opacity: '1', transform: 'scale(1.5)' },
+	  			},
+	  			gradient: {
+	  				'to': { backgroundPosition: '200% center' },
+	  			},
+	  			shine: {
+	  				'0%': { top: '0', transform: 'scaleY(5)', opacity: '0' },
+	  				'10%': { opacity: '0.8' },
+	  				'20%': { top: '100%', transform: 'scaleY(10)', opacity: '0' },
+	  				'100%': { top: '100%', transform: 'scaleY(1)', opacity: '0' },
 	  			},
 	  		},
   	}
