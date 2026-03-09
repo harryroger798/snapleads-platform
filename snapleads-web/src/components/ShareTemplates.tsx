@@ -9,9 +9,9 @@ interface ShareTemplatesProps {
 const DOWNLOAD_URL_WIN = "https://getsnapleads.store/download/windows";
 const DOWNLOAD_URL_MAC = "https://getsnapleads.store/download/mac";
 const DOWNLOAD_URL_LINUX = "https://getsnapleads.store/download/linux";
-const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/4624a435c1b941a0011318a992cf4b3a20d0d17ff19aa7bdd25fe5962c2839bc";
-const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/cb8e184518feb699e2e1ffe84803deee93569a5b2e1120dd3aa383f08a325d1b";
-const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/cb8e184518feb699e2e1ffe84803deee93569a5b2e1120dd3aa383f08a325d1b";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/63672d50cae1f36529261cfe396026b3fb835f1aeb6af3ce3b3bd4fe7fc95502";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/45c4bcf2b6aa0f7762c588c522b1cb990403006baeabd1763a2453e6b69134e4";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/d1614cd791bfa6aeecd40216b42393aa597276759c070593463f7f4d8dc5a0da";
 
 interface PlatformTemplate {
   id: string;
@@ -83,7 +83,7 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-2.13.0.AppImage && ./SnapLeads-2.13.0.AppImage
+Linux: chmod +x SnapLeads-3.0.0.AppImage && ./SnapLeads-3.0.0.AppImage
 
 Verified safe on VirusTotal (0/95):
 Windows: ${VT_SCAN_URL_WIN}
