@@ -15,7 +15,7 @@ type OSTab = "windows" | "macos" | "linux";
 const VT_SCAN_URLS: Record<OSTab, string> = {
     windows: "https://www.virustotal.com/gui/file/f397b045d7ac5321b9cb78c70ee803b4636a43087dee4272c8a27cc47a36a34a",
     macos: "https://www.virustotal.com/gui/file/1b5c913fbcda4d34df48e747efaace1b48a625fee942884088a90f9cf9bc9957",
-    linux: "https://www.virustotal.com/gui/file/PENDING_LINUX_V301_HASH",
+    linux: "https://www.virustotal.com/gui/file/34af279f03b564a15a80c855adc18a8d4859b45247510323578941fb363152b3",
 };
 
 interface BypassGuide {
