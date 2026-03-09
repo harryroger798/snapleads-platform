@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react'
-import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, Zap, Shield, Globe, Clock, Check, ChevronDown, Menu, X, Star, Download, Users, MapPin, MessageCircle, Search, Send, Linkedin, Instagram, Facebook, Twitter, TrendingUp, AlertTriangle } from 'lucide-react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { ArrowRight, Zap, Shield, Globe, Clock, Check, ChevronDown, Menu, X, Star, Download, Users, MapPin, MessageCircle, Search, Send, Linkedin, Instagram, Facebook, Twitter, TrendingUp, AlertTriangle, Play, Pause } from 'lucide-react'
 
 /* ─── COUNTER HOOK ─── */
 function useCountUp(end: number, duration = 2000, startOnView = true) {
@@ -171,7 +171,7 @@ function Hero() {
       {/* Hero Image — Real App Screenshot */}
       <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.8 }} className="relative mt-16 w-full max-w-4xl mx-auto z-10">
         <div className="relative rounded-2xl overflow-hidden border border-dark-border shadow-2xl shadow-accent/10">
-          <img src="/images/screenshot-extraction.png" alt="SnapLeads App — Configure & Extract Leads" className="w-full h-auto" />
+          <img src="/images/screenshot-extraction-v2.png" alt="SnapLeads App — Configure & Extract Leads" className="w-full h-auto" />
           {/* Annotation overlays */}
           <div className="absolute top-[8%] right-[4%] bg-accent/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg animate-pulse-glow">
             9 Platforms Selected
@@ -259,7 +259,200 @@ function WhoWeAre() {
   )
 }
 
-/* ─── APP DEMO SHOWCASE ─── */
+/* ─── AUTO-DEMO VIDEO (Zoom/Pan Animated Showcase) ─── */
+function AutoDemoVideo() {
+  const [currentStep, setCurrentStep] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(true)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const inView = useInView(containerRef, { once: false, amount: 0.3 })
+  
+  const steps = [
+    {
+      img: '/images/screenshot-extraction-v2.png',
+      title: 'Step 1: Configure',
+      subtitle: 'Select platforms, enter keywords, set extraction methods',
+      zoom: { scale: 1.35, x: '-12%', y: '-8%' },
+      annotations: [
+        { label: '9 Platforms', x: '72%', y: '42%', color: 'bg-accent', delay: 0.3 },
+        { label: '3 Keywords', x: '72%', y: '22%', color: 'bg-purple-500', delay: 0.6 },
+        { label: 'One Click Start', x: '50%', y: '88%', color: 'bg-green-500', delay: 0.9 },
+      ],
+      duration: 5000,
+    },
+    {
+      img: '/images/screenshot-running-v2.png',
+      title: 'Step 2: Extract',
+      subtitle: 'Watch leads pour in across all platforms in real-time',
+      zoom: { scale: 1.4, x: '-5%', y: '-15%' },
+      annotations: [
+        { label: '247 Leads', x: '22%', y: '30%', color: 'bg-green-500', delay: 0.3 },
+        { label: '67% Done', x: '75%', y: '12%', color: 'bg-accent', delay: 0.6 },
+        { label: 'Live Stats', x: '50%', y: '55%', color: 'bg-blue-500', delay: 0.9 },
+      ],
+      duration: 5000,
+    },
+    {
+      img: '/images/screenshot-results-v2.png',
+      title: 'Step 3: Export',
+      subtitle: '329 verified leads ready for CSV, Excel, or CRM export',
+      zoom: { scale: 1.3, x: '-8%', y: '-5%' },
+      annotations: [
+        { label: '329 Leads', x: '25%', y: '5%', color: 'bg-accent', delay: 0.3 },
+        { label: 'Verified', x: '78%', y: '35%', color: 'bg-green-500', delay: 0.6 },
+        { label: 'Export CSV', x: '82%', y: '5%', color: 'bg-blue-500', delay: 0.9 },
+      ],
+      duration: 5000,
+    },
+  ]
+
+  const advanceStep = useCallback(() => {
+    setCurrentStep((prev) => (prev + 1) % steps.length)
+  }, [steps.length])
+
+  useEffect(() => {
+    if (!isPlaying || !inView) return
+    const timer = setTimeout(advanceStep, steps[currentStep].duration)
+    return () => clearTimeout(timer)
+  }, [currentStep, isPlaying, inView, advanceStep, steps])
+
+  const step = steps[currentStep]
+
+  return (
+    <section className="py-24 px-4 bg-dark noise-bg relative overflow-hidden" ref={containerRef}>
+      {/* Ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-20" style={{ background: 'radial-gradient(circle, rgba(255,69,0,0.3), transparent 70%)' }} />
+      
+      <div className="max-w-6xl mx-auto relative z-10">
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <motion.div variants={fadeIn} className="text-center mb-12">
+            <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-dark-border px-4 py-2 rounded-full">[ Auto Demo ]</span>
+            <h2 className="text-4xl md:text-6xl font-black uppercase mt-6 tracking-tight">
+              See The <span className="text-gradient">Extraction Power</span>
+            </h2>
+            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">Watch how SnapLeads extracts 329 verified leads from 9 platforms in minutes. Auto-playing demo with zoom-in detail views.</p>
+          </motion.div>
+
+          {/* Step indicators */}
+          <motion.div variants={fadeIn} className="flex justify-center items-center gap-3 mb-8">
+            {steps.map((s, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentStep(i)}
+                className={`flex items-center gap-2 font-mono text-xs uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-500 ${
+                  currentStep === i
+                    ? 'bg-accent text-white shadow-lg shadow-accent/30 scale-105'
+                    : 'bg-dark-card border border-dark-border text-gray-500 hover:text-white hover:border-gray-600'
+                }`}
+              >
+                <span className="w-5 h-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold" style={{ borderColor: currentStep === i ? '#fff' : '#555' }}>{i + 1}</span>
+                {s.title.replace('Step ' + (i + 1) + ': ', '')}
+              </button>
+            ))}
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="ml-2 w-9 h-9 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:text-white hover:border-gray-600 transition-all"
+              title={isPlaying ? 'Pause' : 'Play'}
+            >
+              {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+            </button>
+          </motion.div>
+
+          {/* Progress bar */}
+          <div className="max-w-md mx-auto mb-8">
+            <div className="h-1 bg-dark-card rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-accent to-orange-400 rounded-full"
+                key={`progress-${currentStep}-${isPlaying}`}
+                initial={{ width: '0%' }}
+                animate={{ width: isPlaying && inView ? '100%' : '0%' }}
+                transition={{ duration: step.duration / 1000, ease: 'linear' }}
+              />
+            </div>
+          </div>
+
+          {/* Main viewport with zoom/pan */}
+          <motion.div variants={fadeIn} className="relative">
+            <div className="relative rounded-2xl overflow-hidden border border-dark-border shadow-2xl shadow-accent/10 bg-[#09090b]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentStep}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="relative"
+                >
+                  {/* Image with zoom animation */}
+                  <motion.img
+                    src={step.img}
+                    alt={step.title}
+                    className="w-full h-auto"
+                    initial={{ scale: 1, x: '0%', y: '0%' }}
+                    animate={{
+                      scale: [1, step.zoom.scale, step.zoom.scale, 1],
+                      x: ['0%', step.zoom.x, step.zoom.x, '0%'],
+                      y: ['0%', step.zoom.y, step.zoom.y, '0%'],
+                    }}
+                    transition={{
+                      duration: step.duration / 1000,
+                      times: [0, 0.25, 0.75, 1],
+                      ease: 'easeInOut',
+                    }}
+                  />
+
+                  {/* Animated annotations */}
+                  {step.annotations.map((a, i) => (
+                    <motion.div
+                      key={`${currentStep}-ann-${i}`}
+                      className={`absolute ${a.color} backdrop-blur-md text-white text-[10px] md:text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg shadow-black/30 hidden md:flex items-center gap-1.5`}
+                      style={{ left: a.x, top: a.y, transform: 'translate(-50%, -50%)' }}
+                      initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.5 }}
+                      transition={{ delay: a.delay, duration: 0.4, ease: 'backOut' }}
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                      {a.label}
+                    </motion.div>
+                  ))}
+
+                  {/* Spotlight effect */}
+                  <motion.div
+                    className="absolute inset-0 pointer-events-none"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 0.15, 0.15, 0] }}
+                    transition={{ duration: step.duration / 1000, times: [0, 0.2, 0.8, 1] }}
+                    style={{
+                      background: 'radial-gradient(circle at 50% 40%, transparent 30%, rgba(0,0,0,0.6) 100%)',
+                    }}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-accent/15 via-transparent to-accent/15 rounded-2xl blur-xl -z-10" />
+          </motion.div>
+
+          {/* Step description */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`desc-${currentStep}`}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.4 }}
+              className="text-center mt-8"
+            >
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{step.title}</h3>
+              <p className="text-gray-400 max-w-xl mx-auto text-sm">{step.subtitle}</p>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+/* ─── APP DEMO SHOWCASE (Tab-based) ─── */
 function AppDemo() {
   const [activeTab, setActiveTab] = useState(0)
   const demos = [
@@ -267,7 +460,7 @@ function AppDemo() {
       tab: 'Configure',
       title: 'Set Up Your Extraction in Seconds',
       desc: 'Choose from 9+ platforms, enter your keywords, configure extraction methods, and hit start. The intuitive interface makes lead extraction effortless.',
-      img: '/images/screenshot-extraction.png',
+      img: '/images/screenshot-extraction-v2.png',
       annotations: [
         { label: 'Session Name', pos: 'top-[13%] left-[16%]', color: 'bg-blue-500/90' },
         { label: 'Multi-Keyword Support', pos: 'top-[25%] left-[16%]', color: 'bg-purple-500/90' },
@@ -278,7 +471,7 @@ function AppDemo() {
       tab: 'Extract',
       title: 'Watch Leads Pour In — Real-Time',
       desc: 'Track extraction progress across all platforms with live stats. See total leads, emails found, and phones discovered as they come in.',
-      img: '/images/screenshot-running.png',
+      img: '/images/screenshot-running-v2.png',
       annotations: [
         { label: '67% Complete', pos: 'top-[11%] right-[8%]', color: 'bg-accent/90' },
         { label: '247 Leads Found', pos: 'top-[28%] left-[16%]', color: 'bg-green-500/90' },
@@ -289,7 +482,7 @@ function AppDemo() {
       tab: 'Results',
       title: '329 Verified Leads — Ready to Export',
       desc: 'View all extracted leads with email, phone, name, platform source, quality score, and verification status. Export to CSV, XLSX, or JSON in one click.',
-      img: '/images/screenshot-results.png',
+      img: '/images/screenshot-results-v2.png',
       annotations: [
         { label: 'Clean Results (Pro)', pos: 'top-[2%] right-[30%]', color: 'bg-accent/90' },
         { label: 'Export CSV / XLSX / JSON', pos: 'top-[2%] right-[4%]', color: 'bg-green-500/90' },
@@ -347,10 +540,10 @@ function AppDemo() {
 /* ─── FEATURES (VALUE PROPS) ─── */
 function Features() {
   const features = [
-    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/screenshot-extraction.png' },
-    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/screenshot-running.png' },
-    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/screenshot-running.png' },
-    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/screenshot-results.png' },
+    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/screenshot-extraction-v2.png' },
+    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/screenshot-running-v2.png' },
+    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/screenshot-running-v2.png' },
+    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/screenshot-results-v2.png' },
   ]
   
   return (
@@ -429,10 +622,28 @@ function Platforms() {
             <p className="text-gray-500 mt-4 max-w-2xl mx-auto">Extract leads from the biggest platforms on the internet. Each extractor is purpose-built with safety controls and smart rate limiting.</p>
           </motion.div>
           
-          {/* 3D Platform Icons */}
+          {/* Platform icon grid */}
           <motion.div variants={fadeIn} className="flex justify-center mb-12">
-            <div className="w-full max-w-lg">
-              <img src="/images/3d-platforms.png" alt="Supported Platforms" className="w-full h-auto rounded-2xl" style={{ mixBlendMode: 'darken' }} />
+            <div className="grid grid-cols-4 md:grid-cols-6 gap-4 max-w-lg">
+              {[
+                { name: 'LinkedIn', color: 'bg-blue-600', icon: '💼' },
+                { name: 'Google Maps', color: 'bg-red-500', icon: '📍' },
+                { name: 'Reddit', color: 'bg-orange-500', icon: '🟠' },
+                { name: 'Telegram', color: 'bg-sky-500', icon: '✈️' },
+                { name: 'Instagram', color: 'bg-pink-500', icon: '📸' },
+                { name: 'Facebook', color: 'bg-blue-500', icon: '👥' },
+                { name: 'Twitter/X', color: 'bg-gray-700', icon: '🐦' },
+                { name: 'WhatsApp', color: 'bg-green-500', icon: '💬' },
+                { name: 'TikTok', color: 'bg-gray-800', icon: '🎵' },
+                { name: 'YouTube', color: 'bg-red-600', icon: '▶️' },
+                { name: 'Pinterest', color: 'bg-rose-500', icon: '📌' },
+                { name: 'Email', color: 'bg-teal-500', icon: '✉️' },
+              ].map((p, i) => (
+                <div key={i} className={`${p.color} rounded-xl p-3 flex flex-col items-center justify-center gap-1 text-center shadow-lg hover:scale-105 transition-transform`}>
+                  <span className="text-xl">{p.icon}</span>
+                  <span className="text-[9px] font-mono uppercase tracking-wider text-white/90 font-semibold">{p.name}</span>
+                </div>
+              ))}
             </div>
           </motion.div>
           
@@ -601,9 +812,16 @@ function Testimonial() {
             <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-dark-border px-4 py-2 rounded-full">[ Helping Businesses Scale ]</span>
           </motion.div>
           
-          {/* 3D Testimonial Quote Bubble */}
+          {/* Testimonial stars */}
           <motion.div variants={fadeIn} className="flex justify-center mt-8 mb-4">
-            <img src="/images/3d-testimonial.png" alt="Testimonials" className="w-48 h-48 object-contain" style={{ mixBlendMode: 'lighten' }} />
+            <div className="flex items-center gap-6">
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={24} className="text-accent fill-accent" />
+                ))}
+              </div>
+              <span className="font-mono text-xs uppercase tracking-wider text-gray-500">Trusted by 10,000+ users</span>
+            </div>
           </motion.div>
           
           <motion.div variants={fadeIn} className="mt-2">
@@ -642,9 +860,9 @@ function HowItWorks() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/3d-step-download.png' },
-              { step: '02', title: 'Configure & Extract', desc: 'Select from 9+ platforms, enter keywords, and choose extraction methods. Real app screenshot shown above.', icon: <Search size={28} />, img: '/images/screenshot-extraction.png' },
-              { step: '03', title: 'View Results & Export', desc: 'See all leads with email, phone, quality score. Export to CSV, Excel, JSON, or push to HubSpot CRM.', icon: <Users size={28} />, img: '/images/screenshot-results.png' },
+              { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/screenshot-extraction-v2.png' },
+              { step: '02', title: 'Configure & Extract', desc: 'Select from 9+ platforms, enter keywords, and choose extraction methods. Real app screenshot shown above.', icon: <Search size={28} />, img: '/images/screenshot-extraction-v2.png' },
+              { step: '03', title: 'View Results & Export', desc: 'See all leads with email, phone, quality score. Export to CSV, Excel, JSON, or push to HubSpot CRM.', icon: <Users size={28} />, img: '/images/screenshot-results-v2.png' },
             ].map((s, i) => (
               <motion.div key={i} variants={fadeIn} className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-500 group">
                 <div className="bg-[#0A0A0A] flex items-center justify-center p-1 overflow-hidden">
@@ -714,9 +932,15 @@ function FinalCTA() {
     <section className="py-24 px-4 bg-dark noise-bg relative">
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={stagger}>
-          {/* 3D Rocket CTA */}
+          {/* Animated CTA icon */}
           <motion.div variants={fadeIn} className="flex justify-center mb-8">
-            <img src="/images/3d-cta-rocket.png" alt="Launch SnapLeads" className="w-64 h-64 object-contain" style={{ mixBlendMode: 'lighten' }} />
+            <motion.div
+              animate={{ y: [0, -12, 0], rotate: [0, 2, -2, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-32 h-32 rounded-3xl bg-gradient-to-br from-accent to-orange-600 flex items-center justify-center shadow-2xl shadow-accent/40"
+            >
+              <Zap size={56} className="text-white" />
+            </motion.div>
           </motion.div>
           <motion.h2 variants={fadeIn} className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight leading-none">
             Your Ultimate Lead Extraction Machine.
@@ -833,6 +1057,7 @@ export default function LandingPage() {
       <Hero />
       <Stats />
       <WhoWeAre />
+      <AutoDemoVideo />
       <AppDemo />
       <Features />
       <Platforms />
