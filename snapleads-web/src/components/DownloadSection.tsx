@@ -8,14 +8,14 @@ interface DownloadSectionProps {
 const DOWNLOAD_WIN = "https://getsnapleads.store/download/windows";
 const DOWNLOAD_MAC = "https://getsnapleads.store/download/mac";
 const DOWNLOAD_LINUX = "https://getsnapleads.store/download/linux";
-const VERSION = "2.12.0";
+const VERSION = "2.13.0";
 
 type OSTab = "windows" | "macos" | "linux";
 
 const VT_SCAN_URLS: Record<OSTab, string> = {
-    windows: "https://www.virustotal.com/gui/file/e7ea90ec4ff3bcbca136d5eab18d8c4f3e768362cbe5468345848a457c516a6b",
-    macos: "https://www.virustotal.com/gui/file/afc07b1e05e482689ae4cac7d2c919ac206ccd82a093bcd7c74d7cad8fdad340",
-    linux: "https://www.virustotal.com/gui/file/afc07b1e05e482689ae4cac7d2c919ac206ccd82a093bcd7c74d7cad8fdad340",
+    windows: "https://www.virustotal.com/gui/file/4624a435c1b941a0011318a992cf4b3a20d0d17ff19aa7bdd25fe5962c2839bc",
+    macos: "https://www.virustotal.com/gui/file/cb8e184518feb699e2e1ffe84803deee93569a5b2e1120dd3aa383f08a325d1b",
+    linux: "https://www.virustotal.com/gui/file/cb8e184518feb699e2e1ffe84803deee93569a5b2e1120dd3aa383f08a325d1b",
 };
 
 interface BypassGuide {
@@ -118,8 +118,8 @@ const bypassGuides: BypassGuide[] = [
     os: "linux",
     steps: [
       "Download the .AppImage file to your desired location (e.g., ~/Applications/)",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "Make it executable: chmod +x SnapLeads-2.12.0.AppImage",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Run it: ./SnapLeads-2.12.0.AppImage",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "Make it executable: chmod +x SnapLeads-2.13.0.AppImage",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Run it: ./SnapLeads-2.13.0.AppImage",
       "Or right-click the file > Properties > Permissions > check \"Allow executing file as program\"",
       "Then double-click to launch",
     ],
@@ -145,7 +145,7 @@ const bypassGuides: BypassGuide[] = [
     os: "linux",
     steps: [
       "If SELinux blocks execution: sudo setenforce 0 (temporary) or add a policy exception",
-      "For AppArmor: sudo aa-complain /path/to/SnapLeads-2.12.0.AppImage",
+      "For AppArmor: sudo aa-complain /path/to/SnapLeads-2.13.0.AppImage",
       "Check logs: journalctl -xe | grep -i snapleads for specific error messages",
       "For persistent fix, create a custom SELinux/AppArmor profile for SnapLeads",
     ],
@@ -212,8 +212,8 @@ const installSteps: Record<OSTab, string[]> = {
   linux: [
     "Download the .AppImage file using the button above",
     "Open Terminal and navigate to the download location",
-                                                "Make it executable: chmod +x SnapLeads-2.12.0.AppImage",
-                                                "Run it: ./SnapLeads-2.12.0.AppImage (or double-click if FUSE is installed)",
+                                                "Make it executable: chmod +x SnapLeads-2.13.0.AppImage",
+                                                "Run it: ./SnapLeads-2.13.0.AppImage (or double-click if FUSE is installed)",
     "If FUSE error: install with sudo apt install fuse libfuse2 (Ubuntu/Debian)",
     "Enter your license key when prompted and click \"Activate\"",
     "Done! Start extracting leads from 9+ social media platforms",
