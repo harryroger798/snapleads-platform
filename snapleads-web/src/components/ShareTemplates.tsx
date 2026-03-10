@@ -11,7 +11,7 @@ const DOWNLOAD_URL_MAC = "https://getsnapleads.store/download/mac";
 const DOWNLOAD_URL_LINUX = "https://getsnapleads.store/download/linux";
 const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/0793c677e224bda7bf28d002359e77cf68823be1916f5567265766b447db1c23";
 const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/d8303d219df3bc8a0f80bdb2c35ab31851514f3947948ca860416c3e82f5060a";
-const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/7884dbdf6bf2687ca3b330f1213406c6cd3cb76aa8a221a82ee3fdcf783d7506";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/30fa0fedbf695632b586a7f00f431bad77f550d9063c54814bbdb7507c786bdc";
 
 interface PlatformTemplate {
   id: string;
