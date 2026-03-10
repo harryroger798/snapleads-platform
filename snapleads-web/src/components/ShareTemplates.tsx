@@ -9,9 +9,9 @@ interface ShareTemplatesProps {
 const DOWNLOAD_URL_WIN = "https://getsnapleads.store/download/windows";
 const DOWNLOAD_URL_MAC = "https://getsnapleads.store/download/mac";
 const DOWNLOAD_URL_LINUX = "https://getsnapleads.store/download/linux";
-const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/0501f25dfa3a6f8f8f5fc72025ca0d460807c744b11cc38c78de19b4928da4c0";
-const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/7e9e8ac70558530cb330860e39ab4a0a76d5ed11d86b8e3ced3aecf0341180f1";
-const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/f78933ef8401f746bbfe07de8b1aea9116913af471489c545793acd6fa54d0e2";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/a41779dd79bdbf44f42870784c414be4f5ee67ce8f4f7ebb36b6a672358c4426";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/37438e9d744484c38a99dbe70f4152c82ae754b080bae922f672cf6a25187248";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/7884dbdf6bf2687ca3b330f1213406c6cd3cb76aa8a221a82ee3fdcf783d7506";
 
 interface PlatformTemplate {
   id: string;
