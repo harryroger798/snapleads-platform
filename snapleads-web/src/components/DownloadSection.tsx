@@ -8,13 +8,13 @@ interface DownloadSectionProps {
 const DOWNLOAD_WIN = "https://getsnapleads.store/download/windows";
 const DOWNLOAD_MAC = "https://getsnapleads.store/download/mac";
 const DOWNLOAD_LINUX = "https://getsnapleads.store/download/linux";
-const VERSION = "3.1.1";
+const VERSION = "3.1.2";
 
 type OSTab = "windows" | "macos" | "linux";
 
 const VT_SCAN_URLS: Record<OSTab, string> = {
-    windows: "https://www.virustotal.com/gui/file/dc90f039d08e333d8f51f5f5550ff4d89c2be9f8dd9bbbba20b2b57389e3d916",
-    macos: "https://www.virustotal.com/gui/file/3f899661d35baef3c61c0628f02fb9c2154277dfd2ee34203a16b468ad26eef6",
+    windows: "https://www.virustotal.com/gui/file/0793c677e224bda7bf28d002359e77cf68823be1916f5567265766b447db1c23",
+    macos: "https://www.virustotal.com/gui/file/d8303d219df3bc8a0f80bdb2c35ab31851514f3947948ca860416c3e82f5060a",
     linux: "https://www.virustotal.com/gui/file/7884dbdf6bf2687ca3b330f1213406c6cd3cb76aa8a221a82ee3fdcf783d7506",
 };
 
