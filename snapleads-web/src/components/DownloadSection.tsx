@@ -5,17 +5,17 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.1/SnapLeads%20Setup%203.4.1.exe";
-const DOWNLOAD_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.1/SnapLeads-3.4.1-arm64-mac.zip";
-const DOWNLOAD_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.1/SnapLeads-3.4.1.AppImage";
-const VERSION = "3.4.1";
+const DOWNLOAD_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.2/SnapLeads%20Setup%203.4.2.exe";
+const DOWNLOAD_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.2/SnapLeads-3.4.2-arm64-mac.zip";
+const DOWNLOAD_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.2/SnapLeads-3.4.2.AppImage";
+const VERSION = "3.4.2";
 
 type OSTab = "windows" | "macos" | "linux";
 
 const VT_SCAN_URLS: Record<OSTab, string> = {
-    windows: "https://www.virustotal.com/gui/file/50d02f63bb71151e46cf5ed86fbf7e26038ea5b84b84fa14da073f9ee61767d7",
-    macos: "https://www.virustotal.com/gui/file/60bf12aa315c4e0c359b4af50c685a70a8e50ac6486692ff79557421befc8298",
-    linux: "https://www.virustotal.com/gui/file/c17bbb6dd2095dfc521652e7ebcf62aaba2210d2c09b3f7892fd6edcc5c1f5bd",
+    windows: "https://www.virustotal.com/gui/file/df62f364f74bfb2e2e0b4b3c50537342070c14e446e67678fc4dca817d7f45f8",
+    macos: "https://www.virustotal.com/gui/file/88a83fa1ea9156681082c5270aa3a4b846ff9bce7847eef240dda651788dd85a",
+    linux: "https://www.virustotal.com/gui/file/eb17212f93bbe96dbcd011e5e47fe7cc582a6c96bfde103d58ebc29e061a8740",
 };
 
 interface BypassGuide {
@@ -118,8 +118,8 @@ const bypassGuides: BypassGuide[] = [
     os: "linux",
     steps: [
       "Download the .AppImage file to your desired location (e.g., ~/Applications/)",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "Make it executable: chmod +x SnapLeads-3.4.1.AppImage",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Run it: ./SnapLeads-3.4.1.AppImage",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          "Make it executable: chmod +x SnapLeads-3.4.2.AppImage",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Run it: ./SnapLeads-3.4.2.AppImage",
       "Or right-click the file > Properties > Permissions > check \"Allow executing file as program\"",
       "Then double-click to launch",
     ],
@@ -145,7 +145,7 @@ const bypassGuides: BypassGuide[] = [
     os: "linux",
     steps: [
       "If SELinux blocks execution: sudo setenforce 0 (temporary) or add a policy exception",
-      "For AppArmor: sudo aa-complain /path/to/SnapLeads-3.4.1.AppImage",
+      "For AppArmor: sudo aa-complain /path/to/SnapLeads-3.4.2.AppImage",
       "Check logs: journalctl -xe | grep -i snapleads for specific error messages",
       "For persistent fix, create a custom SELinux/AppArmor profile for SnapLeads",
     ],
@@ -168,7 +168,7 @@ const osInfo: Record<OSTab, { name: string; icon: string; size: string; type: st
   windows: {
     name: "Windows",
     icon: "\u{1FA9F}",
-    size: "~325 MB",
+    size: "~338 MB",
     type: "Installer (.exe)",
     url: DOWNLOAD_WIN,
     platform: "Windows 10/11 (64-bit)",
@@ -176,7 +176,7 @@ const osInfo: Record<OSTab, { name: string; icon: string; size: string; type: st
   macos: {
     name: "macOS",
     icon: "\u{1F34E}",
-    size: "~263 MB",
+    size: "~277 MB",
     type: "Application (.zip)",
     url: DOWNLOAD_MAC,
     platform: "macOS 11+ (Big Sur or later)",
@@ -212,8 +212,8 @@ const installSteps: Record<OSTab, string[]> = {
   linux: [
     "Download the .AppImage file using the button above",
     "Open Terminal and navigate to the download location",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Make it executable: chmod +x SnapLeads-3.4.1.AppImage",
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Run it: ./SnapLeads-3.4.1.AppImage (or double-click if FUSE is installed)",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Make it executable: chmod +x SnapLeads-3.4.2.AppImage",
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "Run it: ./SnapLeads-3.4.2.AppImage (or double-click if FUSE is installed)",
     "If FUSE error: install with sudo apt install fuse libfuse2 (Ubuntu/Debian)",
     "Enter your license key when prompted and click \"Activate\"",
     "Done! Start extracting leads from 9+ social media platforms",
