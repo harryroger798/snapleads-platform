@@ -6,12 +6,12 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.2/SnapLeads%20Setup%203.4.2.exe";
-const DOWNLOAD_URL_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.2/SnapLeads-3.4.2-arm64-mac.zip";
-const DOWNLOAD_URL_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.2/SnapLeads-3.4.2.AppImage";
-const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/df62f364f74bfb2e2e0b4b3c50537342070c14e446e67678fc4dca817d7f45f8";
-const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/88a83fa1ea9156681082c5270aa3a4b846ff9bce7847eef240dda651788dd85a";
-const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/eb17212f93bbe96dbcd011e5e47fe7cc582a6c96bfde103d58ebc29e061a8740";
+const DOWNLOAD_URL_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.3/SnapLeads%20Setup%203.4.3.exe";
+const DOWNLOAD_URL_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.3/SnapLeads-3.4.3-arm64-mac.zip";
+const DOWNLOAD_URL_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.3/SnapLeads-3.4.3.AppImage";
+const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/ba68ad3641d2d0db5125fb9ebb71493a8eb49cde59915588bcfc562ef2bebce3";
+const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/0d5c19be2ad36c6574112dc2364efbe85bd98ba6e6663c3e86c5dea30850a8b1";
+const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/ba68ad3641d2d0db5125fb9ebb71493a8eb49cde59915588bcfc562ef2bebce3";
 
 interface PlatformTemplate {
   id: string;
@@ -83,7 +83,7 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-3.4.2.AppImage && ./SnapLeads-3.4.2.AppImage
+Linux: chmod +x SnapLeads-3.4.3.AppImage && ./SnapLeads-3.4.3.AppImage
 
 Verified safe on VirusTotal (0/95):
 Windows: ${VT_SCAN_URL_WIN}
