@@ -5,9 +5,9 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://getsnapleads.store/download/windows";
-const DOWNLOAD_MAC = "https://getsnapleads.store/download/mac";
-const DOWNLOAD_LINUX = "https://getsnapleads.store/download/linux";
+const DOWNLOAD_WIN = "https://getsnapleads.store/dl/windows";
+const DOWNLOAD_MAC = "https://getsnapleads.store/dl/mac";
+const DOWNLOAD_LINUX = "https://getsnapleads.store/dl/linux";
 const VERSION = "3.4.1";
 
 type OSTab = "windows" | "macos" | "linux";
