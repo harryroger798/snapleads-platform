@@ -5,9 +5,9 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://getsnapleads.store/dl/windows";
-const DOWNLOAD_MAC = "https://getsnapleads.store/dl/mac";
-const DOWNLOAD_LINUX = "https://getsnapleads.store/dl/linux";
+const DOWNLOAD_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.1/SnapLeads%20Setup%203.4.1.exe";
+const DOWNLOAD_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.1/SnapLeads-3.4.1-arm64-mac.zip";
+const DOWNLOAD_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.4.1/SnapLeads-3.4.1.AppImage";
 const VERSION = "3.4.1";
 
 type OSTab = "windows" | "macos" | "linux";
