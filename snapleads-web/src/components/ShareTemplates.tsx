@@ -6,9 +6,9 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://getsnapleads.store/download/windows";
-const DOWNLOAD_URL_MAC = "https://getsnapleads.store/download/mac";
-const DOWNLOAD_URL_LINUX = "https://getsnapleads.store/download/linux";
+const DOWNLOAD_URL_WIN = "https://getsnapleads.store/dl/windows";
+const DOWNLOAD_URL_MAC = "https://getsnapleads.store/dl/mac";
+const DOWNLOAD_URL_LINUX = "https://getsnapleads.store/dl/linux";
 const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/50d02f63bb71151e46cf5ed86fbf7e26038ea5b84b84fa14da073f9ee61767d7";
 const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/60bf12aa315c4e0c359b4af50c685a70a8e50ac6486692ff79557421befc8298";
 const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/c17bbb6dd2095dfc521652e7ebcf62aaba2210d2c09b3f7892fd6edcc5c1f5bd";
