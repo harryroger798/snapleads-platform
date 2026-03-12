@@ -2,9 +2,20 @@
 import aiosqlite
 import os
 
-DB_PATH = os.environ.get("DATABASE_PATH", "/data/app.db")
-if not os.path.exists(os.path.dirname(DB_PATH)):
-    DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "app.db")
+_env_db = os.environ.get("DATABASE_PATH", "").strip()
+if _env_db:
+    _parent = os.path.dirname(_env_db)
+    # Use env path only if the parent directory exists or can be created
+    if _parent and (os.path.isdir(_parent) or _parent == "/data"):
+        DB_PATH = _env_db
+    else:
+        DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "app.db")
+else:
+    # Default: try /data (Render persistent disk) then local fallback
+    if os.path.isdir("/data"):
+        DB_PATH = "/data/app.db"
+    else:
+        DB_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "app.db")
 
 
 async def get_db():

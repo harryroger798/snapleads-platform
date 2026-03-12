@@ -159,6 +159,11 @@ async def invite_member(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Invite a user to the team by email (owner or admin only)."""
+    # Check team exists first (fix R2-#5)
+    cursor = await db.execute("SELECT id FROM teams WHERE id = ?", (team_id,))
+    if not await cursor.fetchone():
+        raise HTTPException(status_code=404, detail="Team not found")
+
     # Verify inviter is owner or admin
     cursor = await db.execute(
         "SELECT role FROM team_members WHERE team_id = ? AND user_id = ?",
@@ -220,6 +225,12 @@ async def remove_member(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Remove a member from the team (owner/admin only, or self-remove)."""
+    # Check team exists first (fix R2-#5)
+    cursor = await db.execute("SELECT owner_id FROM teams WHERE id = ?", (team_id,))
+    team = await cursor.fetchone()
+    if not team:
+        raise HTTPException(status_code=404, detail="Team not found")
+
     is_self = member_user_id == user["id"]
 
     if not is_self:
@@ -233,10 +244,16 @@ async def remove_member(
             raise HTTPException(status_code=403, detail="Only owners and admins can remove members")
 
     # Cannot remove the owner
-    cursor = await db.execute("SELECT owner_id FROM teams WHERE id = ?", (team_id,))
-    team = await cursor.fetchone()
-    if team and dict(team)["owner_id"] == member_user_id:
+    if dict(team)["owner_id"] == member_user_id:
         raise HTTPException(status_code=400, detail="Cannot remove the team owner. Delete the team instead.")
+
+    # Verify the target member exists (fix R2-#6)
+    cursor = await db.execute(
+        "SELECT id FROM team_members WHERE team_id = ? AND user_id = ?",
+        (team_id, member_user_id),
+    )
+    if not await cursor.fetchone():
+        raise HTTPException(status_code=404, detail="Member not found in this team")
 
     await db.execute(
         "DELETE FROM team_members WHERE team_id = ? AND user_id = ?",
@@ -257,6 +274,11 @@ async def share_lead(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Share a single lead with the team."""
+    # Check team exists first (fix R2-#5)
+    cursor = await db.execute("SELECT id FROM teams WHERE id = ?", (team_id,))
+    if not await cursor.fetchone():
+        raise HTTPException(status_code=404, detail="Team not found")
+
     # Verify membership
     cursor = await db.execute(
         "SELECT role FROM team_members WHERE team_id = ? AND user_id = ?",
@@ -265,7 +287,7 @@ async def share_lead(
     if not await cursor.fetchone():
         raise HTTPException(status_code=403, detail="Not a member of this team")
 
-    # Check shared leads limit per team (free: 1000)
+    # Check shared leads limit per team
     cursor = await db.execute(
         "SELECT COUNT(*) as cnt FROM shared_leads WHERE team_id = ?", (team_id,)
     )
@@ -305,6 +327,11 @@ async def share_leads_batch(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Share multiple leads with the team at once."""
+    # Check team exists first (fix R2-#5)
+    cursor = await db.execute("SELECT id FROM teams WHERE id = ?", (team_id,))
+    if not await cursor.fetchone():
+        raise HTTPException(status_code=404, detail="Team not found")
+
     # Verify membership
     cursor = await db.execute(
         "SELECT role FROM team_members WHERE team_id = ? AND user_id = ?",
@@ -364,6 +391,11 @@ async def get_shared_leads(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Get shared leads for a team with pagination and filtering."""
+    # Check team exists first (fix R2-#5)
+    cursor = await db.execute("SELECT id FROM teams WHERE id = ?", (team_id,))
+    if not await cursor.fetchone():
+        raise HTTPException(status_code=404, detail="Team not found")
+
     # Verify membership
     cursor = await db.execute(
         "SELECT role FROM team_members WHERE team_id = ? AND user_id = ?",
@@ -372,13 +404,15 @@ async def get_shared_leads(
     if not await cursor.fetchone():
         raise HTTPException(status_code=403, detail="Not a member of this team")
 
-    # Cap per_page to prevent DoS (fix #15)
+    # Validate pagination params (fix R2-#2)
+    if page < 1:
+        page = 1
     if per_page > 200:
         per_page = 200
     if per_page < 1:
         per_page = 50
 
-    # Build WHERE conditions separately for clean count query (fix #7)
+    # Build WHERE conditions separately for clean count query
     where = "sl.team_id = ?"
     params: list = [team_id]
 
@@ -386,8 +420,10 @@ async def get_shared_leads(
         where += " AND sl.platform = ?"
         params.append(platform)
     if search:
-        where += " AND (sl.email LIKE ? OR sl.name LIKE ? OR sl.phone LIKE ?)"
-        params.extend([f"%{search}%", f"%{search}%", f"%{search}%"])
+        # Escape LIKE wildcards to prevent pattern injection (fix R2-#1)
+        escaped = search.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+        where += " AND (sl.email LIKE ? ESCAPE '\\' OR sl.name LIKE ? ESCAPE '\\' OR sl.phone LIKE ? ESCAPE '\\')"
+        params.extend([f"%{escaped}%", f"%{escaped}%", f"%{escaped}%"])
 
     # Count (clean query without JOIN, fix #7)
     cursor = await db.execute(f"SELECT COUNT(*) as cnt FROM shared_leads sl WHERE {where}", params)
@@ -416,6 +452,11 @@ async def get_activity_feed(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Get the team activity feed."""
+    # Check team exists first (fix R2-#5)
+    cursor = await db.execute("SELECT id FROM teams WHERE id = ?", (team_id,))
+    if not await cursor.fetchone():
+        raise HTTPException(status_code=404, detail="Team not found")
+
     # Verify membership
     cursor = await db.execute(
         "SELECT role FROM team_members WHERE team_id = ? AND user_id = ?",
@@ -424,6 +465,9 @@ async def get_activity_feed(
     if not await cursor.fetchone():
         raise HTTPException(status_code=403, detail="Not a member of this team")
 
+    # Clamp limit (fix R2-#8)
+    if limit < 1:
+        limit = 50
     if limit > 100:
         limit = 100
 

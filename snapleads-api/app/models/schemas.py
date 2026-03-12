@@ -5,8 +5,8 @@ from pydantic import BaseModel, Field, field_validator
 
 # Auth schemas
 class LoginRequest(BaseModel):
-    email: str
-    password: str
+    email: str = Field(..., max_length=500)
+    password: str = Field(..., max_length=128)
 
 
 class RegisterRequest(BaseModel):
@@ -89,8 +89,16 @@ class CreateTeamRequest(BaseModel):
 
 
 class InviteTeamMemberRequest(BaseModel):
-    email: str
+    email: str = Field(..., max_length=500)
     role: str = Field(default="member", pattern="^(member|admin)$")
+
+    @field_validator("email")
+    @classmethod
+    def validate_invite_email(cls, v: str) -> str:
+        v = v.strip().lower()
+        if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", v):
+            raise ValueError("Invalid email format")
+        return v
 
 
 class ShareLeadRequest(BaseModel):

@@ -123,6 +123,9 @@ async def get_usage_stats(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Get usage statistics for the current user."""
+    # Clamp days to valid range (fix R2-#7)
+    if days < 1:
+        days = 1
     if days > 90:
         days = 90
 
