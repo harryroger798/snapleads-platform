@@ -2,7 +2,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException
 import aiosqlite
 
 from app.database import get_db
@@ -12,33 +12,9 @@ from app.models.schemas import (
     ShareLeadRequest,
     ShareLeadsBatchRequest,
 )
-from app.services.auth import decode_token
+from app.routes.auth_deps import require_licensed_user
 
 router = APIRouter(prefix="/api/teams", tags=["teams"])
-
-
-async def require_licensed_user(
-    authorization: str = Header(""),
-    db: aiosqlite.Connection = Depends(get_db),
-) -> dict:
-    """Require a valid licensed user (any role)."""
-    token = authorization.replace("Bearer ", "") if authorization.startswith("Bearer ") else authorization
-    if not token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    payload = decode_token(token)
-    if not payload:
-        raise HTTPException(status_code=401, detail="Invalid or expired token")
-    user_id = payload.get("sub")
-    if not user_id:
-        raise HTTPException(status_code=401, detail="Invalid token payload")
-    cursor = await db.execute("SELECT * FROM users WHERE id = ?", (user_id,))
-    user = await cursor.fetchone()
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-    user_dict = dict(user)
-    if user_dict["status"] != "active":
-        raise HTTPException(status_code=403, detail="Account suspended")
-    return user_dict
 
 
 # ─── Team CRUD ─────────────────────────────────────────────────────────────
@@ -95,8 +71,11 @@ async def get_my_teams(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Get all teams the current user belongs to."""
+    # Use subqueries to avoid N+1 queries (fix #24)
     cursor = await db.execute(
-        """SELECT t.*, tm.role as member_role
+        """SELECT t.*, tm.role as member_role,
+           (SELECT COUNT(*) FROM team_members WHERE team_id = t.id) as member_count,
+           (SELECT COUNT(*) FROM shared_leads WHERE team_id = t.id) as shared_leads_count
            FROM teams t
            JOIN team_members tm ON t.id = tm.team_id
            WHERE tm.user_id = ?
@@ -104,22 +83,7 @@ async def get_my_teams(
         (user["id"],),
     )
     rows = await cursor.fetchall()
-    teams = []
-    for row in rows:
-        team = dict(row)
-        # Get member count
-        cursor2 = await db.execute(
-            "SELECT COUNT(*) as cnt FROM team_members WHERE team_id = ?",
-            (team["id"],),
-        )
-        team["member_count"] = dict(await cursor2.fetchone())["cnt"]
-        # Get shared leads count
-        cursor3 = await db.execute(
-            "SELECT COUNT(*) as cnt FROM shared_leads WHERE team_id = ?",
-            (team["id"],),
-        )
-        team["shared_leads_count"] = dict(await cursor3.fetchone())["cnt"]
-        teams.append(team)
+    teams = [dict(row) for row in rows]
     return {"teams": teams}
 
 
@@ -130,6 +94,12 @@ async def get_team(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Get team details (must be a member)."""
+    # Check team exists first (fix #22)
+    cursor = await db.execute("SELECT * FROM teams WHERE id = ?", (team_id,))
+    team = await cursor.fetchone()
+    if not team:
+        raise HTTPException(status_code=404, detail="Team not found")
+
     # Verify membership
     cursor = await db.execute(
         "SELECT role FROM team_members WHERE team_id = ? AND user_id = ?",
@@ -139,15 +109,11 @@ async def get_team(
     if not membership:
         raise HTTPException(status_code=403, detail="Not a member of this team")
 
-    cursor = await db.execute("SELECT * FROM teams WHERE id = ?", (team_id,))
-    team = await cursor.fetchone()
-    if not team:
-        raise HTTPException(status_code=404, detail="Team not found")
     team_dict = dict(team)
 
-    # Get members
+    # Get members with user info
     cursor = await db.execute(
-        """SELECT tm.*, u.email, u.name as user_name
+        """SELECT tm.user_id, tm.role, tm.joined_at, u.email, u.name
            FROM team_members tm
            JOIN users u ON tm.user_id = u.id
            WHERE tm.team_id = ?
@@ -156,7 +122,7 @@ async def get_team(
     )
     team_dict["members"] = [dict(r) for r in await cursor.fetchall()]
 
-    return team_dict
+    return {"team": team_dict}
 
 
 @router.delete("/{team_id}")
@@ -166,9 +132,12 @@ async def delete_team(
     db: aiosqlite.Connection = Depends(get_db),
 ):
     """Delete a team (owner only)."""
-    cursor = await db.execute("SELECT * FROM teams WHERE id = ? AND owner_id = ?", (team_id, user["id"]))
+    # Check team exists first (fix #22)
+    cursor = await db.execute("SELECT * FROM teams WHERE id = ?", (team_id,))
     team = await cursor.fetchone()
     if not team:
+        raise HTTPException(status_code=404, detail="Team not found")
+    if dict(team)["owner_id"] != user["id"]:
         raise HTTPException(status_code=403, detail="Only the team owner can delete the team")
 
     await db.execute("DELETE FROM shared_leads WHERE team_id = ?", (team_id,))
@@ -347,6 +316,17 @@ async def share_leads_batch(
     if len(req.leads) > 200:
         raise HTTPException(status_code=400, detail="Maximum 200 leads per batch")
 
+    # Check shared leads limit per team (fix #6 - batch was bypassing limit)
+    cursor = await db.execute(
+        "SELECT COUNT(*) as cnt FROM shared_leads WHERE team_id = ?", (team_id,)
+    )
+    current_count = dict(await cursor.fetchone())["cnt"]
+    if current_count + len(req.leads) > 5000:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Team shared leads limit would be exceeded. Current: {current_count}/5000, trying to add: {len(req.leads)}",
+        )
+
     now = datetime.now(timezone.utc).isoformat()
     created_count = 0
 
@@ -392,24 +372,30 @@ async def get_shared_leads(
     if not await cursor.fetchone():
         raise HTTPException(status_code=403, detail="Not a member of this team")
 
-    query = "SELECT sl.*, u.name as shared_by_name FROM shared_leads sl LEFT JOIN users u ON sl.shared_by = u.id WHERE sl.team_id = ?"
+    # Cap per_page to prevent DoS (fix #15)
+    if per_page > 200:
+        per_page = 200
+    if per_page < 1:
+        per_page = 50
+
+    # Build WHERE conditions separately for clean count query (fix #7)
+    where = "sl.team_id = ?"
     params: list = [team_id]
 
     if platform:
-        query += " AND sl.platform = ?"
+        where += " AND sl.platform = ?"
         params.append(platform)
     if search:
-        query += " AND (sl.email LIKE ? OR sl.name LIKE ? OR sl.phone LIKE ?)"
+        where += " AND (sl.email LIKE ? OR sl.name LIKE ? OR sl.phone LIKE ?)"
         params.extend([f"%{search}%", f"%{search}%", f"%{search}%"])
 
-    # Count
-    count_query = query.replace("SELECT sl.*, u.name as shared_by_name", "SELECT COUNT(*) as cnt")
-    cursor = await db.execute(count_query, params)
+    # Count (clean query without JOIN, fix #7)
+    cursor = await db.execute(f"SELECT COUNT(*) as cnt FROM shared_leads sl WHERE {where}", params)
     total = dict(await cursor.fetchone())["cnt"]
 
     # Paginate
     offset = (page - 1) * per_page
-    query += " ORDER BY sl.created_at DESC LIMIT ? OFFSET ?"
+    query = f"SELECT sl.*, u.name as shared_by_name FROM shared_leads sl LEFT JOIN users u ON sl.shared_by = u.id WHERE {where} ORDER BY sl.created_at DESC LIMIT ? OFFSET ?"
     params.extend([per_page, offset])
 
     cursor = await db.execute(query, params)

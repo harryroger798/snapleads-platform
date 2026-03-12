@@ -1,5 +1,6 @@
 """Pydantic schemas for request/response models."""
-from pydantic import BaseModel
+import re
+from pydantic import BaseModel, Field, field_validator
 
 
 # Auth schemas
@@ -10,8 +11,16 @@ class LoginRequest(BaseModel):
 
 class RegisterRequest(BaseModel):
     email: str
-    password: str
-    name: str
+    password: str = Field(..., min_length=6, max_length=128)
+    name: str = ""
+
+    @field_validator("email")
+    @classmethod
+    def validate_email_format(cls, v: str) -> str:
+        v = v.strip().lower()
+        if not re.match(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", v):
+            raise ValueError("Invalid email format")
+        return v
 
 
 class TokenResponse(BaseModel):
@@ -76,23 +85,23 @@ class StatsResponse(BaseModel):
 
 # Team schemas
 class CreateTeamRequest(BaseModel):
-    name: str
+    name: str = Field(..., min_length=1, max_length=100)
 
 
 class InviteTeamMemberRequest(BaseModel):
     email: str
-    role: str = "member"  # member, admin
+    role: str = Field(default="member", pattern="^(member|admin)$")
 
 
 class ShareLeadRequest(BaseModel):
-    email: str = ""
-    phone: str = ""
-    name: str = ""
-    platform: str = ""
-    source_keyword: str = ""
-    source_url: str = ""
-    quality_score: int = 0
-    metadata: str = ""  # JSON string for extra fields
+    email: str = Field(default="", max_length=500)
+    phone: str = Field(default="", max_length=50)
+    name: str = Field(default="", max_length=500)
+    platform: str = Field(default="", max_length=50)
+    source_keyword: str = Field(default="", max_length=500)
+    source_url: str = Field(default="", max_length=2000)
+    quality_score: int = Field(default=0, ge=0, le=100)
+    metadata: str = Field(default="", max_length=10000)
 
 
 class ShareLeadsBatchRequest(BaseModel):
@@ -101,7 +110,7 @@ class ShareLeadsBatchRequest(BaseModel):
 
 # Usage schemas
 class LogUsageRequest(BaseModel):
-    action: str  # search, export, enrichment, share_lead, extraction
-    detail: str = ""
-    platform: str = ""
-    lead_count: int = 0
+    action: str = Field(..., pattern="^(search|export|enrichment|share_lead|extraction)$")
+    detail: str = Field(default="", max_length=500)
+    platform: str = Field(default="", max_length=50)
+    lead_count: int = Field(default=0, ge=0)

@@ -1,8 +1,9 @@
 """Authentication routes."""
+import os
 import uuid
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Header
 import aiosqlite
 
 from app.database import get_db
@@ -12,8 +13,12 @@ from app.services.auth import hash_password, verify_password, create_access_toke
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
 
-async def get_current_user(db: aiosqlite.Connection = Depends(get_db), token: str = ""):
-    """Dependency to get current user from token."""
+async def get_current_user(
+    authorization: str = Header(""),
+    db: aiosqlite.Connection = Depends(get_db),
+):
+    """Dependency to get current user from Authorization header (fix #4)."""
+    token = authorization.replace("Bearer ", "") if authorization.startswith("Bearer ") else authorization
     if not token:
         raise HTTPException(status_code=401, detail="Not authenticated")
     payload = decode_token(token)
@@ -59,32 +64,35 @@ async def login(req: LoginRequest, db: aiosqlite.Connection = Depends(get_db)):
     )
 
 
-@router.post("/register")
+@router.post("/register", response_model=TokenResponse)
 async def register_user(req: RegisterRequest, db: aiosqlite.Connection = Depends(get_db)):
     """Register a new user account (customer role). Used by desktop app."""
-    if not req.email or not req.password:
-        raise HTTPException(status_code=400, detail="Email and password are required")
-    if len(req.password) < 6:
-        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    # Pydantic validates email format, password length (6-128) via schema
+    email = req.email.strip().lower()
+    name = req.name.strip() if req.name else email.split('@')[0]
     # Check duplicate email
-    cursor = await db.execute("SELECT id FROM users WHERE email = ?", (req.email,))
+    cursor = await db.execute("SELECT id FROM users WHERE email = ?", (email,))
     if await cursor.fetchone():
         raise HTTPException(status_code=400, detail="Email already registered")
     user_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
-    await db.execute(
-        "INSERT INTO users (id, email, password_hash, name, role, created_at) VALUES (?, ?, ?, ?, 'customer', ?)",
-        (user_id, req.email, hash_password(req.password), req.name or req.email.split('@')[0], now),
-    )
-    await db.commit()
+    try:
+        await db.execute(
+            "INSERT INTO users (id, email, password_hash, name, role, created_at) VALUES (?, ?, ?, ?, 'customer', ?)",
+            (user_id, email, hash_password(req.password), name, now),
+        )
+        await db.commit()
+    except Exception:
+        # UNIQUE constraint on email handles race condition
+        raise HTTPException(status_code=400, detail="Email already registered")
     # Auto-login after registration
     token = create_access_token({"sub": user_id, "role": "customer"})
     return TokenResponse(
         access_token=token,
         user={
             "id": user_id,
-            "email": req.email,
-            "name": req.name or req.email.split('@')[0],
+            "email": email,
+            "name": name,
             "role": "customer",
         },
     )
@@ -92,29 +100,36 @@ async def register_user(req: RegisterRequest, db: aiosqlite.Connection = Depends
 
 @router.post("/setup")
 async def initial_setup(db: aiosqlite.Connection = Depends(get_db)):
-    """Create default super admin if none exists."""
+    """Create default super admin if none exists.
+    Reads credentials from environment variables (fix #1 - no hardcoded creds)."""
     cursor = await db.execute("SELECT COUNT(*) as cnt FROM users WHERE role = 'super_admin'")
     row = await cursor.fetchone()
     if dict(row)["cnt"] > 0:
         raise HTTPException(status_code=400, detail="Super admin already exists")
+    admin_email = os.environ.get("ADMIN_EMAIL", "admin@snapleads.store")
+    admin_password = os.environ.get("ADMIN_PASSWORD")
+    if not admin_password:
+        raise HTTPException(status_code=500, detail="ADMIN_PASSWORD environment variable not set")
     user_id = str(uuid.uuid4())
     now = datetime.now(timezone.utc).isoformat()
-    await db.execute(
-        "INSERT INTO users (id, email, password_hash, name, role, created_at) VALUES (?, ?, ?, ?, ?, ?)",
-        (user_id, "admin@snapleads.store", hash_password("SnapLeads@2026"), "Super Admin", "super_admin", now),
-    )
-    await db.commit()
+    try:
+        await db.execute(
+            "INSERT INTO users (id, email, password_hash, name, role, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+            (user_id, admin_email, hash_password(admin_password), "Super Admin", "super_admin", now),
+        )
+        await db.commit()
+    except Exception:
+        # UNIQUE constraint race condition guard (fix #2)
+        raise HTTPException(status_code=400, detail="Super admin already exists")
     return {
         "message": "Super admin created",
-        "email": "admin@snapleads.store",
-        "password": "SnapLeads@2026",
+        "email": admin_email,
     }
 
 
 @router.get("/me")
-async def get_me(db: aiosqlite.Connection = Depends(get_db), token: str = ""):
-    """Get current user info from token."""
-    user = await get_current_user(db, token)
+async def get_me(user: dict = Depends(get_current_user)):
+    """Get current user info from Authorization header (fix #4)."""
     return {
         "id": user["id"],
         "email": user["email"],

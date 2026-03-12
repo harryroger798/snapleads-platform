@@ -2,12 +2,12 @@
 import uuid
 from datetime import datetime, timezone, timedelta
 
-from fastapi import APIRouter, Depends, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException
 import aiosqlite
 
 from app.database import get_db
 from app.models.schemas import LogUsageRequest
-from app.services.auth import decode_token
+from app.routes.auth_deps import require_licensed_user
 
 router = APIRouter(prefix="/api/usage", tags=["usage"])
 
@@ -30,39 +30,16 @@ PLAN_QUOTAS = {
 }
 
 
-async def require_licensed_user(
-    authorization: str = Header(""),
-    db: aiosqlite.Connection = Depends(get_db),
-) -> dict:
-    """Require a valid licensed user."""
-    token = authorization.replace("Bearer ", "") if authorization.startswith("Bearer ") else authorization
-    if not token:
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    payload = decode_token(token)
-    if not payload:
-        raise HTTPException(status_code=401, detail="Invalid or expired token")
-    user_id = payload.get("sub")
-    if not user_id:
-        raise HTTPException(status_code=401, detail="Invalid token payload")
-    cursor = await db.execute("SELECT * FROM users WHERE id = ?", (user_id,))
-    user = await cursor.fetchone()
-    if not user:
-        raise HTTPException(status_code=401, detail="User not found")
-    user_dict = dict(user)
-    if user_dict["status"] != "active":
-        raise HTTPException(status_code=403, detail="Account suspended")
-    return user_dict
-
-
 async def _get_user_plan(user_id: str, db: aiosqlite.Connection) -> str:
-    """Get the user's current plan from their license key."""
+    """Get the user's current plan from their license key (filtered by user)."""
+    # Find license keys activated on devices associated with this user's email
     cursor = await db.execute(
         """SELECT lk.plan FROM license_keys lk
-           JOIN activations a ON lk.id = a.license_id
            WHERE lk.status = 'active'
+           AND lk.assigned_to_email = (SELECT email FROM users WHERE id = ?)
            AND (lk.expires_at IS NULL OR lk.expires_at > ?)
            ORDER BY lk.created_at DESC LIMIT 1""",
-        (datetime.now(timezone.utc).isoformat(),),
+        (user_id, datetime.now(timezone.utc).isoformat()),
     )
     row = await cursor.fetchone()
     if row:
@@ -113,7 +90,6 @@ async def check_quota(
     plan = await _get_user_plan(user["id"], db)
     quotas = PLAN_QUOTAS.get(plan, PLAN_QUOTAS["starter"])
 
-    quota_key = f"{action}s_per_day" if not action.endswith("s") else f"{action}_per_day"
     # Normalize: search -> searches_per_day, export -> exports_per_day
     key_map = {
         "search": "searches_per_day",
