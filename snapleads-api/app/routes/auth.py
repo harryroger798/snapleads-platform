@@ -6,7 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException
 import aiosqlite
 
 from app.database import get_db
-from app.models.schemas import LoginRequest, TokenResponse, CreateUserRequest
+from app.models.schemas import LoginRequest, RegisterRequest, TokenResponse, CreateUserRequest
 from app.services.auth import hash_password, verify_password, create_access_token, decode_token
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
@@ -55,6 +55,37 @@ async def login(req: LoginRequest, db: aiosqlite.Connection = Depends(get_db)):
             "email": user_dict["email"],
             "name": user_dict["name"],
             "role": user_dict["role"],
+        },
+    )
+
+
+@router.post("/register")
+async def register_user(req: RegisterRequest, db: aiosqlite.Connection = Depends(get_db)):
+    """Register a new user account (customer role). Used by desktop app."""
+    if not req.email or not req.password:
+        raise HTTPException(status_code=400, detail="Email and password are required")
+    if len(req.password) < 6:
+        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    # Check duplicate email
+    cursor = await db.execute("SELECT id FROM users WHERE email = ?", (req.email,))
+    if await cursor.fetchone():
+        raise HTTPException(status_code=400, detail="Email already registered")
+    user_id = str(uuid.uuid4())
+    now = datetime.now(timezone.utc).isoformat()
+    await db.execute(
+        "INSERT INTO users (id, email, password_hash, name, role, created_at) VALUES (?, ?, ?, ?, 'customer', ?)",
+        (user_id, req.email, hash_password(req.password), req.name or req.email.split('@')[0], now),
+    )
+    await db.commit()
+    # Auto-login after registration
+    token = create_access_token({"sub": user_id, "role": "customer"})
+    return TokenResponse(
+        access_token=token,
+        user={
+            "id": user_id,
+            "email": req.email,
+            "name": req.name or req.email.split('@')[0],
+            "role": "customer",
         },
     )
 

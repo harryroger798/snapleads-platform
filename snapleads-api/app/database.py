@@ -82,5 +82,75 @@ async def init_db():
             CREATE INDEX IF NOT EXISTS idx_activations_license ON activations(license_id);
             CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
             CREATE INDEX IF NOT EXISTS idx_users_parent ON users(parent_id);
+
+            -- ═══ Desktop-First SaaS Tables (v3.5.2) ═══
+
+            CREATE TABLE IF NOT EXISTS teams (
+                id TEXT PRIMARY KEY,
+                name TEXT NOT NULL,
+                owner_id TEXT NOT NULL,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (owner_id) REFERENCES users(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS team_members (
+                id TEXT PRIMARY KEY,
+                team_id TEXT NOT NULL,
+                user_id TEXT NOT NULL,
+                role TEXT NOT NULL DEFAULT 'member',
+                joined_at TEXT NOT NULL,
+                FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
+                FOREIGN KEY (user_id) REFERENCES users(id),
+                UNIQUE(team_id, user_id)
+            );
+
+            CREATE TABLE IF NOT EXISTS shared_leads (
+                id TEXT PRIMARY KEY,
+                team_id TEXT NOT NULL,
+                shared_by TEXT NOT NULL,
+                email TEXT DEFAULT '',
+                phone TEXT DEFAULT '',
+                name TEXT DEFAULT '',
+                platform TEXT DEFAULT '',
+                source_keyword TEXT DEFAULT '',
+                source_url TEXT DEFAULT '',
+                quality_score INTEGER DEFAULT 0,
+                metadata TEXT DEFAULT '',
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
+                FOREIGN KEY (shared_by) REFERENCES users(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS usage_logs (
+                id TEXT PRIMARY KEY,
+                user_id TEXT NOT NULL,
+                action TEXT NOT NULL,
+                detail TEXT DEFAULT '',
+                platform TEXT DEFAULT '',
+                lead_count INTEGER DEFAULT 0,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            );
+
+            CREATE TABLE IF NOT EXISTS activity_feed (
+                id TEXT PRIMARY KEY,
+                team_id TEXT NOT NULL,
+                user_id TEXT NOT NULL,
+                action TEXT NOT NULL,
+                detail TEXT DEFAULT '',
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE,
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_teams_owner ON teams(owner_id);
+            CREATE INDEX IF NOT EXISTS idx_team_members_team ON team_members(team_id);
+            CREATE INDEX IF NOT EXISTS idx_team_members_user ON team_members(user_id);
+            CREATE INDEX IF NOT EXISTS idx_shared_leads_team ON shared_leads(team_id);
+            CREATE INDEX IF NOT EXISTS idx_shared_leads_platform ON shared_leads(platform);
+            CREATE INDEX IF NOT EXISTS idx_usage_logs_user ON usage_logs(user_id);
+            CREATE INDEX IF NOT EXISTS idx_usage_logs_action ON usage_logs(action);
+            CREATE INDEX IF NOT EXISTS idx_usage_logs_created ON usage_logs(created_at);
+            CREATE INDEX IF NOT EXISTS idx_activity_feed_team ON activity_feed(team_id);
         """)
         await db.commit()

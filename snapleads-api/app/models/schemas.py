@@ -8,6 +8,12 @@ class LoginRequest(BaseModel):
     password: str
 
 
+class RegisterRequest(BaseModel):
+    email: str
+    password: str
+    name: str
+
+
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
@@ -66,3 +72,36 @@ class StatsResponse(BaseModel):
     keys_expiring_30d: int = 0
     revenue_usd: int = 0
     revenue_inr: int = 0
+
+
+# Team schemas
+class CreateTeamRequest(BaseModel):
+    name: str
+
+
+class InviteTeamMemberRequest(BaseModel):
+    email: str
+    role: str = "member"  # member, admin
+
+
+class ShareLeadRequest(BaseModel):
+    email: str = ""
+    phone: str = ""
+    name: str = ""
+    platform: str = ""
+    source_keyword: str = ""
+    source_url: str = ""
+    quality_score: int = 0
+    metadata: str = ""  # JSON string for extra fields
+
+
+class ShareLeadsBatchRequest(BaseModel):
+    leads: list[ShareLeadRequest]
+
+
+# Usage schemas
+class LogUsageRequest(BaseModel):
+    action: str  # search, export, enrichment, share_lead, extraction
+    detail: str = ""
+    platform: str = ""
+    lead_count: int = 0
