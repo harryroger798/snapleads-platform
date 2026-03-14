@@ -5,9 +5,9 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://s3.us-west-1.idrivee2.com/crop-spray-uploads/leads-cm-database/SnapLeads-Setup-3.5.12.exe";
-const DOWNLOAD_MAC = "https://s3.us-west-1.idrivee2.com/crop-spray-uploads/leads-cm-database/SnapLeads-3.5.12-arm64-mac.zip";
-const DOWNLOAD_LINUX = "https://s3.us-west-1.idrivee2.com/crop-spray-uploads/leads-cm-database/SnapLeads-3.5.12.AppImage";
+const DOWNLOAD_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.5.12/SnapLeads-Setup-3.5.12.exe";
+const DOWNLOAD_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.5.12/SnapLeads-3.5.12-arm64-mac.zip";
+const DOWNLOAD_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.5.12/SnapLeads-3.5.12.AppImage";
 const VERSION = "3.5.12";
 
 type OSTab = "windows" | "macos" | "linux";
