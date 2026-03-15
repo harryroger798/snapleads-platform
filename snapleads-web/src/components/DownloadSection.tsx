@@ -5,16 +5,16 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-Setup-3.5.14.exe";
-const DOWNLOAD_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.14-mac.zip";
-const DOWNLOAD_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.14-mac.zip";
-const VERSION = "3.5.14";
+const DOWNLOAD_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-Setup-3.5.15.exe";
+const DOWNLOAD_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.15-arm64-mac.zip";
+const DOWNLOAD_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.15-arm64-mac.zip";
+const VERSION = "3.5.15";
 
 type OSTab = "windows" | "macos" | "linux";
 
 const VT_SCAN_URLS: Record<OSTab, string> = {
-    windows: "https://www.virustotal.com/gui/file/e7c78a728bbb9a8d1002c1e41885748a0c464dd1640e95430f775a6c2f0dd0a6",
-    macos: "https://www.virustotal.com/gui/file/6c9e2fd4a942852fd95468cf35b61fcb3d9ff56ad3ef87555270b5111015a371",
+    windows: "https://www.virustotal.com/gui/file/64b2e873d78aebdeba36cd3e71ce591e3602cb45757e1444253330896951dca6",
+    macos: "https://www.virustotal.com/gui/file/17bbf3c482b253c378a2f882dba9a69405eb8fcd3e2c31e593c97b8782f11ad3",
     linux: "https://www.virustotal.com/gui/file/pending-linux-build",
 };
 
