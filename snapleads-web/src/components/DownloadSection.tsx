@@ -5,10 +5,10 @@ interface DownloadSectionProps {
   isDark: boolean;
 }
 
-const DOWNLOAD_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.5.29/SnapLeads-Setup-3.5.29.exe";
-const DOWNLOAD_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.5.29/SnapLeads-3.5.29-arm64-mac.zip";
-const DOWNLOAD_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/v3.5.29/SnapLeads-3.5.29-arm64-mac.zip";
-const VERSION = "3.5.29";
+const DOWNLOAD_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.30.exe";
+const DOWNLOAD_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.30-arm64-mac.zip";
+const DOWNLOAD_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.30-arm64-mac.zip";
+const VERSION = "3.5.30";
 
 type OSTab = "windows" | "macos" | "linux";
 
