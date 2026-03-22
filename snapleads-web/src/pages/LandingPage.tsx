@@ -222,7 +222,7 @@ function Stats() {
           </motion.div>
           <motion.div variants={fadeIn} className="border-l-2 border-white/30 pl-6">
             <h6 className="font-mono text-xs uppercase tracking-widest text-white/80 mb-4">Platform Coverage</h6>
-            <div className="text-5xl font-black text-white mb-2"><span ref={s2.ref}>{s2.count}</span>+</div>
+            <div className="text-5xl font-black text-white mb-2"><span ref={s2.ref}>{s2.count}</span></div>
             <p className="text-white/70 text-sm">Social platforms and data sources supported. LinkedIn, Google Maps, Reddit, Telegram, and more.</p>
           </motion.div>
           <motion.div variants={fadeIn} className="border-l-2 border-white/30 pl-6">
@@ -273,7 +273,7 @@ function AutoDemoVideo() {
       subtitle: 'Select platforms, enter keywords, set extraction methods',
       zoom: { scale: 1.35, x: '-12%', y: '-8%' },
       annotations: [
-        { label: '9 Platforms', x: '72%', y: '42%', color: 'bg-accent', delay: 0.3 },
+        { label: '20 Platforms', x: '72%', y: '42%', color: 'bg-accent', delay: 0.3 },
         { label: '3 Keywords', x: '72%', y: '22%', color: 'bg-purple-500', delay: 0.6 },
         { label: 'One Click Start', x: '50%', y: '88%', color: 'bg-green-500', delay: 0.9 },
       ],
@@ -718,7 +718,7 @@ function Pricing() {
               </div>
               <div className="p-8">
                 <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">What's Included</h6>
-                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Tumblr)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Desktop app (Win/Mac/Linux)'].map((item, i) => (
+                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Email)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Desktop app (Win/Mac/Linux)'].map((item, i) => (
                   <div key={i} className="flex items-start gap-3 mb-3">
                     <Check size={16} className="text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">{item}</span>
