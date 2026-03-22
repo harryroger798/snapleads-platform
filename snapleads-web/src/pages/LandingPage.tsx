@@ -150,12 +150,12 @@ function Hero() {
       <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="text-5xl md:text-7xl lg:text-8xl font-black uppercase text-center leading-none tracking-tighter max-w-5xl relative z-10">
         Extract <span className="italic text-gray-500">Leads</span> From
         <br />
-        <span className="text-gradient">12+ Platforms</span> In Minutes
+        <span className="text-gradient">20 Platforms</span> In Minutes
       </motion.h1>
       
       {/* Subtitle */}
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-gray-400 text-base md:text-lg max-w-xl text-center mt-6 mb-8 relative z-10">
-        The most powerful desktop app for extracting emails, phones, and business data from social media, Google Maps, and the web. Zero proxies needed.
+        The most powerful desktop app for extracting emails, phones, and business data from 20 platforms — social media, B2B directories, Google Maps, and the web. Zero proxies needed.
       </motion.p>
       
       {/* CTAs */}
@@ -174,7 +174,7 @@ function Hero() {
           <img src="/images/screenshot-extraction-v2.png" alt="SnapLeads App — Configure & Extract Leads" className="w-full h-auto" />
           {/* Annotation overlays */}
           <div className="absolute top-[8%] right-[4%] bg-accent/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg animate-pulse-glow">
-            9 Platforms Selected
+            20 Platforms Available
           </div>
           <div className="absolute bottom-[35%] right-[4%] bg-green-500/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">
             Auto-Verify Emails
@@ -191,7 +191,7 @@ function Hero() {
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="flex items-center gap-12 mx-6">
-              {['LinkedIn', 'Facebook', 'Instagram', 'Reddit', 'Twitter/X', 'Google Maps', 'Telegram', 'WhatsApp', 'TikTok', 'YouTube'].map((name) => (
+              {['LinkedIn', 'Facebook', 'Instagram', 'Reddit', 'Twitter/X', 'Google Maps', 'Telegram', 'WhatsApp', 'TikTok', 'YouTube', 'Pinterest', 'Email', 'IndiaMART', 'JustDial', 'TradeIndia', 'ExportersIndia', 'Email Finder', 'GitHub', 'Business Dirs', 'Google Maps B2B'].map((name) => (
                 <span key={`${i}-${name}`} className="font-mono text-sm uppercase tracking-wider text-gray-600 hover:text-gray-400 transition-colors">{name}</span>
               ))}
             </div>
@@ -205,7 +205,7 @@ function Hero() {
 /* ─── STATS (ORANGE) ─── */
 function Stats() {
   const s1 = useCountUp(10000, 2000)
-  const s2 = useCountUp(12, 1500)
+  const s2 = useCountUp(20, 1500)
   const s3 = useCountUp(100, 1800)
   
   return (
@@ -222,7 +222,7 @@ function Stats() {
           </motion.div>
           <motion.div variants={fadeIn} className="border-l-2 border-white/30 pl-6">
             <h6 className="font-mono text-xs uppercase tracking-widest text-white/80 mb-4">Platform Coverage</h6>
-            <div className="text-5xl font-black text-white mb-2"><span ref={s2.ref}>{s2.count}</span>+</div>
+            <div className="text-5xl font-black text-white mb-2"><span ref={s2.ref}>{s2.count}</span></div>
             <p className="text-white/70 text-sm">Social platforms and data sources supported. LinkedIn, Google Maps, Reddit, Telegram, and more.</p>
           </motion.div>
           <motion.div variants={fadeIn} className="border-l-2 border-white/30 pl-6">
@@ -247,7 +247,7 @@ function WhoWeAre() {
         <div className="animate-marquee inline-flex">
           {[...Array(2)].map((_, i) => (
             <span key={i} className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tight text-gray-800 mx-4">
-              THE MOST POWERFUL DESKTOP APP FOR EXTRACTING LEADS, EMAILS, PHONES AND BUSINESS DATA FROM 12+ SOCIAL PLATFORMS AND GOOGLE MAPS.&nbsp;&nbsp;&nbsp;
+              THE MOST POWERFUL DESKTOP APP FOR EXTRACTING LEADS, EMAILS, PHONES AND BUSINESS DATA FROM 20 PLATFORMS — SOCIAL, B2B DIRECTORIES, AND GOOGLE MAPS.&nbsp;&nbsp;&nbsp;
             </span>
           ))}
         </div>
@@ -273,7 +273,7 @@ function AutoDemoVideo() {
       subtitle: 'Select platforms, enter keywords, set extraction methods',
       zoom: { scale: 1.35, x: '-12%', y: '-8%' },
       annotations: [
-        { label: '9 Platforms', x: '72%', y: '42%', color: 'bg-accent', delay: 0.3 },
+        { label: '20 Platforms', x: '72%', y: '42%', color: 'bg-accent', delay: 0.3 },
         { label: '3 Keywords', x: '72%', y: '22%', color: 'bg-purple-500', delay: 0.6 },
         { label: 'One Click Start', x: '50%', y: '88%', color: 'bg-green-500', delay: 0.9 },
       ],
@@ -329,7 +329,7 @@ function AutoDemoVideo() {
             <h2 className="text-4xl md:text-6xl font-black uppercase mt-6 tracking-tight">
               See The <span className="text-gradient">Extraction Power</span>
             </h2>
-            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">Watch how SnapLeads extracts 329 verified leads from 9 platforms in minutes. Auto-playing demo with zoom-in detail views.</p>
+            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">Watch how SnapLeads extracts verified leads from 20 platforms in minutes. Auto-playing demo with zoom-in detail views.</p>
           </motion.div>
 
           {/* Step indicators */}
@@ -459,12 +459,12 @@ function AppDemo() {
     {
       tab: 'Configure',
       title: 'Set Up Your Extraction in Seconds',
-      desc: 'Choose from 9+ platforms, enter your keywords, configure extraction methods, and hit start. The intuitive interface makes lead extraction effortless.',
+      desc: 'Choose from 20 platforms (12 social + 8 B2B), enter your keywords, configure extraction methods, and hit start. The intuitive interface makes lead extraction effortless.',
       img: '/images/screenshot-extraction-v2.png',
       annotations: [
         { label: 'Session Name', pos: 'top-[13%] left-[16%]', color: 'bg-blue-500/90' },
         { label: 'Multi-Keyword Support', pos: 'top-[25%] left-[16%]', color: 'bg-purple-500/90' },
-        { label: '9 Platforms', pos: 'top-[42%] left-[16%]', color: 'bg-accent/90' },
+        { label: '20 Platforms', pos: 'top-[42%] left-[16%]', color: 'bg-accent/90' },
       ]
     },
     {
@@ -500,7 +500,7 @@ function AppDemo() {
             <h2 className="text-4xl md:text-6xl font-black uppercase mt-6 tracking-tight">
               Real App. <span className="text-gradient">Real Results.</span>
             </h2>
-            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">No mockups, no fake data — these are actual screenshots from SnapLeads extracting leads across 9 platforms.</p>
+            <p className="text-gray-400 mt-4 max-w-2xl mx-auto">No mockups, no fake data — these are actual screenshots from SnapLeads extracting leads across 20 platforms.</p>
           </motion.div>
           
           {/* Tab Switcher */}
@@ -540,7 +540,7 @@ function AppDemo() {
 /* ─── FEATURES (VALUE PROPS) ─── */
 function Features() {
   const features = [
-    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, and 8 more platforms.', img: '/images/screenshot-extraction-v2.png' },
+    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, IndiaMART, JustDial, and 14 more platforms.', img: '/images/screenshot-extraction-v2.png' },
     { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/screenshot-running-v2.png' },
     { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/screenshot-running-v2.png' },
     { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/screenshot-results-v2.png' },
@@ -615,7 +615,7 @@ function Platforms() {
       <div className="max-w-6xl mx-auto">
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
           <motion.div variants={fadeIn} className="text-center mb-16">
-            <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-gray-300 px-4 py-2 rounded-full">[ Platforms — 12+ ]</span>
+            <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-gray-300 px-4 py-2 rounded-full">[ Platforms — 20 ]</span>
             <h2 className="text-4xl md:text-6xl font-black uppercase mt-6 tracking-tight">
               Our <span className="italic text-gray-400">Supported</span> Platforms
             </h2>
@@ -718,7 +718,7 @@ function Pricing() {
               </div>
               <div className="p-8">
                 <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">What's Included</h6>
-                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Tumblr)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Desktop app (Win/Mac/Linux)'].map((item, i) => (
+                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Email)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Desktop app (Win/Mac/Linux)'].map((item, i) => (
                   <div key={i} className="flex items-start gap-3 mb-3">
                     <Check size={16} className="text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">{item}</span>
@@ -743,7 +743,7 @@ function Pricing() {
               </div>
               <div className="p-8">
                 <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">Everything in Starter, plus</h6>
-                {['All 12+ platforms + Google Maps', 'Scheduled automated extractions', 'Email outreach campaigns', 'HubSpot & Salesforce CRM export', 'Telegram + WhatsApp extractors', 'Website email finder', 'Unlimited leads per extraction', 'Priority support & updates'].map((item, i) => (
+                {['All 20 platforms including B2B directories', 'Scheduled automated extractions', 'Email outreach campaigns', 'HubSpot & Salesforce CRM export', 'Telegram + WhatsApp extractors', 'Website email finder', 'Unlimited leads per extraction', 'Priority support & updates'].map((item, i) => (
                   <div key={i} className="flex items-start gap-3 mb-3">
                     <Check size={16} className="text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">{item}</span>
@@ -861,7 +861,7 @@ function HowItWorks() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/screenshot-extraction-v2.png' },
-              { step: '02', title: 'Configure & Extract', desc: 'Select from 9+ platforms, enter keywords, and choose extraction methods. Real app screenshot shown above.', icon: <Search size={28} />, img: '/images/screenshot-extraction-v2.png' },
+              { step: '02', title: 'Configure & Extract', desc: 'Select from 20 platforms (social + B2B), enter keywords, and choose extraction methods. Real app screenshot shown above.', icon: <Search size={28} />, img: '/images/screenshot-extraction-v2.png' },
               { step: '03', title: 'View Results & Export', desc: 'See all leads with email, phone, quality score. Export to CSV, Excel, JSON, or push to HubSpot CRM.', icon: <Users size={28} />, img: '/images/screenshot-results-v2.png' },
             ].map((s, i) => (
               <motion.div key={i} variants={fadeIn} className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-500 group">
@@ -887,7 +887,7 @@ function FAQ() {
   const faqs = [
     { q: 'Is SnapLeads really that affordable?', a: 'Yes! Our Starter plan is just $7/month. We believe powerful lead extraction should not cost hundreds. Your license gives you full access to the desktop app with no hidden costs, no API fees, and no proxy charges.' },
     { q: 'Will my accounts get banned using SnapLeads?', a: 'We have built enterprise-grade account safety: smart rate limiting, randomized behavior patterns, and built-in safety controls. In 6+ months of testing, zero bans reported.' },
-    { q: 'What platforms can I extract leads from?', a: 'LinkedIn, Facebook, Instagram, Reddit, Twitter/X, TikTok, YouTube, Google Maps, Telegram, WhatsApp, and more. Pro plan includes all platforms; Starter includes 5 core platforms.' },
+    { q: 'What platforms can I extract leads from?', a: 'LinkedIn, Facebook, Instagram, Reddit, Twitter/X, TikTok, YouTube, Google Maps, Telegram, WhatsApp, Pinterest, Email, IndiaMART, JustDial, TradeIndia, ExportersIndia, Email Finder B2B, GitHub B2B, Business Directories, and Google Maps B2B. Pro plan includes all 20 platforms; Starter includes 5 core platforms.' },
     { q: 'Does it work on Windows, Mac, and Linux?', a: 'Yes! SnapLeads works on all three platforms. Download the installer for your OS and you are ready in under 2 minutes.' },
     { q: 'Can I export leads to my CRM?', a: 'Pro plan includes direct HubSpot and Salesforce CRM integration. All plans support CSV and Excel export. We are adding more CRM integrations based on user demand.' },
     { q: 'What if I do not like it? Is there a refund?', a: 'We offer a 14-day money-back guarantee on all plans. If SnapLeads does not meet your needs, we will refund you — no questions asked.' },
@@ -959,7 +959,7 @@ function FinalCTA() {
 
 /* ─── KEYWORD MARQUEE ─── */
 function KeywordMarquee() {
-  const keywords = ['Lead Extraction', 'Email Finder', 'Google Maps', 'Account Safety', 'CRM Export', 'No Proxies', 'Desktop App', 'Scheduled Runs']
+  const keywords = ['Lead Extraction', 'Email Finder', 'Google Maps', 'Account Safety', 'CRM Export', 'No Proxies', 'Desktop App', 'Scheduled Runs', 'B2B Directories', '190M+ Database', 'IndiaMART', 'JustDial']
   return (
     <div className="py-6 bg-dark border-t border-b border-dark-border overflow-hidden">
       <div className="flex animate-marquee whitespace-nowrap">
