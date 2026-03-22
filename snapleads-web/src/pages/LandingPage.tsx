@@ -282,24 +282,24 @@ function AutoDemoVideo() {
     {
       img: '/images/screenshot-running-v2.png',
       title: 'Step 2: Extract',
-      subtitle: 'Watch leads pour in across all platforms in real-time',
+      subtitle: 'Configure scraping methods, security settings, and start extracting',
       zoom: { scale: 1.4, x: '-5%', y: '-15%' },
       annotations: [
-        { label: '247 Leads', x: '22%', y: '30%', color: 'bg-green-500', delay: 0.3 },
-        { label: '67% Done', x: '75%', y: '12%', color: 'bg-accent', delay: 0.6 },
-        { label: 'Live Stats', x: '50%', y: '55%', color: 'bg-blue-500', delay: 0.9 },
+        { label: 'Google Dorking', x: '22%', y: '35%', color: 'bg-green-500', delay: 0.3 },
+        { label: 'Anti-Detection', x: '75%', y: '60%', color: 'bg-accent', delay: 0.6 },
+        { label: 'Headless Mode', x: '50%', y: '72%', color: 'bg-blue-500', delay: 0.9 },
       ],
       duration: 5000,
     },
     {
       img: '/images/screenshot-results-v2.png',
       title: 'Step 3: Export',
-      subtitle: '329 verified leads ready for CSV, Excel, or CRM export',
+      subtitle: '495 verified leads ready for CSV, Excel, or CRM export',
       zoom: { scale: 1.3, x: '-8%', y: '-5%' },
       annotations: [
-        { label: '329 Leads', x: '25%', y: '5%', color: 'bg-accent', delay: 0.3 },
-        { label: 'Verified', x: '78%', y: '35%', color: 'bg-green-500', delay: 0.6 },
-        { label: 'Export CSV', x: '82%', y: '5%', color: 'bg-blue-500', delay: 0.9 },
+        { label: '495 Leads', x: '25%', y: '30%', color: 'bg-accent', delay: 0.3 },
+        { label: '304 Phones', x: '78%', y: '30%', color: 'bg-green-500', delay: 0.6 },
+        { label: '100% Complete', x: '50%', y: '15%', color: 'bg-blue-500', delay: 0.9 },
       ],
       duration: 5000,
     },
@@ -469,24 +469,24 @@ function AppDemo() {
     },
     {
       tab: 'Extract',
-      title: 'Watch Leads Pour In — Real-Time',
-      desc: 'Track extraction progress across all platforms with live stats. See total leads, emails found, and phones discovered as they come in.',
+      title: 'Advanced Scraping & Security Controls',
+      desc: 'Choose from Google Dorking, Direct Scraping, and Firecrawl Enrichment. Built-in anti-detection with proxy support and headless mode keeps your accounts safe.',
       img: '/images/screenshot-running-v2.png',
       annotations: [
-        { label: '67% Complete', pos: 'top-[11%] right-[8%]', color: 'bg-accent/90' },
-        { label: '247 Leads Found', pos: 'top-[28%] left-[16%]', color: 'bg-green-500/90' },
-        { label: 'Per-Platform Breakdown', pos: 'top-[55%] left-[16%]', color: 'bg-blue-500/90' },
+        { label: 'Google Dorking', pos: 'top-[30%] left-[16%]', color: 'bg-accent/90' },
+        { label: 'Anti-Detection', pos: 'top-[55%] left-[16%]', color: 'bg-green-500/90' },
+        { label: 'Headless Mode', pos: 'top-[68%] right-[8%]', color: 'bg-blue-500/90' },
       ]
     },
     {
       tab: 'Results',
-      title: '329 Verified Leads — Ready to Export',
-      desc: 'View all extracted leads with email, phone, name, platform source, quality score, and verification status. Export to CSV, XLSX, or JSON in one click.',
+      title: '495 Verified Leads — Ready to Export',
+      desc: 'View all extracted leads with email, phone, name, and platform source. 495 total leads, 495 emails found, 304 phones — export to CSV, XLSX, or JSON in one click.',
       img: '/images/screenshot-results-v2.png',
       annotations: [
-        { label: 'Clean Results (Pro)', pos: 'top-[2%] right-[30%]', color: 'bg-accent/90' },
-        { label: 'Export CSV / XLSX / JSON', pos: 'top-[2%] right-[4%]', color: 'bg-green-500/90' },
-        { label: 'Quality Score & Verification', pos: 'top-[45%] right-[8%]', color: 'bg-blue-500/90' },
+        { label: '495 Total Leads', pos: 'top-[28%] left-[16%]', color: 'bg-accent/90' },
+        { label: '495 Emails Found', pos: 'top-[28%] left-[40%]', color: 'bg-green-500/90' },
+        { label: '304 Phones Found', pos: 'top-[28%] right-[8%]', color: 'bg-blue-500/90' },
       ]
     },
   ]
