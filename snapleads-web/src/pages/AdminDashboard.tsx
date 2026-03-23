@@ -4,8 +4,8 @@ import { api } from "../lib/api";
 import { useNavigate } from "react-router-dom";
 import {
   KeyRound, Users, BarChart3, Plus, Search, XCircle, CheckCircle,
-  LogOut, Copy, Download, RefreshCw, UserPlus,
-  TrendingUp, Clock, AlertTriangle, Sun, Moon, PackageOpen
+  LogOut, Copy, Download, RefreshCw,
+  TrendingUp, Clock, AlertTriangle, Sun, Moon
 } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import SnapLeadsLogo from "../components/SnapLeadsLogo";
@@ -25,8 +25,6 @@ interface Stats {
   keys_expiring_30d: number;
   revenue_usd: number;
   revenue_inr: number;
-  master_resellers: number;
-  resellers: number;
 }
 
 interface LicenseKey {
@@ -43,17 +41,7 @@ interface LicenseKey {
   created_at: string;
 }
 
-interface Reseller {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
-  status: string;
-  total_keys: number;
-  created_at: string;
-}
-
-type Tab = "overview" | "keys" | "generate" | "resellers" | "download" | "templates";
+type Tab = "overview" | "keys" | "generate" | "download" | "templates";
 
 export default function AdminDashboard() {
   const { user, logout } = useAuth();
@@ -66,7 +54,6 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterPlan, setFilterPlan] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
-  const [resellers, setResellers] = useState<Reseller[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Generate form
@@ -77,13 +64,6 @@ export default function AdminDashboard() {
   const [genName, setGenName] = useState("");
   const [genNotes, setGenNotes] = useState("");
   const [generatedKeys, setGeneratedKeys] = useState<Array<{ key: string; plan: string; billing_cycle: string; expires_at: string }>>([]);
-
-  // Reseller form
-  const [resName, setResName] = useState("");
-  const [resEmail, setResEmail] = useState("");
-  const [resPassword, setResPassword] = useState("");
-  const [resRole, setResRole] = useState("reseller");
-  const [showResForm, setShowResForm] = useState(false);
 
   const [message, setMessage] = useState("");
   const { isDark, toggleTheme } = useTheme();
@@ -130,16 +110,8 @@ export default function AdminDashboard() {
     setLoading(false);
   }, [keysPage, filterPlan, filterStatus, searchQuery]);
 
-  const loadResellers = useCallback(async () => {
-    try {
-      const data = await api.adminListResellers();
-      setResellers(data.resellers);
-    } catch { /* ignore */ }
-  }, []);
-
   useEffect(() => { loadStats(); }, [loadStats]);
   useEffect(() => { if (tab === "keys" || tab === "templates") loadKeys(); }, [tab, loadKeys]);
-  useEffect(() => { if (tab === "resellers") loadResellers(); }, [tab, loadResellers]);
 
   const handleGenerate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -172,28 +144,6 @@ export default function AdminDashboard() {
       await api.adminReactivateKey(id);
       loadKeys();
       loadStats();
-    } catch { /* ignore */ }
-  };
-
-  const handleCreateReseller = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await api.adminCreateReseller({ email: resEmail, password: resPassword, name: resName, role: resRole });
-      setMessage("Reseller created successfully");
-      setShowResForm(false);
-      setResName(""); setResEmail(""); setResPassword("");
-      await loadResellers();
-      await loadStats();
-    } catch (err) {
-      setMessage(err instanceof Error ? err.message : "Failed to create reseller");
-    }
-  };
-
-  const handleSuspendReseller = async (id: string, currentStatus: string) => {
-    const newStatus = currentStatus === "active" ? "suspended" : "active";
-    try {
-      await api.adminUpdateReseller(id, { status: newStatus });
-      loadResellers();
     } catch { /* ignore */ }
   };
 
@@ -257,7 +207,6 @@ export default function AdminDashboard() {
             ["overview", "Overview", BarChart3],
             ["keys", "License Keys", KeyRound],
             ["generate", "Generate Keys", Plus],
-            ["resellers", "Resellers", Users],
             ["download", "Download", DownloadIcon],
             ["templates", "Templates", MessageSquare],
           ] as const).map(([id, label, Icon]) => (
@@ -312,7 +261,7 @@ export default function AdminDashboard() {
                   <span className={`${t.textSecondary} text-sm`}>Activations</span>
                 </div>
                 <p className={`text-2xl font-bold ${t.textPrimary}`}>{stats.total_activations}</p>
-                <p className={`text-sm ${t.textMuted} mt-1`}>{(stats.master_resellers || 0) + (stats.resellers || 0)} resellers</p>
+                <p className={`text-sm ${t.textMuted} mt-1`}>Devices connected</p>
               </div>
               <div className={`${t.card} rounded-xl p-5`}>
                 <div className="flex items-center gap-2 mb-3">
@@ -354,10 +303,7 @@ export default function AdminDashboard() {
                   <button onClick={() => setTab("generate")} className="p-3 bg-indigo-600/20 border border-indigo-500/30 rounded-lg text-indigo-300 text-sm hover:bg-indigo-600/30 transition flex items-center gap-2">
                     <Plus className="w-4 h-4" /> Generate Keys
                   </button>
-                  <button onClick={() => setTab("resellers")} className="p-3 bg-purple-600/20 border border-purple-500/30 rounded-lg text-purple-300 text-sm hover:bg-purple-600/30 transition flex items-center gap-2">
-                    <UserPlus className="w-4 h-4" /> Add Reseller
-                  </button>
-                  <button onClick={() => setTab("keys")} className="p-3 bg-emerald-600/20 border border-emerald-500/30 rounded-lg text-emerald-300 text-sm hover:bg-emerald-600/30 transition flex items-center gap-2">
+                    <button onClick={() => setTab("keys")} className="p-3 bg-emerald-600/20 border border-emerald-500/30 rounded-lg text-emerald-300 text-sm hover:bg-emerald-600/30 transition flex items-center gap-2">
                     <KeyRound className="w-4 h-4" /> View All Keys
                   </button>
                   <button onClick={loadStats} className="p-3 bg-slate-600/20 border border-slate-500/30 rounded-lg text-slate-300 text-sm hover:bg-slate-600/30 transition flex items-center gap-2">
@@ -573,105 +519,6 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* RESELLERS TAB */}
-        {tab === "resellers" && (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className={`text-lg font-semibold ${t.textPrimary}`}>Resellers ({resellers.length})</h3>
-              <button onClick={() => setShowResForm(!showResForm)}
-                className="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm transition">
-                <UserPlus className="w-4 h-4" /> {showResForm ? "Cancel" : "Add Reseller"}
-              </button>
-            </div>
-
-            {showResForm && (
-              <form onSubmit={handleCreateReseller} className={`${t.card} rounded-xl p-6 space-y-4`}>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className={`block text-sm font-medium ${t.label} mb-1.5`}>Name</label>
-                    <input type="text" value={resName} onChange={(e) => setResName(e.target.value)} required
-                      className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50`} />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium ${t.label} mb-1.5`}>Email</label>
-                    <input type="email" value={resEmail} onChange={(e) => setResEmail(e.target.value)} required
-                      className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50`} />
-                  </div>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className={`block text-sm font-medium ${t.label} mb-1.5`}>Password</label>
-                    <input type="password" value={resPassword} onChange={(e) => setResPassword(e.target.value)} required
-                      className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50`} />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-medium ${t.label} mb-1.5`}>Role</label>
-                    <select value={resRole} onChange={(e) => setResRole(e.target.value)}
-                      className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50`}>
-                      <option value="reseller">Reseller</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="submit" className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-lg transition hover:from-indigo-500 hover:to-purple-500">
-                  Create Reseller
-                </button>
-              </form>
-            )}
-
-            <div className={`${t.card} rounded-xl overflow-hidden`}>
-              <table className="w-full">
-                <thead>
-                  <tr className={`border-b ${t.border}`}>
-                    <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Name</th>
-                    <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Email</th>
-                    <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Role</th>
-                    <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Keys</th>
-                    <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Status</th>
-                    <th className={`text-left px-4 py-3 text-xs font-medium ${t.textSecondary} uppercase`}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {resellers.map((r) => (
-                    <tr key={r.id} className={`border-b ${t.borderLight} ${t.rowHover} transition`}>
-                      <td className={`px-4 py-3 text-sm ${t.textPrimary}`}>{r.name}</td>
-                      <td className={`px-4 py-3 text-sm ${t.textSecondary}`}>{r.email}</td>
-                      <td className="px-4 py-3">
-                        <span className={`px-2 py-0.5 rounded text-xs font-medium bg-blue-500/20 text-blue-300`}>
-                          Reseller
-                        </span>
-                      </td>
-                      <td className={`px-4 py-3 text-sm ${t.textSecondary}`}>{r.total_keys}</td>
-                      <td className="px-4 py-3">
-                        <span className={`px-2 py-0.5 rounded text-xs font-medium ${r.status === "active" ? "bg-emerald-500/20 text-emerald-300" : "bg-red-500/20 text-red-300"}`}>
-                          {r.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3">
-                        <button onClick={() => handleSuspendReseller(r.id, r.status)}
-                          className={`px-2 py-1 text-xs rounded transition ${r.status === "active" ? "bg-red-500/20 text-red-300 hover:bg-red-500/30" : "bg-emerald-500/20 text-emerald-300 hover:bg-emerald-500/30"}`}>
-                          {r.status === "active" ? "Suspend" : "Activate"}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                  {resellers.length === 0 && (
-                    <tr><td colSpan={6} className="px-4 py-12 text-center">
-                      <div className="flex flex-col items-center gap-3">
-                        <div className="w-16 h-16 bg-slate-700/30 dash-card rounded-2xl flex items-center justify-center">
-                          <PackageOpen className="w-8 h-8 text-slate-500 dash-text-muted" />
-                        </div>
-                        <div>
-                          <p className="text-slate-400 dash-text-secondary font-medium">No resellers yet</p>
-                          <p className="text-slate-500 dash-text-muted text-xs mt-1">Click "Add Reseller" to create your first reseller account</p>
-                        </div>
-                      </div>
-                    </td></tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
         {/* DOWNLOAD TAB */}
         {tab === "download" && (
           <DownloadSection isDark={isDark} />

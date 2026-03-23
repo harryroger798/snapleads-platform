@@ -34,7 +34,7 @@ class CreateUserRequest(BaseModel):
     email: str
     password: str
     name: str
-    role: str = "customer"  # super_admin, master_reseller, reseller, customer
+    role: str = "customer"  # super_admin, customer
 
 
 class UpdateUserRequest(BaseModel):

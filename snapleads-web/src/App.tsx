@@ -5,7 +5,6 @@ import LandingPage from "./pages/LandingPage";
 import LifetimePage from "./pages/LifetimePage";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
-import ResellerDashboard from "./pages/ResellerDashboard";
 
 function ProtectedRoute({ children, roles }: { children: React.ReactNode; roles: string[] }) {
   const token = sessionStorage.getItem("token");
@@ -29,7 +28,6 @@ function App() {
             <Route path="/lifetime" element={<LifetimePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/admin" element={<ProtectedRoute roles={["super_admin"]}><AdminDashboard /></ProtectedRoute>} />
-            <Route path="/reseller" element={<ProtectedRoute roles={["master_reseller", "reseller"]}><ResellerDashboard /></ProtectedRoute>} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </AuthProvider>

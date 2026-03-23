@@ -6,8 +6,8 @@ from fastapi import APIRouter, Depends, HTTPException, Header
 import aiosqlite
 
 from app.database import get_db
-from app.models.schemas import CreateUserRequest, UpdateUserRequest, GenerateKeysRequest
-from app.services.auth import hash_password, decode_token
+from app.models.schemas import GenerateKeysRequest
+from app.services.auth import decode_token
 from app.services.license import generate_keys, get_expiry_date, PRICING
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
@@ -102,13 +102,6 @@ async def get_stats(admin: dict = Depends(require_admin), db: aiosqlite.Connecti
             total_inr += PRICING[plan][cycle]["inr"] * count
     stats["revenue_usd"] = total_usd
     stats["revenue_inr"] = total_inr
-
-    # Reseller counts
-    cursor = await db.execute("SELECT COUNT(*) as cnt FROM users WHERE role = 'master_reseller'")
-    stats["master_resellers"] = dict(await cursor.fetchone())["cnt"]
-
-    cursor = await db.execute("SELECT COUNT(*) as cnt FROM users WHERE role = 'reseller'")
-    stats["resellers"] = dict(await cursor.fetchone())["cnt"]
 
     return stats
 
@@ -243,69 +236,3 @@ async def reactivate_key(key_id: str, admin: dict = Depends(require_admin), db: 
     await db.execute("UPDATE license_keys SET status = 'active' WHERE id = ?", (key_id,))
     await db.commit()
     return {"message": "Key reactivated", "id": key_id}
-
-
-@router.post("/resellers")
-async def create_reseller(
-    req: CreateUserRequest,
-    admin: dict = Depends(require_admin),
-    db: aiosqlite.Connection = Depends(get_db),
-):
-    """Create a new reseller (master_reseller or reseller)."""
-    if req.role not in ("master_reseller", "reseller"):
-        raise HTTPException(status_code=400, detail="Role must be 'master_reseller' or 'reseller'")
-    # Check duplicate email
-    cursor = await db.execute("SELECT id FROM users WHERE email = ?", (req.email,))
-    if await cursor.fetchone():
-        raise HTTPException(status_code=400, detail="Email already exists")
-    user_id = str(uuid.uuid4())
-    now = datetime.now(timezone.utc).isoformat()
-    await db.execute(
-        "INSERT INTO users (id, email, password_hash, name, role, parent_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        (user_id, req.email, hash_password(req.password), req.name, req.role, admin["id"], now),
-    )
-    await db.commit()
-    return {
-        "id": user_id,
-        "email": req.email,
-        "name": req.name,
-        "role": req.role,
-        "created_at": now,
-    }
-
-
-@router.get("/resellers")
-async def list_resellers(admin: dict = Depends(require_admin), db: aiosqlite.Connection = Depends(get_db)):
-    """List all resellers."""
-    cursor = await db.execute(
-        "SELECT id, email, name, role, status, parent_id, created_at, last_login FROM users WHERE role IN ('master_reseller', 'reseller') ORDER BY created_at DESC"
-    )
-    rows = await cursor.fetchall()
-    resellers = []
-    for row in rows:
-        r = dict(row)
-        # Count their keys
-        cursor2 = await db.execute("SELECT COUNT(*) as cnt FROM license_keys WHERE created_by = ?", (r["id"],))
-        r["total_keys"] = dict(await cursor2.fetchone())["cnt"]
-        resellers.append(r)
-    return {"resellers": resellers}
-
-
-@router.put("/resellers/{user_id}")
-async def update_reseller(
-    user_id: str,
-    req: UpdateUserRequest,
-    admin: dict = Depends(require_admin),
-    db: aiosqlite.Connection = Depends(get_db),
-):
-    """Update a reseller's info or status."""
-    cursor = await db.execute("SELECT * FROM users WHERE id = ? AND role IN ('master_reseller', 'reseller')", (user_id,))
-    user = await cursor.fetchone()
-    if not user:
-        raise HTTPException(status_code=404, detail="Reseller not found")
-    if req.name is not None:
-        await db.execute("UPDATE users SET name = ? WHERE id = ?", (req.name, user_id))
-    if req.status is not None:
-        await db.execute("UPDATE users SET status = ? WHERE id = ?", (req.status, user_id))
-    await db.commit()
-    return {"message": "Reseller updated", "id": user_id}

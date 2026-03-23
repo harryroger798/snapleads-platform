@@ -39,7 +39,7 @@ export default function Login() {
         if (payload.role === "super_admin") {
           navigate("/admin");
         } else {
-          navigate("/reseller");
+          navigate("/login"); // Only super_admin can access the portal
         }
       }
     } catch (err) {
