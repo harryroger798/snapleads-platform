@@ -39,22 +39,6 @@ export const api = {
   adminGetKey: (id: string) => request(`/api/admin/keys/${id}`),
   adminRevokeKey: (id: string) => request(`/api/admin/keys/${id}/revoke`, { method: "PUT" }),
   adminReactivateKey: (id: string) => request(`/api/admin/keys/${id}/activate`, { method: "PUT" }),
-  adminCreateReseller: (data: { email: string; password: string; name: string; role: string }) =>
-    request("/api/admin/resellers", { method: "POST", body: JSON.stringify(data) }),
-  adminListResellers: () => request("/api/admin/resellers"),
-  adminUpdateReseller: (id: string, data: { name?: string; status?: string }) =>
-    request(`/api/admin/resellers/${id}`, { method: "PUT", body: JSON.stringify(data) }),
-
-  // Reseller
-  resellerStats: () => request("/api/reseller/stats"),
-  resellerGenerateKeys: (data: { plan: string; billing_cycle: string; quantity: number; assigned_to_email?: string; assigned_to_name?: string; notes?: string }) =>
-    request("/api/reseller/keys/generate", { method: "POST", body: JSON.stringify(data) }),
-  resellerListKeys: (params?: { page?: number; search?: string }) => {
-    const q = new URLSearchParams();
-    if (params?.page) q.set("page", String(params.page));
-    if (params?.search) q.set("search", params.search);
-    return request(`/api/reseller/keys?${q.toString()}`);
-  },
   // License (public)
   validateLicense: (key: string, device_id: string) =>
     request("/api/license/validate", { method: "POST", body: JSON.stringify({ key, device_id }) }),

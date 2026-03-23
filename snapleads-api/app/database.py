@@ -39,11 +39,9 @@ async def init_db():
                 password_hash TEXT NOT NULL,
                 name TEXT NOT NULL DEFAULT '',
                 role TEXT NOT NULL DEFAULT 'customer',
-                parent_id TEXT,
                 status TEXT NOT NULL DEFAULT 'active',
                 created_at TEXT NOT NULL,
                 last_login TEXT,
-                FOREIGN KEY (parent_id) REFERENCES users(id)
             );
 
             CREATE TABLE IF NOT EXISTS license_keys (
@@ -92,7 +90,6 @@ async def init_db():
             CREATE INDEX IF NOT EXISTS idx_keys_plan ON license_keys(plan);
             CREATE INDEX IF NOT EXISTS idx_activations_license ON activations(license_id);
             CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);
-            CREATE INDEX IF NOT EXISTS idx_users_parent ON users(parent_id);
 
             -- ═══ Desktop-First SaaS Tables (v3.5.2) ═══
 
