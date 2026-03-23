@@ -756,35 +756,6 @@ function Pricing() {
             </motion.div>
           </div>
           
-          {/* Lifetime Deal */}
-          <motion.div variants={fadeIn} className="mt-6 bg-dark-card border border-accent/20 rounded-2xl p-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 bg-accent text-white font-mono text-xs px-4 py-1.5 rounded-bl-xl">LIMITED TIME</div>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <h3 className="font-mono text-xs uppercase tracking-widest text-accent mb-2">Lifetime Deal — Pay Once, Use Forever</h3>
-                <p className="text-gray-500 text-sm">No subscriptions. Includes all future updates and new features forever.</p>
-              </div>
-              <div className="flex items-center gap-8">
-                <div className="text-center">
-                  <div className="text-gray-500 line-through text-lg">$168</div>
-                  <div className="text-4xl font-black text-white">$99</div>
-                  <span className="bg-red-500/20 text-red-400 font-mono text-[10px] px-2 py-0.5 rounded-full">41% OFF</span>
-                  <div className="text-gray-600 font-mono text-[10px] uppercase mt-1">Starter Lifetime</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-gray-500 line-through text-lg">$456</div>
-                  <div className="text-4xl font-black text-white">$249</div>
-                  <span className="bg-red-500/20 text-red-400 font-mono text-[10px] px-2 py-0.5 rounded-full">45% OFF</span>
-                  <div className="text-gray-600 font-mono text-[10px] uppercase mt-1">Pro Lifetime</div>
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center justify-center gap-2 mt-6">
-              <TrendingUp size={14} className="text-accent" />
-              <span className="text-gray-400 font-mono text-xs uppercase tracking-wider">Only <span className="text-accent font-bold">47 lifetime keys</span> remaining — then this offer is gone forever</span>
-            </div>
-          </motion.div>
-
           {/* Money-back guarantee */}
           <motion.div variants={fadeIn} className="mt-4 text-center">
             <p className="text-gray-500 font-mono text-xs uppercase tracking-wider">14-Day Money-Back Guarantee — No Questions Asked</p>

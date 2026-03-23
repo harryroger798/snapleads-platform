@@ -16,7 +16,6 @@ PLAN_PREFIXES = {
 CYCLE_PREFIXES = {
     "monthly": "M",
     "yearly": "Y",
-    "lifetime": "L",
 }
 
 
@@ -53,8 +52,6 @@ def get_expiry_date(billing_cycle: str) -> str | None:
         return (now + timedelta(days=30)).isoformat()
     elif billing_cycle == "yearly":
         return (now + timedelta(days=365)).isoformat()
-    elif billing_cycle == "lifetime":
-        return (now + timedelta(days=36500)).isoformat()  # 100 years
     return None
 
 
@@ -68,12 +65,10 @@ PRICING = {
     "starter": {
         "monthly": {"usd": 700, "inr": 49900, "usd_display": "$7/mo", "inr_display": "\u20b9499/mo"},
         "yearly": {"usd": 5900, "inr": 449900, "usd_display": "$59/yr", "inr_display": "\u20b94,499/yr"},
-        "lifetime": {"usd": 9900, "inr": 799900, "usd_display": "$99", "inr_display": "\u20b97,999"},
     },
     "pro": {
         "monthly": {"usd": 1900, "inr": 149900, "usd_display": "$19/mo", "inr_display": "\u20b91,499/mo"},
         "yearly": {"usd": 16900, "inr": 1299900, "usd_display": "$169/yr", "inr_display": "\u20b912,999/yr"},
-        "lifetime": {"usd": 24900, "inr": 1999900, "usd_display": "$249", "inr_display": "\u20b919,999"},
     },
 }
 
