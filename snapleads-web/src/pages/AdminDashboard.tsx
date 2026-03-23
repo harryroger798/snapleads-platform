@@ -450,7 +450,6 @@ export default function AdminDashboard() {
                     className={`w-full px-3 py-2.5 ${t.input} border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500/50`}>
                     <option value="monthly">Monthly</option>
                     <option value="yearly">Yearly</option>
-                    <option value="lifetime">Lifetime</option>
                   </select>
                 </div>
               </div>

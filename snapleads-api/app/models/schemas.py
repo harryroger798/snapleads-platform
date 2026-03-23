@@ -45,7 +45,7 @@ class UpdateUserRequest(BaseModel):
 # License key schemas
 class GenerateKeysRequest(BaseModel):
     plan: str = "starter"  # starter, pro
-    billing_cycle: str = "monthly"  # monthly, yearly, lifetime
+    billing_cycle: str = "monthly"  # monthly, yearly
     quantity: int = 1
     assigned_to_email: str = ""
     assigned_to_name: str = ""

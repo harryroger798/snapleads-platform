@@ -117,8 +117,8 @@ async def generate_license_keys(
         raise HTTPException(status_code=400, detail="Quantity must be between 1 and 100")
     if req.plan not in ("starter", "pro"):
         raise HTTPException(status_code=400, detail="Plan must be 'starter' or 'pro'")
-    if req.billing_cycle not in ("monthly", "yearly", "lifetime"):
-        raise HTTPException(status_code=400, detail="Billing cycle must be 'monthly', 'yearly', or 'lifetime'")
+    if req.billing_cycle not in ("monthly", "yearly"):
+        raise HTTPException(status_code=400, detail="Billing cycle must be 'monthly' or 'yearly'")
 
     keys = generate_keys(req.quantity, req.plan, req.billing_cycle)
     now = datetime.now(timezone.utc).isoformat()
