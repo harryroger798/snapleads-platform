@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Zap, Shield, Globe, Clock, Check, ChevronDown, Menu, X, Star, Download, Users, MapPin, MessageCircle, Search, Send, Linkedin, Instagram, Facebook, Twitter, TrendingUp, AlertTriangle, Play, Pause } from 'lucide-react'
+import { ArrowRight, Zap, Shield, Globe, Clock, Check, ChevronDown, Menu, X, Star, Download, Users, MapPin, MessageCircle, Search, Send, Linkedin, Instagram, Facebook, Twitter, TrendingUp, AlertTriangle, Play, Pause, ChevronUp } from 'lucide-react'
 
 /* ─── COUNTER HOOK ─── */
 function useCountUp(end: number, duration = 2000, startOnView = true) {
@@ -95,13 +95,13 @@ function Hero() {
       <div className="absolute top-[5%] right-[15%] w-[350px] h-[350px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(220,50,0,0.08) 0%, transparent 60%)' }} />
       <div className="absolute bottom-[30%] left-[10%] w-[300px] h-[300px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.05) 0%, transparent 60%)' }} />
       
-      {/* Hakari-style sparkle particles */}
-      {[...Array(24)].map((_, i) => {
-        const sizes = [2, 3, 4, 2, 3, 2, 4, 3, 2, 3, 4, 2, 3, 2, 4, 3, 2, 3, 4, 2, 3, 2, 4, 3]
-        const tops = ['8%','15%','22%','35%','45%','55%','65%','75%','12%','28%','42%','58%','72%','85%','18%','32%','48%','62%','78%','5%','25%','50%','70%','90%']
-        const lefts = ['5%','15%','85%','92%','8%','78%','25%','65%','45%','55%','35%','72%','18%','88%','60%','40%','95%','3%','50%','70%','30%','82%','12%','58%']
-        const opacities = [0.15, 0.25, 0.35, 0.2, 0.3, 0.15, 0.25, 0.2, 0.35, 0.15, 0.25, 0.3, 0.2, 0.15, 0.35, 0.25, 0.2, 0.3, 0.15, 0.25, 0.35, 0.2, 0.3, 0.15]
-        const delays = [0, 1.5, 3, 0.5, 2, 3.5, 1, 2.5, 0.8, 1.8, 2.8, 0.3, 1.3, 2.3, 3.3, 0.6, 1.6, 2.6, 3.6, 0.9, 1.9, 2.9, 3.9, 1.2]
+      {/* Sparkle particles (reduced from 24 to 6 for performance) */}
+      {[...Array(6)].map((_, i) => {
+        const sizes = [2, 3, 4, 2, 3, 4]
+        const tops = ['8%','22%','45%','65%','28%','72%']
+        const lefts = ['5%','85%','8%','78%','45%','18%']
+        const opacities = [0.15, 0.35, 0.3, 0.15, 0.25, 0.2]
+        const delays = [0, 3, 2, 3.5, 0.8, 2.3]
         return (
           <div
             key={`sparkle-${i}`}
@@ -146,15 +146,15 @@ function Hero() {
         <Star size={14} className="text-accent fill-accent" />
       </motion.div>
       
-      {/* Headline */}
-      <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="text-5xl md:text-7xl lg:text-8xl font-black uppercase text-center leading-none tracking-tighter max-w-5xl relative z-10">
+      {/* Headline — sm: breakpoint for mobile visibility */}
+      <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="text-3xl sm:text-4xl md:text-7xl lg:text-8xl font-black uppercase text-center leading-none tracking-tighter max-w-5xl relative z-10 px-2">
         Extract <span className="italic text-gray-500">Leads</span> From
         <br />
         <span className="text-gradient">20 Platforms</span> In Minutes
       </motion.h1>
       
       {/* Subtitle */}
-      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-gray-400 text-base md:text-lg max-w-xl text-center mt-6 mb-8 relative z-10">
+      <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }} className="text-gray-400 text-sm sm:text-base md:text-lg max-w-xl text-center mt-4 sm:mt-6 mb-6 sm:mb-8 relative z-10 px-4">
         The most powerful desktop app for extracting emails, phones, and business data from 20 platforms — social media, B2B directories, Google Maps, and the web. Zero proxies needed.
       </motion.p>
       
@@ -171,7 +171,7 @@ function Hero() {
       {/* Hero Image — Real App Screenshot */}
       <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1, duration: 0.8 }} className="relative mt-16 w-full max-w-4xl mx-auto z-10">
         <div className="relative rounded-2xl overflow-hidden border border-dark-border shadow-2xl shadow-accent/10">
-          <img src="/images/screenshot-extraction-v2.png" alt="SnapLeads App — Configure & Extract Leads" className="w-full h-auto" />
+          <img src="/images/screenshot-extraction-v2.webp" alt="SnapLeads App — Configure & Extract Leads from 20 Platforms" className="w-full h-auto" width="1200" height="675" />
           {/* Annotation overlays */}
           <div className="absolute top-[8%] right-[4%] bg-accent/90 backdrop-blur-sm text-white text-[10px] md:text-xs font-mono uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg animate-pulse-glow">
             20 Platforms Available
@@ -268,7 +268,7 @@ function AutoDemoVideo() {
   
   const steps = [
     {
-      img: '/images/screenshot-extraction-v2.png',
+      img: '/images/screenshot-extraction-v2.webp',
       title: 'Step 1: Configure',
       subtitle: 'Select platforms, enter keywords, set extraction methods',
       zoom: { scale: 1.35, x: '-12%', y: '-8%' },
@@ -280,7 +280,7 @@ function AutoDemoVideo() {
       duration: 5000,
     },
     {
-      img: '/images/screenshot-running-v2.png',
+      img: '/images/screenshot-running-v2.webp',
       title: 'Step 2: Extract',
       subtitle: 'Configure scraping methods, security settings, and start extracting',
       zoom: { scale: 1.4, x: '-5%', y: '-15%' },
@@ -292,7 +292,7 @@ function AutoDemoVideo() {
       duration: 5000,
     },
     {
-      img: '/images/screenshot-results-v2.png',
+      img: '/images/screenshot-results-v2.webp',
       title: 'Step 3: Export',
       subtitle: '495 verified leads ready for CSV, Excel, or CRM export',
       zoom: { scale: 1.3, x: '-8%', y: '-5%' },
@@ -460,7 +460,7 @@ function AppDemo() {
       tab: 'Configure',
       title: 'Set Up Your Extraction in Seconds',
       desc: 'Choose from 20 platforms (12 social + 8 B2B), enter your keywords, configure extraction methods, and hit start. The intuitive interface makes lead extraction effortless.',
-      img: '/images/screenshot-extraction-v2.png',
+      img: '/images/screenshot-extraction-v2.webp',
       annotations: [
         { label: 'Session Name', pos: 'top-[13%] left-[16%]', color: 'bg-blue-500/90' },
         { label: 'Multi-Keyword Support', pos: 'top-[25%] left-[16%]', color: 'bg-purple-500/90' },
@@ -471,7 +471,7 @@ function AppDemo() {
       tab: 'Extract',
       title: 'Advanced Scraping & Security Controls',
       desc: 'Choose from Google Dorking, Direct Scraping, and Firecrawl Enrichment. Built-in anti-detection with proxy support and headless mode keeps your accounts safe.',
-      img: '/images/screenshot-running-v2.png',
+      img: '/images/screenshot-running-v2.webp',
       annotations: [
         { label: 'Google Dorking', pos: 'top-[30%] left-[16%]', color: 'bg-accent/90' },
         { label: 'Anti-Detection', pos: 'top-[55%] left-[16%]', color: 'bg-green-500/90' },
@@ -482,7 +482,7 @@ function AppDemo() {
       tab: 'Results',
       title: '495 Verified Leads — Ready to Export',
       desc: 'View all extracted leads with email, phone, name, and platform source. 495 total leads, 495 emails found, 304 phones — export to CSV, XLSX, or JSON in one click.',
-      img: '/images/screenshot-results-v2.png',
+      img: '/images/screenshot-results-v2.webp',
       annotations: [
         { label: '495 Total Leads', pos: 'top-[28%] left-[16%]', color: 'bg-accent/90' },
         { label: '495 Emails Found', pos: 'top-[28%] left-[40%]', color: 'bg-green-500/90' },
@@ -540,10 +540,10 @@ function AppDemo() {
 /* ─── FEATURES (VALUE PROPS) ─── */
 function Features() {
   const features = [
-    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, IndiaMART, JustDial, and 14 more platforms.', img: '/images/screenshot-extraction-v2.png' },
-    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/screenshot-running-v2.png' },
-    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/screenshot-running-v2.png' },
-    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/screenshot-results-v2.png' },
+    { icon: <Search size={24} />, title: 'EXTRACT', subtitle: 'Pull leads from any platform', desc: 'Extract emails, phones, names, and business data from LinkedIn, Instagram, Reddit, Google Maps, IndiaMART, JustDial, and 14 more platforms.', img: '/images/screenshot-extraction-v2.webp' },
+    { icon: <Shield size={24} />, title: 'PROTECT', subtitle: 'Built-in account safety', desc: 'Advanced anti-detection technology with smart rate limiting, randomized behavior patterns, and built-in safety controls to keep your accounts protected.', img: '/images/screenshot-running-v2.webp' },
+    { icon: <Zap size={24} />, title: 'AUTOMATE', subtitle: 'Schedule & scale extractions', desc: 'Set up recurring extraction schedules. Run campaigns on autopilot while you focus on closing deals.', img: '/images/screenshot-running-v2.webp' },
+    { icon: <Clock size={24} />, title: 'ENRICH', subtitle: 'Verify & export instantly', desc: 'Built-in email verification, CSV/Excel export, HubSpot CRM integration, and email outreach — all in one app.', img: '/images/screenshot-results-v2.webp' },
   ]
   
   return (
@@ -593,7 +593,7 @@ function FeatureCard({ icon, title, subtitle, desc, img }: { icon: React.ReactNo
           </a>
         </div>
         <div className={`w-full md:w-80 h-56 md:h-auto overflow-hidden transition-all duration-500 bg-[#0A0A0A] flex items-center justify-center ${hovered ? 'md:w-96' : 'md:w-80'}`}>
-          <img src={img} alt={title} className={`w-full h-full object-cover transition-transform duration-700 ${hovered ? 'scale-110' : 'scale-100'}`} />
+          <img src={img} alt={title} loading="lazy" className={`w-full h-full object-cover transition-transform duration-700 ${hovered ? 'scale-110' : 'scale-100'}`} />
         </div>
       </div>
     </motion.div>
@@ -860,13 +860,13 @@ function HowItWorks() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/screenshot-extraction-v2.png' },
-              { step: '02', title: 'Configure & Extract', desc: 'Select from 20 platforms (social + B2B), enter keywords, and choose extraction methods. Real app screenshot shown above.', icon: <Search size={28} />, img: '/images/screenshot-extraction-v2.png' },
-              { step: '03', title: 'View Results & Export', desc: 'See all leads with email, phone, quality score. Export to CSV, Excel, JSON, or push to HubSpot CRM.', icon: <Users size={28} />, img: '/images/screenshot-results-v2.png' },
+              { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/screenshot-extraction-v2.webp' },
+              { step: '02', title: 'Configure & Extract', desc: 'Select from 20 platforms (social + B2B), enter keywords, and choose extraction methods. Real app screenshot shown above.', icon: <Search size={28} />, img: '/images/screenshot-extraction-v2.webp' },
+              { step: '03', title: 'View Results & Export', desc: 'See all leads with email, phone, quality score. Export to CSV, Excel, JSON, or push to HubSpot CRM.', icon: <Users size={28} />, img: '/images/screenshot-results-v2.webp' },
             ].map((s, i) => (
               <motion.div key={i} variants={fadeIn} className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-500 group">
                 <div className="bg-[#0A0A0A] flex items-center justify-center p-1 overflow-hidden">
-                  <img src={s.img} alt={s.title} className="w-full h-44 object-cover object-top rounded-t-xl" />
+                  <img src={s.img} alt={s.title} loading="lazy" className="w-full h-44 object-cover object-top rounded-t-xl" />
                 </div>
                 <div className="p-8">
                   <span className="text-accent font-mono text-lg font-bold">{s.step}.</span>
@@ -986,9 +986,9 @@ function Footer() {
             <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">Follow Us</h6>
             <div className="space-y-3">
               {[
-                { icon: <Twitter size={16} />, name: 'X (Twitter)', href: 'https://x.com' },
-                { icon: <Facebook size={16} />, name: 'Facebook', href: 'https://facebook.com' },
-                { icon: <Linkedin size={16} />, name: 'LinkedIn', href: 'https://linkedin.com' },
+                { icon: <Twitter size={16} />, name: 'X (Twitter)', href: 'https://x.com/getsnapleads' },
+                { icon: <Facebook size={16} />, name: 'Facebook', href: 'https://facebook.com/getsnapleads' },
+                { icon: <Linkedin size={16} />, name: 'LinkedIn', href: 'https://linkedin.com/company/snapleads' },
               ].map((s, i) => (
                 <a key={i} href={s.href} className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors text-sm">
                   {s.icon} <span className="font-mono text-xs uppercase tracking-wider">{s.name}</span>
@@ -1049,6 +1049,26 @@ function Footer() {
   )
 }
 
+/* ─── BACK TO TOP BUTTON ─── */
+function BackToTop() {
+  const [show, setShow] = useState(false)
+  useEffect(() => {
+    const handler = () => setShow(window.scrollY > 600)
+    window.addEventListener('scroll', handler)
+    return () => window.removeEventListener('scroll', handler)
+  }, [])
+  if (!show) return null
+  return (
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-accent hover:bg-accent-hover text-white rounded-full shadow-lg shadow-accent/30 flex items-center justify-center transition-all duration-300 hover:scale-110"
+      aria-label="Back to top"
+    >
+      <ChevronUp size={20} />
+    </button>
+  )
+}
+
 /* ─── LANDING PAGE ─── */
 export default function LandingPage() {
   return (
@@ -1068,6 +1088,7 @@ export default function LandingPage() {
       <FinalCTA />
       <KeywordMarquee />
       <Footer />
+      <BackToTop />
     </div>
   )
 }
