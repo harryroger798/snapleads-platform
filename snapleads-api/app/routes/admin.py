@@ -7,7 +7,7 @@ import aiosqlite
 
 from app.database import get_db
 from app.models.schemas import GenerateKeysRequest
-from app.services.auth import decode_token
+from app.services.auth import hash_password, decode_token
 from app.services.license import generate_keys, get_expiry_date, PRICING
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
@@ -236,3 +236,52 @@ async def reactivate_key(key_id: str, admin: dict = Depends(require_admin), db: 
     await db.execute("UPDATE license_keys SET status = 'active' WHERE id = ?", (key_id,))
     await db.commit()
     return {"message": "Key reactivated", "id": key_id}
+
+
+@router.put("/profile")
+async def update_admin_profile(
+    body: dict,
+    admin: dict = Depends(require_admin),
+    db: aiosqlite.Connection = Depends(get_db),
+):
+    """Update the super admin's own email, password, or name via JSON body."""
+    updates = []
+    params = []
+
+    new_email = body.get("email", "").strip().lower() if body.get("email") else ""
+    new_password = body.get("password", "")
+    new_name = body.get("name", "").strip() if body.get("name") else ""
+
+    if new_email:
+        # Check email not already taken by another user
+        cursor = await db.execute(
+            "SELECT id FROM users WHERE email = ? AND id != ?",
+            (new_email, admin["id"]),
+        )
+        if await cursor.fetchone():
+            raise HTTPException(status_code=400, detail="Email already in use")
+        updates.append("email = ?")
+        params.append(new_email)
+
+    if new_password:
+        if len(new_password) < 6:
+            raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+        updates.append("password_hash = ?")
+        params.append(hash_password(new_password))
+
+    if new_name:
+        updates.append("name = ?")
+        params.append(new_name)
+
+    if not updates:
+        raise HTTPException(status_code=400, detail="No fields to update")
+
+    params.append(admin["id"])
+    query = f"UPDATE users SET {', '.join(updates)} WHERE id = ?"
+    await db.execute(query, params)
+    await db.commit()
+
+    return {
+        "message": "Admin profile updated",
+        "updated_fields": [u.split(" = ")[0] for u in updates],
+    }
