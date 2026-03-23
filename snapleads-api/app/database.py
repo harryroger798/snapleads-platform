@@ -41,7 +41,7 @@ async def init_db():
                 role TEXT NOT NULL DEFAULT 'customer',
                 status TEXT NOT NULL DEFAULT 'active',
                 created_at TEXT NOT NULL,
-                last_login TEXT,
+                last_login TEXT
             );
 
             CREATE TABLE IF NOT EXISTS license_keys (
