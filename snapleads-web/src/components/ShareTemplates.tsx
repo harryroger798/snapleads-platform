@@ -6,9 +6,9 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.71.exe";
-const DOWNLOAD_URL_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.71-arm64-mac.zip";
-const DOWNLOAD_URL_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.71-arm64-mac.zip";
+const DOWNLOAD_URL_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.72.exe";
+const DOWNLOAD_URL_MAC = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.72-arm64-mac.zip";
+const DOWNLOAD_URL_LINUX = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads-3.5.72-arm64-mac.zip";
 const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/466e49b7f481e77e5a620fcbb42f0010b8af73a9e177a35c517f901b1b4e6fb7";
 const VT_SCAN_URL_MAC = "https://www.virustotal.com/gui/file/fdb4eb42fd2c039335b9b076786b578f09934171a7220aa36afd5882f0c17b9d";
 const VT_SCAN_URL_LINUX = "https://www.virustotal.com/gui/file/466e49b7f481e77e5a620fcbb42f0010b8af73a9e177a35c517f901b1b4e6fb7";
@@ -83,7 +83,7 @@ Linux (.AppImage): ${DOWNLOAD_URL_LINUX}
 **Security bypass:**
 Windows: Click "More info" > "Run anyway"
 macOS: Right-click > Open > Open again
-Linux: chmod +x SnapLeads-3.5.71.AppImage && ./SnapLeads-3.5.71.AppImage
+Linux: chmod +x SnapLeads-3.5.72.AppImage && ./SnapLeads-3.5.72.AppImage
 
 Verified safe on VirusTotal (0/95):
 Windows: ${VT_SCAN_URL_WIN}
