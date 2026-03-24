@@ -90,12 +90,12 @@ function Hero() {
     <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-16 px-4 overflow-hidden">
       {/* Background gradient glow */}
       <div className="absolute inset-0 bg-dark" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(255,69,0,0.15) 0%, rgba(255,69,0,0.05) 40%, transparent 70%)' }} />
-      <div className="absolute top-[10%] left-[20%] w-[400px] h-[400px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(255,107,53,0.1) 0%, transparent 60%)' }} />
-      <div className="absolute top-[5%] right-[15%] w-[350px] h-[350px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(220,50,0,0.08) 0%, transparent 60%)' }} />
-      <div className="absolute bottom-[30%] left-[10%] w-[300px] h-[300px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.05) 0%, transparent 60%)' }} />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[400px] md:w-[800px] h-[300px] md:h-[600px] rounded-full blur-3xl" style={{ background: 'radial-gradient(ellipse at center, rgba(255,69,0,0.15) 0%, rgba(255,69,0,0.05) 40%, transparent 70%)' }} />
+      <div className="absolute top-[10%] left-[20%] w-[400px] h-[400px] rounded-full blur-3xl hidden md:block" style={{ background: 'radial-gradient(ellipse at center, rgba(255,107,53,0.1) 0%, transparent 60%)' }} />
+      <div className="absolute top-[5%] right-[15%] w-[350px] h-[350px] rounded-full blur-3xl hidden md:block" style={{ background: 'radial-gradient(ellipse at center, rgba(220,50,0,0.08) 0%, transparent 60%)' }} />
+      <div className="absolute bottom-[30%] left-[10%] w-[300px] h-[300px] rounded-full blur-3xl hidden md:block" style={{ background: 'radial-gradient(ellipse at center, rgba(168,85,247,0.05) 0%, transparent 60%)' }} />
       
-      {/* Sparkle particles (reduced from 24 to 6 for performance) */}
+      {/* Sparkle particles (reduced from 24 to 6 for performance, hidden on mobile) */}
       {[...Array(6)].map((_, i) => {
         const sizes = [2, 3, 4, 2, 3, 4]
         const tops = ['8%','22%','45%','65%','28%','72%']
@@ -105,7 +105,7 @@ function Hero() {
         return (
           <div
             key={`sparkle-${i}`}
-            className="absolute rounded-full animate-sparkle"
+            className="absolute rounded-full animate-sparkle hidden md:block"
             style={{
               width: sizes[i],
               height: sizes[i],
@@ -119,23 +119,23 @@ function Hero() {
         )
       })}
       
-      {/* Floating platform icons */}
-      <motion.div style={{ y: y1 }} className="absolute top-32 left-[10%] animate-float">
+      {/* Floating platform icons — hidden on mobile to prevent overlap with hero text */}
+      <motion.div style={{ y: y1 }} className="absolute top-32 left-[10%] animate-float hidden md:block">
         <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-600/30"><Linkedin size={28} className="text-white" /></div>
       </motion.div>
-      <motion.div style={{ y: y2 }} className="absolute top-40 right-[12%] animate-float-delayed">
+      <motion.div style={{ y: y2 }} className="absolute top-40 right-[12%] animate-float-delayed hidden md:block">
         <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/30"><Instagram size={28} className="text-white" /></div>
       </motion.div>
-      <motion.div style={{ y: y1 }} className="absolute top-56 left-[5%] animate-float-delayed">
+      <motion.div style={{ y: y1 }} className="absolute top-56 left-[5%] animate-float-delayed hidden md:block">
         <div className="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center shadow-lg shadow-red-500/30"><Globe size={24} className="text-white" /></div>
       </motion.div>
-      <motion.div style={{ y: y2 }} className="absolute top-48 right-[5%] animate-float">
+      <motion.div style={{ y: y2 }} className="absolute top-48 right-[5%] animate-float hidden md:block">
         <div className="w-12 h-12 bg-green-500 rounded-2xl flex items-center justify-center shadow-lg shadow-green-500/30"><MapPin size={24} className="text-white" /></div>
       </motion.div>
-      <motion.div style={{ y: y1 }} className="absolute bottom-[35%] left-[8%] animate-float">
+      <motion.div style={{ y: y1 }} className="absolute bottom-[35%] left-[8%] animate-float hidden md:block">
         <div className="w-11 h-11 bg-sky-500 rounded-2xl flex items-center justify-center shadow-lg shadow-sky-500/30"><Send size={22} className="text-white" /></div>
       </motion.div>
-      <motion.div style={{ y: y2 }} className="absolute bottom-[40%] right-[8%] animate-float-delayed">
+      <motion.div style={{ y: y2 }} className="absolute bottom-[40%] right-[8%] animate-float-delayed hidden md:block">
         <div className="w-11 h-11 bg-orange-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-500/30"><MessageCircle size={22} className="text-white" /></div>
       </motion.div>
       
@@ -187,12 +187,12 @@ function Hero() {
       </motion.div>
       
       {/* Logo Marquee */}
-      <div className="w-full mt-16 overflow-hidden relative z-10">
+      <div className="w-full mt-10 md:mt-16 overflow-hidden relative z-10">
         <div className="flex animate-marquee whitespace-nowrap">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="flex items-center gap-12 mx-6">
+            <div key={i} className="flex items-center gap-6 md:gap-12 mx-3 md:mx-6">
               {['LinkedIn', 'Facebook', 'Instagram', 'Reddit', 'Twitter/X', 'Google Maps', 'Telegram', 'WhatsApp', 'TikTok', 'YouTube', 'Pinterest', 'Email', 'IndiaMART', 'JustDial', 'TradeIndia', 'ExportersIndia', 'Email Finder', 'GitHub', 'Business Dirs', 'Google Maps B2B'].map((name) => (
-                <span key={`${i}-${name}`} className="font-mono text-sm uppercase tracking-wider text-gray-600 hover:text-gray-400 transition-colors">{name}</span>
+                <span key={`${i}-${name}`} className="font-mono text-xs md:text-sm uppercase tracking-wider text-gray-600 hover:text-gray-400 transition-colors">{name}</span>
               ))}
             </div>
           ))}
@@ -320,7 +320,7 @@ function AutoDemoVideo() {
   return (
     <section className="py-24 px-4 bg-dark noise-bg relative overflow-hidden" ref={containerRef}>
       {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-20" style={{ background: 'radial-gradient(circle, rgba(255,69,0,0.3), transparent 70%)' }} />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full blur-3xl opacity-20" style={{ background: 'radial-gradient(circle, rgba(255,69,0,0.3), transparent 70%)' }} />
       
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
@@ -333,24 +333,24 @@ function AutoDemoVideo() {
           </motion.div>
 
           {/* Step indicators */}
-          <motion.div variants={fadeIn} className="flex justify-center items-center gap-3 mb-8">
+          <motion.div variants={fadeIn} className="flex flex-wrap justify-center items-center gap-2 md:gap-3 mb-8 px-2">
             {steps.map((s, i) => (
               <button
                 key={i}
                 onClick={() => setCurrentStep(i)}
-                className={`flex items-center gap-2 font-mono text-xs uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-500 ${
+                className={`flex items-center gap-1.5 md:gap-2 font-mono text-[10px] md:text-xs uppercase tracking-wider px-3 md:px-5 py-2 md:py-2.5 rounded-full transition-all duration-500 ${
                   currentStep === i
                     ? 'bg-accent text-white shadow-lg shadow-accent/30 scale-105'
                     : 'bg-dark-card border border-dark-border text-gray-500 hover:text-white hover:border-gray-600'
                 }`}
               >
-                <span className="w-5 h-5 rounded-full border-2 flex items-center justify-center text-[10px] font-bold" style={{ borderColor: currentStep === i ? '#fff' : '#555' }}>{i + 1}</span>
+                <span className="w-4 h-4 md:w-5 md:h-5 rounded-full border-2 flex items-center justify-center text-[9px] md:text-[10px] font-bold" style={{ borderColor: currentStep === i ? '#fff' : '#555' }}>{i + 1}</span>
                 {s.title.replace('Step ' + (i + 1) + ': ', '')}
               </button>
             ))}
             <button
               onClick={() => setIsPlaying(!isPlaying)}
-              className="ml-2 w-9 h-9 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:text-white hover:border-gray-600 transition-all"
+              className="ml-1 md:ml-2 w-8 h-8 md:w-9 md:h-9 rounded-full bg-dark-card border border-dark-border flex items-center justify-center text-gray-400 hover:text-white hover:border-gray-600 transition-all"
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? <Pause size={14} /> : <Play size={14} />}
@@ -504,9 +504,9 @@ function AppDemo() {
           </motion.div>
           
           {/* Tab Switcher */}
-          <motion.div variants={fadeIn} className="flex justify-center gap-2 mb-8">
+          <motion.div variants={fadeIn} className="flex justify-center gap-2 mb-8 px-2">
             {demos.map((d, i) => (
-              <button key={i} onClick={() => setActiveTab(i)} className={`font-mono text-xs uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 ${activeTab === i ? 'bg-accent text-white shadow-lg shadow-accent/30' : 'bg-dark-card border border-dark-border text-gray-400 hover:text-white hover:border-gray-600'}`}>
+              <button key={i} onClick={() => setActiveTab(i)} className={`font-mono text-[10px] md:text-xs uppercase tracking-wider px-4 md:px-6 py-2.5 md:py-3 rounded-full transition-all duration-300 ${activeTab === i ? 'bg-accent text-white shadow-lg shadow-accent/30' : 'bg-dark-card border border-dark-border text-gray-400 hover:text-white hover:border-gray-600'}`}>
                 {d.tab}
               </button>
             ))}
@@ -623,8 +623,8 @@ function Platforms() {
           </motion.div>
           
           {/* Platform icon grid */}
-          <motion.div variants={fadeIn} className="flex justify-center mb-12">
-            <div className="grid grid-cols-4 md:grid-cols-6 gap-4 max-w-lg">
+          <motion.div variants={fadeIn} className="flex justify-center mb-12 px-2">
+            <div className="grid grid-cols-4 md:grid-cols-6 gap-2 md:gap-4 max-w-lg">
               {[
                 { name: 'LinkedIn', color: 'bg-blue-600', svg: <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" /></svg> },
                 { name: 'Google Maps', color: 'bg-red-500', svg: <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-white"><path d="M19.527 4.799c1.212 2.608.937 5.678-.405 8.173-1.101 2.047-2.744 3.74-4.098 5.614-.619.858-1.244 1.75-1.669 2.727-.141.325-.263.658-.383.992-.121.333-.224.673-.34 1.008-.109.314-.236.684-.627.687h-.007c-.466-.001-.579-.53-.695-.887-.284-.874-.581-1.713-1.044-2.525-1.049-1.842-2.554-3.378-3.737-5.113-1.29-1.893-2.264-4.14-2.04-6.494.137-1.447.637-2.863 1.483-4.065C8.02 2.49 10.674 1.007 13.467.873c2.056-.1 4.15.524 5.744 1.769.085.066.168.134.251.204l-.014.012-.106.09-.062.053.003.004-.005.01 1.245 1.018-.001-.001.005.01c.092-.076.174-.166.276-.233.135-.09.267-.183.399-.275l-1.674-1.735z" /><path d="M19.527 4.799l-1.674-1.735c-.132.092-.264.185-.399.275-.102.067-.184.157-.276.233l-.005-.01.001.001-1.245-1.018.005-.01-.003-.004.062-.053.106-.09.014-.012a8.96 8.96 0 00-.251-.204C14.11.698 11.57.146 9.166.627 6.27 1.211 3.776 3.322 2.641 6.02c-.955 2.273-.985 4.903-.037 7.185.465 1.118 1.128 2.17 1.919 3.05.763.85 1.564 1.672 2.33 2.524.802.892 1.556 1.83 2.247 2.823.464.665.879 1.364 1.208 2.109.121.274.234.551.342.831.108.279.203.567.312.85.109.281.224.556.367.816a.966.966 0 00.39.415c.17.09.356.117.542.117h.007c.391-.003.518-.373.627-.687.116-.335.219-.675.34-1.008.12-.334.242-.667.383-.992.425-.977 1.05-1.869 1.669-2.727 1.354-1.874 2.997-3.567 4.098-5.614 1.342-2.495 1.617-5.565.405-8.173zM12 14.4a3.6 3.6 0 110-7.2 3.6 3.6 0 010 7.2z" /></svg> },
@@ -653,11 +653,11 @@ function Platforms() {
                 <div className="flex flex-col md:flex-row md:items-center gap-6">
                   <span className="text-accent font-mono text-lg font-bold">{p.num}.</span>
                   <h3 className="text-2xl md:text-3xl font-black uppercase tracking-tight flex-1">{p.name}</h3>
-                  <div className="flex gap-8">
+                  <div className="flex flex-wrap gap-4 md:gap-8">
                     {p.stats.map((s, j) => (
                       <div key={j} className="text-center">
-                        <div className="text-2xl font-black text-dark">{s.val}</div>
-                        <div className="text-xs text-gray-400 font-mono uppercase">{s.label}</div>
+                        <div className="text-xl md:text-2xl font-black text-dark">{s.val}</div>
+                        <div className="text-[10px] md:text-xs text-gray-400 font-mono uppercase">{s.label}</div>
                       </div>
                     ))}
                   </div>
@@ -785,13 +785,13 @@ function Testimonial() {
           
           {/* Testimonial stars */}
           <motion.div variants={fadeIn} className="flex justify-center mt-8 mb-4">
-            <div className="flex items-center gap-6">
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6">
               <div className="flex gap-1">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={24} className="text-accent fill-accent" />
+                  <Star key={i} size={20} className="text-accent fill-accent md:w-6 md:h-6" />
                 ))}
               </div>
-              <span className="font-mono text-xs uppercase tracking-wider text-gray-500">Trusted by 10,000+ users</span>
+              <span className="font-mono text-[10px] md:text-xs uppercase tracking-wider text-gray-500">Trusted by 10,000+ users</span>
             </div>
           </motion.div>
           
@@ -932,12 +932,12 @@ function FinalCTA() {
 function KeywordMarquee() {
   const keywords = ['Lead Extraction', 'Email Finder', 'Google Maps', 'Account Safety', 'CRM Export', 'No Proxies', 'Desktop App', 'Scheduled Runs', 'B2B Directories', '190M+ Database', 'IndiaMART', 'JustDial']
   return (
-    <div className="py-6 bg-dark border-t border-b border-dark-border overflow-hidden">
+    <div className="py-4 md:py-6 bg-dark border-t border-b border-dark-border overflow-hidden">
       <div className="flex animate-marquee whitespace-nowrap">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="flex items-center gap-4 mx-4">
+          <div key={i} className="flex items-center gap-3 md:gap-4 mx-3 md:mx-4">
             {keywords.map((kw, j) => (
-              <span key={`${i}-${j}`} className="font-mono text-xs uppercase tracking-widest text-gray-600 border border-dark-border px-5 py-2 rounded-full hover:text-gray-400 hover:border-gray-600 transition-colors">{kw}</span>
+              <span key={`${i}-${j}`} className="font-mono text-[10px] md:text-xs uppercase tracking-widest text-gray-600 border border-dark-border px-3 md:px-5 py-1.5 md:py-2 rounded-full hover:text-gray-400 hover:border-gray-600 transition-colors">{kw}</span>
             ))}
           </div>
         ))}
@@ -1032,10 +1032,11 @@ function BackToTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-8 right-8 z-50 w-12 h-12 bg-accent hover:bg-accent-hover text-white rounded-full shadow-lg shadow-accent/30 flex items-center justify-center transition-all duration-300 hover:scale-110"
+      className="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 w-10 h-10 md:w-12 md:h-12 bg-accent hover:bg-accent-hover text-white rounded-full shadow-lg shadow-accent/30 flex items-center justify-center transition-all duration-300 hover:scale-110"
       aria-label="Back to top"
     >
-      <ChevronUp size={20} />
+      <ChevronUp size={18} className="md:hidden" />
+      <ChevronUp size={20} className="hidden md:block" />
     </button>
   )
 }
@@ -1043,7 +1044,7 @@ function BackToTop() {
 /* ─── LANDING PAGE ─── */
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-dark overflow-x-hidden">
       <Navbar />
       <Hero />
       <Stats />
