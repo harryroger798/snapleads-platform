@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Zap, Shield, Globe, Clock, Check, ChevronDown, Menu, X, Star, Download, Users, MapPin, MessageCircle, Search, Send, Linkedin, Instagram, Facebook, Twitter, AlertTriangle, Play, Pause, ChevronUp } from 'lucide-react'
+import { ArrowRight, Zap, Shield, Globe, Clock, Check, ChevronDown, Menu, X, Star, Download, Users, MapPin, MessageCircle, Search, Send, Linkedin, Instagram, Facebook, Twitter, AlertTriangle, Play, Pause, ChevronUp, Mail, Loader2 } from 'lucide-react'
 
 /* ─── COUNTER HOOK ─── */
 function useCountUp(end: number, duration = 2000, startOnView = true) {
@@ -33,8 +33,271 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.15 } }
 }
 
+/* ─── MAILGUN CONFIG ─── */
+const MAILGUN_DOMAIN = 'getsnapleads.store'
+const SUPPORT_EMAIL = 'support@getsnapleads.store'
+
+/* Pre-computed auth token for contact form sending */
+const _AUTH = 'YXBpOjNmODhkOWVjNGQzOTViYjk2MTEwY2NkNGQyOThmNTE4LWM1MGFhMTEwLTg2ZDgwMmQy'
+
+async function sendContactEmail(name: string, email: string, subject: string, message: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    const form = new FormData()
+    form.append('from', `${name} <contact-form@${MAILGUN_DOMAIN}>`)
+    form.append('to', SUPPORT_EMAIL)
+    form.append('h:Reply-To', email)
+    form.append('subject', `[Contact Form] ${subject}`)
+    form.append('text', `Name: ${name}\nEmail: ${email}\nSubject: ${subject}\n\n${message}`)
+    form.append('html', `<div style="font-family:sans-serif;max-width:600px;margin:0 auto">
+      <div style="background:#1a1a1a;padding:24px;border-radius:12px 12px 0 0">
+        <h2 style="color:#ff4500;margin:0">New Contact Form Submission</h2>
+      </div>
+      <div style="background:#111;padding:24px;border:1px solid #333;border-top:none;border-radius:0 0 12px 12px">
+        <p style="color:#999;margin:0 0 8px"><strong style="color:#fff">Name:</strong> ${name}</p>
+        <p style="color:#999;margin:0 0 8px"><strong style="color:#fff">Email:</strong> <a href="mailto:${email}" style="color:#ff4500">${email}</a></p>
+        <p style="color:#999;margin:0 0 16px"><strong style="color:#fff">Subject:</strong> ${subject}</p>
+        <div style="background:#1a1a1a;padding:16px;border-radius:8px;border:1px solid #333">
+          <p style="color:#ccc;margin:0;white-space:pre-wrap">${message}</p>
+        </div>
+      </div>
+    </div>`)
+
+    const res = await fetch(`https://api.mailgun.net/v3/${MAILGUN_DOMAIN}/messages`, {
+      method: 'POST',
+      headers: { 'Authorization': 'Basic ' + _AUTH },
+      body: form,
+    })
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ message: 'Unknown error' }))
+      return { success: false, error: err.message || 'Failed to send message' }
+    }
+    return { success: true }
+  } catch {
+    return { success: false, error: 'Network error. Please try again.' }
+  }
+}
+
+/* ─── CONTACT MODAL ─── */
+function ContactModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [subject, setSubject] = useState('')
+  const [message, setMessage] = useState('')
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setSending(true)
+    const result = await sendContactEmail(name, email, subject, message)
+    setSending(false)
+    if (result.success) {
+      setSent(true)
+      setTimeout(() => {
+        setSent(false)
+        setName('')
+        setEmail('')
+        setSubject('')
+        setMessage('')
+        onClose()
+      }, 3000)
+    } else {
+      setError(result.error || 'Failed to send. Please try again.')
+    }
+  }
+
+  const handleClose = () => {
+    if (!sending) {
+      setError('')
+      setSent(false)
+      onClose()
+    }
+  }
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+          onClick={handleClose}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            transition={{ type: 'spring', duration: 0.5 }}
+            className="w-full max-w-lg bg-dark-card border border-dark-border rounded-2xl overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-accent/20 to-orange-900/20 border-b border-dark-border px-6 py-5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-accent/20 rounded-xl flex items-center justify-center">
+                  <Mail size={20} className="text-accent" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Contact Support</h3>
+                  <p className="text-xs text-gray-400 font-mono">{SUPPORT_EMAIL}</p>
+                </div>
+              </div>
+              <button onClick={handleClose} className="text-gray-400 hover:text-white transition-colors" disabled={sending}>
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Body */}
+            {sent ? (
+              <div className="p-8 text-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: 'spring', duration: 0.5 }}
+                  className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4"
+                >
+                  <Check size={32} className="text-green-400" />
+                </motion.div>
+                <h4 className="text-xl font-bold text-white mb-2">Message Sent!</h4>
+                <p className="text-gray-400 text-sm">We'll get back to you as soon as possible.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Your name"
+                      className="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-accent/50 transition-colors"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Email</label>
+                    <input
+                      type="email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="your@email.com"
+                      className="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-accent/50 transition-colors"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Subject</label>
+                  <input
+                    type="text"
+                    required
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    placeholder="How can we help?"
+                    className="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-accent/50 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Message</label>
+                  <textarea
+                    required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Describe your question or issue..."
+                    rows={4}
+                    className="w-full bg-dark border border-dark-border rounded-xl px-4 py-3 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-accent/50 transition-colors resize-none"
+                  />
+                </div>
+                {error && (
+                  <div className="flex items-center gap-2 text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+                    <AlertTriangle size={16} />
+                    <span>{error}</span>
+                  </div>
+                )}
+                <button
+                  type="submit"
+                  disabled={sending}
+                  className="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover disabled:opacity-50 disabled:cursor-not-allowed text-white font-mono text-sm uppercase tracking-wider px-6 py-4 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-accent/30"
+                >
+                  {sending ? (
+                    <><Loader2 size={16} className="animate-spin" /> Sending...</>
+                  ) : (
+                    <><Send size={16} /> Send Message</>
+                  )}
+                </button>
+              </form>
+            )}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+/* ─── CONTACT SUPPORT SECTION ─── */
+function ContactSupport({ onOpenModal }: { onOpenModal: () => void }) {
+  return (
+    <section id="contact" className="py-24 px-4 bg-dark relative">
+      <div className="max-w-5xl mx-auto relative z-10">
+        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+          <motion.div variants={fadeIn} className="text-center mb-12">
+            <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-dark-border px-4 py-2 rounded-full">[ Support ]</span>
+            <h2 className="text-4xl md:text-6xl font-black uppercase mt-6 tracking-tight">
+              Need <span className="italic text-gray-500">Help?</span> We're Here
+            </h2>
+            <p className="text-gray-400 mt-4 max-w-xl mx-auto">Our support team is ready to help you get the most out of SnapLeads.</p>
+          </motion.div>
+
+          <motion.div variants={fadeIn} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Email Card */}
+            <div className="bg-dark-card border border-dark-border rounded-2xl p-8 text-center group hover:border-accent/30 transition-all duration-500">
+              <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
+                <Mail size={24} className="text-accent" />
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">Email Us</h3>
+              <p className="text-gray-400 text-sm mb-4">Get a response within 24 hours</p>
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="text-accent font-mono text-xs uppercase tracking-wider hover:underline">{SUPPORT_EMAIL}</a>
+            </div>
+
+            {/* Contact Form Card */}
+            <div className="bg-dark-card border border-accent/30 rounded-2xl p-8 text-center group hover:border-accent/60 transition-all duration-500 relative">
+              <div className="absolute top-4 right-4 bg-accent text-white font-mono text-[10px] px-2 py-0.5 rounded-full">Quick</div>
+              <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
+                <MessageCircle size={24} className="text-accent" />
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">Contact Form</h3>
+              <p className="text-gray-400 text-sm mb-4">Send us a message directly</p>
+              <button
+                onClick={onOpenModal}
+                className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-accent/30"
+              >
+                Open Form <ArrowRight size={14} />
+              </button>
+            </div>
+
+            {/* FAQ Card */}
+            <div className="bg-dark-card border border-dark-border rounded-2xl p-8 text-center group hover:border-accent/30 transition-all duration-500">
+              <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors">
+                <Search size={24} className="text-accent" />
+              </div>
+              <h3 className="text-lg font-bold text-white mb-2">FAQ</h3>
+              <p className="text-gray-400 text-sm mb-4">Find answers to common questions</p>
+              <a href="#faq" className="text-accent font-mono text-xs uppercase tracking-wider hover:underline">Browse FAQ</a>
+            </div>
+          </motion.div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
 /* ─── NAVBAR ─── */
-function Navbar() {
+function Navbar({ onOpenContact }: { onOpenContact: () => void }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   
@@ -56,6 +319,7 @@ function Navbar() {
         <a href="#platforms" className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Platforms</a>
         <a href="#pricing" className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Pricing</a>
         <a href="#faq" className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">FAQ</a>
+        <button onClick={onOpenContact} className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Support</button>
       </div>
       
       <div className="flex items-center gap-3">
@@ -73,6 +337,7 @@ function Navbar() {
           <a href="#platforms" onClick={() => setMenuOpen(false)} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white">Platforms</a>
           <a href="#pricing" onClick={() => setMenuOpen(false)} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white">Pricing</a>
           <a href="#faq" onClick={() => setMenuOpen(false)} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white">FAQ</a>
+          <button onClick={() => { setMenuOpen(false); onOpenContact(); }} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white text-left">Support</button>
           <a href="#pricing" className="flex items-center justify-center gap-2 bg-accent text-white font-mono text-sm uppercase px-5 py-3 rounded-full">Get Started <ArrowRight size={14} /></a>
         </motion.div>
       )}
@@ -984,14 +1249,10 @@ function Footer() {
           {/* Support */}
           <div>
             <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">Support</h6>
-            {[
-              { label: 'FAQ', href: '#faq' },
-              { label: 'Contact', href: 'mailto:support@getsnapleads.store' },
-              { label: 'Documentation', href: '#faq' },
-              { label: 'Changelog', href: '#features' },
-            ].map((item, i) => (
-              <a key={i} href={item.href} className="block text-gray-500 hover:text-white transition-colors mb-2 font-mono text-xs uppercase tracking-wider">{item.label}</a>
-            ))}
+            <a href="#faq" className="block text-gray-500 hover:text-white transition-colors mb-2 font-mono text-xs uppercase tracking-wider">FAQ</a>
+            <a href="#contact" className="block text-gray-500 hover:text-white transition-colors mb-2 font-mono text-xs uppercase tracking-wider">Contact</a>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="block text-gray-500 hover:text-white transition-colors mb-2 font-mono text-xs uppercase tracking-wider">Email Support</a>
+            <a href="#features" className="block text-gray-500 hover:text-white transition-colors mb-2 font-mono text-xs uppercase tracking-wider">Changelog</a>
           </div>
           
           {/* Legal */}
@@ -1043,9 +1304,11 @@ function BackToTop() {
 
 /* ─── LANDING PAGE ─── */
 export default function LandingPage() {
+  const [contactOpen, setContactOpen] = useState(false)
+
   return (
     <div className="min-h-screen bg-dark overflow-x-hidden">
-      <Navbar />
+      <Navbar onOpenContact={() => setContactOpen(true)} />
       <Hero />
       <Stats />
       <WhoWeAre />
@@ -1057,10 +1320,12 @@ export default function LandingPage() {
       <Testimonial />
       <HowItWorks />
       <FAQ />
+      <ContactSupport onOpenModal={() => setContactOpen(true)} />
       <FinalCTA />
       <KeywordMarquee />
       <Footer />
       <BackToTop />
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </div>
   )
 }
