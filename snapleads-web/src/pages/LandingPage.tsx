@@ -518,7 +518,7 @@ function WhoWeAre() {
         </div>
       </div>
       <div className="flex justify-center mt-8">
-        <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-dark-border px-4 py-2 rounded-full">[ Windows, Mac & Linux — Works Everywhere ]</span>
+        <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-dark-border px-4 py-2 rounded-full">[ Windows Desktop Application ]</span>
       </div>
     </section>
   )
@@ -994,7 +994,7 @@ function Pricing() {
               </div>
               <div className="p-8">
                 <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">What's Included</h6>
-                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Email)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Desktop app (Win/Mac/Linux)'].map((item, i) => (
+                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Email)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Desktop app (Windows)'].map((item, i) => (
                   <div key={i} className="flex items-start gap-3 mb-3">
                     <Check size={16} className="text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">{item}</span>
@@ -1107,7 +1107,7 @@ function HowItWorks() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows, Mac, or Linux. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/screenshot-extraction-v2.webp' },
+              { step: '01', title: 'Download & Activate', desc: 'Install the desktop app on Windows. Enter your license key and you\'re ready to go.', icon: <Download size={28} />, img: '/images/screenshot-extraction-v2.webp' },
               { step: '02', title: 'Configure & Extract', desc: 'Select from 20 platforms (social + B2B), enter keywords, and choose extraction methods. Real app screenshot shown above.', icon: <Search size={28} />, img: '/images/screenshot-extraction-v2.webp' },
               { step: '03', title: 'View Results & Export', desc: 'See all leads with email, phone, quality score. Export to CSV, Excel, JSON, or push to HubSpot CRM.', icon: <Users size={28} />, img: '/images/screenshot-results-v2.webp' },
             ].map((s, i) => (
@@ -1135,7 +1135,7 @@ function FAQ() {
     { q: 'Is SnapLeads really that affordable?', a: 'Yes! Our Starter plan is just $7/month. We believe powerful lead extraction should not cost hundreds. Your license gives you full access to the desktop app with no hidden costs, no API fees, and no proxy charges.' },
     { q: 'Will my accounts get banned using SnapLeads?', a: 'We have built enterprise-grade account safety: smart rate limiting, randomized behavior patterns, and built-in safety controls. In 6+ months of testing, zero bans reported.' },
     { q: 'What platforms can I extract leads from?', a: 'LinkedIn, Facebook, Instagram, Reddit, Twitter/X, TikTok, YouTube, Google Maps, Telegram, WhatsApp, Pinterest, Email, IndiaMART, JustDial, TradeIndia, ExportersIndia, Email Finder B2B, GitHub B2B, Business Directories, and Google Maps B2B. Pro plan includes all 20 platforms; Starter includes 5 core platforms.' },
-    { q: 'Does it work on Windows, Mac, and Linux?', a: 'Yes! SnapLeads works on all three platforms. Download the installer for your OS and you are ready in under 2 minutes.' },
+    { q: 'What operating system does SnapLeads support?', a: 'SnapLeads is a Windows desktop application. It works on Windows 10 and Windows 11 (64-bit). Download the installer and you are ready in under 2 minutes.' },
     { q: 'Can I export leads to my CRM?', a: 'Pro plan includes direct HubSpot and Salesforce CRM integration. All plans support CSV and Excel export. We are adding more CRM integrations based on user demand.' },
     { q: 'What if I do not like it? Is there a refund?', a: 'We offer a 14-day money-back guarantee on all plans. If SnapLeads does not meet your needs, we will refund you — no questions asked.' },
   ]
