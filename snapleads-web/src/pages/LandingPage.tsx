@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Zap, Shield, Globe, Clock, Check, ChevronDown, Menu, X, Star, Download, Users, MapPin, MessageCircle, Search, Send, Linkedin, Instagram, Facebook, Twitter, AlertTriangle, Play, Pause, ChevronUp, Mail, Loader2 } from 'lucide-react'
+import DownloadSection from '../components/DownloadSection'
 
 /* ─── COUNTER HOOK ─── */
 function useCountUp(end: number, duration = 2000, startOnView = true) {
@@ -318,6 +319,7 @@ function Navbar({ onOpenContact }: { onOpenContact: () => void }) {
         <a href="#features" className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Features</a>
         <a href="#platforms" className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Platforms</a>
         <a href="#pricing" className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Pricing</a>
+        <a href="#download" className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Download</a>
         <a href="#faq" className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">FAQ</a>
         <button onClick={onOpenContact} className="text-xs font-mono uppercase tracking-wider text-gray-400 hover:text-white transition-colors">Support</button>
       </div>
@@ -336,6 +338,7 @@ function Navbar({ onOpenContact }: { onOpenContact: () => void }) {
           <a href="#features" onClick={() => setMenuOpen(false)} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white">Features</a>
           <a href="#platforms" onClick={() => setMenuOpen(false)} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white">Platforms</a>
           <a href="#pricing" onClick={() => setMenuOpen(false)} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white">Pricing</a>
+          <a href="#download" onClick={() => setMenuOpen(false)} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white">Download</a>
           <a href="#faq" onClick={() => setMenuOpen(false)} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white">FAQ</a>
           <button onClick={() => { setMenuOpen(false); onOpenContact(); }} className="text-sm font-mono uppercase tracking-wider text-gray-400 hover:text-white text-left">Support</button>
           <a href="#pricing" className="flex items-center justify-center gap-2 bg-accent text-white font-mono text-sm uppercase px-5 py-3 rounded-full">Get Started <ArrowRight size={14} /></a>
@@ -1330,6 +1333,23 @@ export default function LandingPage() {
       <Pricing />
       <Testimonial />
       <HowItWorks />
+      {/* Download Section */}
+      <section id="download" className="py-24 px-4 bg-dark noise-bg relative">
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
+            <motion.div variants={fadeIn} className="text-center mb-12">
+              <span className="font-mono text-xs uppercase tracking-widest text-gray-500 border border-dark-border px-4 py-2 rounded-full">[ Download ]</span>
+              <h2 className="text-4xl md:text-6xl font-black uppercase mt-6 tracking-tight">
+                Get <span className="italic text-gray-500">SnapLeads</span> Now
+              </h2>
+              <p className="text-gray-400 mt-4 max-w-xl mx-auto">Download the Windows desktop app, install in under 2 minutes, and start extracting leads.</p>
+            </motion.div>
+            <motion.div variants={fadeIn} className="flex justify-center">
+              <DownloadSection isDark={true} />
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
       <FAQ />
       <ContactSupport onOpenModal={() => setContactOpen(true)} />
       <FinalCTA />
