@@ -45,6 +45,9 @@ def send_license_email(
 
     subject = f"Your SnapLeads {plan_display} {cycle_display} License Key"
 
+    download_url = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.74.exe"
+    vt_url = "https://www.virustotal.com/gui/file/354e0edc073d142a5a9492d1ab40e0e5e9d44fab156ee699daf17e9c41a7c52b"
+
     html_body = f"""<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
@@ -67,17 +70,52 @@ def send_license_email(
       <code style="color: #38bdf8; font-size: 20px; letter-spacing: 2px; font-weight: bold;">{license_key}</code>
     </div>
 
-    <h3 style="color: #0f172a; font-size: 16px; margin: 24px 0 12px;">How to activate:</h3>
+    <!-- Download Button -->
+    <div style="text-align: center; margin: 24px 0;">
+      <a href="{download_url}" style="display: inline-block; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #ffffff; font-size: 16px; font-weight: bold; text-decoration: none; padding: 14px 32px; border-radius: 12px;">&#11015; Download SnapLeads for Windows</a>
+      <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0;">Version 3.5.74 &middot; ~330 MB &middot; Windows 10/11 (64-bit)</p>
+    </div>
+
+    <h3 style="color: #0f172a; font-size: 16px; margin: 24px 0 12px;">Installation &amp; Activation Guide:</h3>
     <ol style="color: #334155; font-size: 14px; line-height: 1.8; padding-left: 20px;">
-      <li>Download SnapLeads for Windows from <a href="https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.74.exe" style="color: #3b82f6;">here</a></li>
-      <li>Run the installer and follow the setup wizard</li>
-      <li>Open the app — you'll see the License Activation screen</li>
+      <li>Click the download button above to get the <strong>.exe installer</strong></li>
+      <li>Run the .exe file &mdash; if SmartScreen appears, click <strong>&quot;More info&quot;</strong> then <strong>&quot;Run anyway&quot;</strong></li>
+      <li>Follow the installation wizard (click Next &gt; Install &gt; Finish)</li>
+      <li>Launch SnapLeads from your Desktop shortcut or Start Menu</li>
       <li>Paste the license key above and click <strong>Activate License</strong></li>
-      <li>Enjoy all {plan_display} features!</li>
+      <li>Done! Start extracting leads from 9+ social media platforms</li>
     </ol>
 
+    <!-- System Requirements -->
     <div style="background: #f1f5f9; border-radius: 8px; padding: 16px; margin-top: 24px;">
-      <p style="color: #64748b; font-size: 13px; margin: 0;">
+      <h4 style="color: #0f172a; font-size: 14px; margin: 0 0 8px;">System Requirements:</h4>
+      <p style="color: #64748b; font-size: 13px; margin: 0; line-height: 1.8;">
+        <strong>OS:</strong> Windows 10 or 11 (64-bit)<br>
+        <strong>RAM:</strong> 4 GB minimum, 8 GB recommended<br>
+        <strong>Disk:</strong> 200 MB free space<br>
+        <strong>Internet:</strong> Required for activation &amp; extraction
+      </p>
+    </div>
+
+    <!-- Bypass Tips -->
+    <div style="background: #fffbeb; border: 1px solid #fcd34d; border-radius: 8px; padding: 16px; margin-top: 16px;">
+      <h4 style="color: #92400e; font-size: 14px; margin: 0 0 8px;">&#9888; Security Warning? Here&rsquo;s How to Fix:</h4>
+      <p style="color: #78350f; font-size: 13px; margin: 0; line-height: 1.8;">
+        <strong>Windows SmartScreen:</strong> Click &quot;More info&quot; &rarr; &quot;Run anyway&quot;<br>
+        <strong>Chrome/Edge warning:</strong> Click the &quot;^&quot; arrow &rarr; &quot;Keep&quot;<br>
+        <strong>Antivirus block:</strong> Add SnapLeads to your exceptions list<br>
+        <strong>Firewall:</strong> Allow SnapLeads through Windows Firewall (needed for activation &amp; extraction)
+      </p>
+      <p style="color: #78350f; font-size: 12px; margin: 8px 0 0;">
+        These warnings appear because the app is newly released. It is 100% safe &mdash;
+        <a href="{vt_url}" style="color: #4f46e5; font-weight: bold;">verified on VirusTotal (0/95 clean)</a>.
+      </p>
+    </div>
+
+    <!-- Plan Details -->
+    <div style="background: #f1f5f9; border-radius: 8px; padding: 16px; margin-top: 16px;">
+      <h4 style="color: #0f172a; font-size: 14px; margin: 0 0 8px;">Your Plan Details:</h4>
+      <p style="color: #64748b; font-size: 13px; margin: 0; line-height: 1.8;">
         <strong>Plan:</strong> {plan_display} {cycle_display}<br>
         <strong>Price:</strong> {price}<br>
         <strong>Valid until:</strong> {expires_at[:10] if expires_at else 'See subscription'}<br>
@@ -105,13 +143,33 @@ Thank you for purchasing SnapLeads {plan_display} {cycle_display} ({price}).
 
 Your license key: {license_key}
 
-How to activate:
-1. Download SnapLeads for Windows from https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.74.exe
-2. Run the installer and follow the setup wizard
-3. Open the app — you'll see the License Activation screen
-4. Paste the license key above and click Activate License
-5. Enjoy all {plan_display} features!
+DOWNLOAD SNAPLEADS FOR WINDOWS:
+{download_url}
+(Version 3.5.74 | ~330 MB | Windows 10/11 64-bit)
 
+INSTALLATION & ACTIVATION GUIDE:
+1. Click the download link above to get the .exe installer
+2. Run the .exe file — if SmartScreen appears, click "More info" then "Run anyway"
+3. Follow the installation wizard (click Next > Install > Finish)
+4. Launch SnapLeads from your Desktop shortcut or Start Menu
+5. Paste the license key above and click "Activate License"
+6. Done! Start extracting leads from 9+ social media platforms
+
+SYSTEM REQUIREMENTS:
+- OS: Windows 10 or 11 (64-bit)
+- RAM: 4 GB minimum, 8 GB recommended
+- Disk: 200 MB free space
+- Internet: Required for activation & extraction
+
+SECURITY WARNING? HERE'S HOW TO FIX:
+- Windows SmartScreen: Click "More info" > "Run anyway"
+- Chrome/Edge warning: Click the "^" arrow > "Keep"
+- Antivirus block: Add SnapLeads to your exceptions list
+- Firewall: Allow SnapLeads through Windows Firewall (needed for activation & extraction)
+These warnings appear because the app is newly released. It is 100% safe.
+Verified on VirusTotal (0/95 clean): {vt_url}
+
+YOUR PLAN DETAILS:
 Plan: {plan_display} {cycle_display}
 Price: {price}
 Valid until: {expires_at[:10] if expires_at else 'See subscription'}
