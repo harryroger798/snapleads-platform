@@ -10,6 +10,7 @@ from app.routes.admin import router as admin_router
 from app.routes.license import router as license_router
 from app.routes.teams import router as teams_router
 from app.routes.usage import router as usage_router
+from app.routes.webhooks import router as webhooks_router
 
 
 @asynccontextmanager
@@ -35,6 +36,7 @@ app.include_router(admin_router)
 app.include_router(license_router)
 app.include_router(teams_router)
 app.include_router(usage_router)
+app.include_router(webhooks_router)
 
 
 @app.get("/healthz")
