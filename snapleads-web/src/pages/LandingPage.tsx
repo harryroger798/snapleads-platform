@@ -937,6 +937,17 @@ function Platforms() {
 }
 
 /* ─── PRICING ─── */
+const DODO_CHECKOUT = {
+  starter: {
+    monthly: 'https://checkout.dodopayments.com/buy/pdt_0NbTzBdTBYTeFm09HPt5g?quantity=1',
+    yearly: 'https://checkout.dodopayments.com/buy/pdt_0NbTzOk5XHeFxkUELENXl?quantity=1',
+  },
+  pro: {
+    monthly: 'https://checkout.dodopayments.com/buy/pdt_0NbTzZroyG9d8UJ99Npsx?quantity=1',
+    yearly: 'https://checkout.dodopayments.com/buy/pdt_0NbTzoHEqWKfiDqn2r4SH?quantity=1',
+  },
+}
+
 function Pricing() {
   const [annual, setAnnual] = useState(false)
   
@@ -989,7 +1000,7 @@ function Pricing() {
                     <span className="text-gray-300 text-sm">{item}</span>
                   </div>
                 ))}
-                <a href="#pricing" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 mt-6 w-full hover:shadow-lg hover:shadow-accent/30">
+                <a href={annual ? DODO_CHECKOUT.starter.yearly : DODO_CHECKOUT.starter.monthly} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 mt-6 w-full hover:shadow-lg hover:shadow-accent/30">
                   Get Starter <ArrowRight size={14} />
                 </a>
               </div>
@@ -1014,7 +1025,7 @@ function Pricing() {
                     <span className="text-gray-300 text-sm">{item}</span>
                   </div>
                 ))}
-                <a href="#pricing" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 mt-6 w-full hover:shadow-lg hover:shadow-accent/30 animate-pulse-glow">
+                <a href={annual ? DODO_CHECKOUT.pro.yearly : DODO_CHECKOUT.pro.monthly} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-white font-mono text-xs uppercase tracking-wider px-6 py-3.5 rounded-full transition-all duration-300 mt-6 w-full hover:shadow-lg hover:shadow-accent/30 animate-pulse-glow">
                   Get Pro <ArrowRight size={14} />
                 </a>
               </div>
