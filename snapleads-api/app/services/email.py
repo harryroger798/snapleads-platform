@@ -69,7 +69,8 @@ def send_license_email(
 
     <h3 style="color: #0f172a; font-size: 16px; margin: 24px 0 12px;">How to activate:</h3>
     <ol style="color: #334155; font-size: 14px; line-height: 1.8; padding-left: 20px;">
-      <li>Download SnapLeads from <a href="https://getsnapleads.store" style="color: #3b82f6;">getsnapleads.store</a></li>
+      <li>Download SnapLeads for Windows from <a href="https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.74.exe" style="color: #3b82f6;">here</a></li>
+      <li>Run the installer and follow the setup wizard</li>
       <li>Open the app — you'll see the License Activation screen</li>
       <li>Paste the license key above and click <strong>Activate License</strong></li>
       <li>Enjoy all {plan_display} features!</li>
@@ -105,10 +106,11 @@ Thank you for purchasing SnapLeads {plan_display} {cycle_display} ({price}).
 Your license key: {license_key}
 
 How to activate:
-1. Download SnapLeads from https://getsnapleads.store
-2. Open the app — you'll see the License Activation screen
-3. Paste the license key above and click Activate License
-4. Enjoy all {plan_display} features!
+1. Download SnapLeads for Windows from https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.74.exe
+2. Run the installer and follow the setup wizard
+3. Open the app — you'll see the License Activation screen
+4. Paste the license key above and click Activate License
+5. Enjoy all {plan_display} features!
 
 Plan: {plan_display} {cycle_display}
 Price: {price}
