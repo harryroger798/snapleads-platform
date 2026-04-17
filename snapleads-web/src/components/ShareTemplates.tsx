@@ -6,7 +6,7 @@ interface ShareTemplatesProps {
   licenseKeys: Array<{ key: string; plan: string }>;
 }
 
-const DOWNLOAD_URL_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.75.exe";
+const DOWNLOAD_URL_WIN = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.76.exe";
 const VT_SCAN_URL_WIN = "https://www.virustotal.com/gui/file/466e49b7f481e77e5a620fcbb42f0010b8af73a9e177a35c517f901b1b4e6fb7";
 
 interface PlatformTemplate {

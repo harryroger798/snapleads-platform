@@ -45,7 +45,7 @@ def send_license_email(
 
     subject = f"Your SnapLeads {plan_display} {cycle_display} License Key"
 
-    download_url = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.75.exe"
+    download_url = "https://f005.backblazeb2.com/file/snapleads-downloads/SnapLeads%20Setup%203.5.76.exe"
     vt_url = "https://www.virustotal.com/gui/file/354e0edc073d142a5a9492d1ab40e0e5e9d44fab156ee699daf17e9c41a7c52b"
 
     html_body = f"""<!DOCTYPE html>
@@ -73,7 +73,7 @@ def send_license_email(
     <!-- Download Button -->
     <div style="text-align: center; margin: 24px 0;">
       <a href="{download_url}" style="display: inline-block; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #ffffff; font-size: 16px; font-weight: bold; text-decoration: none; padding: 14px 32px; border-radius: 12px;">&#11015; Download SnapLeads for Windows</a>
-      <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0;">Version 3.5.75 &middot; ~330 MB &middot; Windows 10/11 (64-bit)</p>
+      <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0;">Version 3.5.76 &middot; ~330 MB &middot; Windows 10/11 (64-bit)</p>
     </div>
 
     <h3 style="color: #0f172a; font-size: 16px; margin: 24px 0 12px;">Installation &amp; Activation Guide:</h3>
@@ -145,7 +145,7 @@ Your license key: {license_key}
 
 DOWNLOAD SNAPLEADS FOR WINDOWS:
 {download_url}
-(Version 3.5.75 | ~330 MB | Windows 10/11 64-bit)
+(Version 3.5.76 | ~330 MB | Windows 10/11 64-bit)
 
 INSTALLATION & ACTIVATION GUIDE:
 1. Click the download link above to get the .exe installer
