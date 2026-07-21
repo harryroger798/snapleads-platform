@@ -997,7 +997,7 @@ function Pricing() {
               </div>
               <div className="p-8">
                 <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">What's Included</h6>
-                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Email)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Desktop app (Windows)'].map((item, i) => (
+                {['5 social platforms (Reddit, Twitter, YouTube, Pinterest, Email)', 'CSV export', 'Email verification', '100 leads per extraction', '10 extractions/month', 'Use on up to 2 devices', 'Desktop app (Windows)'].map((item, i) => (
                   <div key={i} className="flex items-start gap-3 mb-3">
                     <Check size={16} className="text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">{item}</span>
@@ -1022,7 +1022,7 @@ function Pricing() {
               </div>
               <div className="p-8">
                 <h6 className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-4">Everything in Starter, plus</h6>
-                {['All 20 platforms including B2B directories', 'Scheduled automated extractions', 'Email outreach campaigns', 'HubSpot & Salesforce CRM export', 'Telegram + WhatsApp extractors', 'Website email finder', 'Unlimited leads per extraction', 'Priority support & updates'].map((item, i) => (
+                {['All 20 platforms including B2B directories', 'Scheduled automated extractions', 'Email outreach campaigns', 'HubSpot & Salesforce CRM export', 'Telegram + WhatsApp extractors', 'Website email finder', 'Unlimited leads per extraction', 'Use on up to 2 devices', 'Priority support & updates'].map((item, i) => (
                   <div key={i} className="flex items-start gap-3 mb-3">
                     <Check size={16} className="text-accent mt-0.5 flex-shrink-0" />
                     <span className="text-gray-300 text-sm">{item}</span>
@@ -1139,6 +1139,8 @@ function FAQ() {
     { q: 'Will my accounts get banned using SnapLeads?', a: 'We have built enterprise-grade account safety: smart rate limiting, randomized behavior patterns, and built-in safety controls. In 6+ months of testing, zero bans reported.' },
     { q: 'What platforms can I extract leads from?', a: 'LinkedIn, Facebook, Instagram, Reddit, Twitter/X, TikTok, YouTube, Google Maps, Telegram, WhatsApp, Pinterest, Email, IndiaMART, JustDial, TradeIndia, ExportersIndia, Email Finder B2B, GitHub B2B, Business Directories, and Google Maps B2B. Pro plan includes all 20 platforms; Starter includes 5 core platforms.' },
     { q: 'What operating system does SnapLeads support?', a: 'SnapLeads is a Windows desktop application. It works on Windows 10 and Windows 11 (64-bit). Download the installer and you are ready in under 2 minutes.' },
+    { q: 'How many devices can I use one license on?', a: 'Every SnapLeads license — Starter or Pro, monthly or yearly — can be activated on up to 2 devices at the same time. Switching to a new machine? Just deactivate a device from the app to free up a slot.' },
+    { q: 'How many leads can I extract per run?', a: 'The Pro plan has no limits — unlimited leads per extraction and unlimited extractions each month. The Starter plan is capped at 100 leads per extraction and 10 extractions per month.' },
     { q: 'Can I export leads to my CRM?', a: 'Pro plan includes direct HubSpot and Salesforce CRM integration. All plans support CSV and Excel export. We are adding more CRM integrations based on user demand.' },
     { q: 'What if I do not like it? Is there a refund?', a: 'We offer a 14-day money-back guarantee on all plans. If SnapLeads does not meet your needs, we will refund you — no questions asked.' },
   ]
